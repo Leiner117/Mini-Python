@@ -2,10 +2,10 @@
 /shelf/
 /workspace.xml
 # Rider ignored files
-/contentModel.xml
-/.idea.Miny_Python.iml
-/modules.xml
 /projectSettingsUpdater.xml
+/contentModel.xml
+/modules.xml
+/.idea.Mini_Python.iml
 # Editor-based HTTP Client requests
 /httpRequests/
 # Datasource local storage ignored files

@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Miny_Python", "Miny_Python\Miny_Python.csproj", "{FA1B1AE0-2DF7-4884-B869-24C8271A2BB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FA1B1AE0-2DF7-4884-B869-24C8271A2BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1B1AE0-2DF7-4884-B869-24C8271A2BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1B1AE0-2DF7-4884-B869-24C8271A2BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1B1AE0-2DF7-4884-B869-24C8271A2BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

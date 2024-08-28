@@ -1,0 +1,17 @@
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\Mini_Python.exe
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\Mini_Python.deps.json
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\Mini_Python.runtimeconfig.json
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\Mini_Python.dll
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\Mini_Python.pdb
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.Form1.resources
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.csproj.GenerateResource.cache
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.AssemblyInfoInputs.cache
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.AssemblyInfo.cs
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.csproj.CoreCompileInputs.cache
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.sourcelink.json
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.dll
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\refint\Mini_Python.dll
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.pdb
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.genruntimeconfig.cache
+C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\ref\Mini_Python.dll

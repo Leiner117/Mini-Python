@@ -1,9 +1,0 @@
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\Mini_Python.csproj.AssemblyReference.cache
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\Mini_Python.Properties.Resources.resources
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\Mini_Python.csproj.GenerateResource.cache
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\Mini_Python.csproj.CoreCompileInputs.cache
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\Mini_Python.exe.config
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\Mini_Python.exe
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\Mini_Python.pdb
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\Mini_Python.exe
-C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\Mini_Python.pdb

@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Mini_Python/1.0.0": {
+        "runtime": {
+          "Mini_Python.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Mini_Python/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

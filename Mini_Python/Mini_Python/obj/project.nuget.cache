@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "h9qxGoMq6s4=",
+  "dgSpecHash": "PF+jb4mV5Jc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\leine\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512"
+  ],
   "logs": []
 }

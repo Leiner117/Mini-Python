@@ -45,10 +45,10 @@ lexer grammar miniPythonLexer;
         while (indentCount != getSavedIndent()) {
             if (indentCount > getSavedIndent()) {
                 indentStack.Push(indentCount);
-                tokenQueue.AddLast(createToken(INDENT, "INDENT"+indentCount, next));
+                tokenQueue.AddLast(createToken(INDENT, "INDENT", next));
             } else {
                 indentStack.Pop();
-                tokenQueue.AddLast(createToken(DEDENT, "DEDENT"+getSavedIndent(), next));
+                tokenQueue.AddLast(createToken(DEDENT, "DEDENT", next));
             }
         }
         pendingDent = false;
@@ -71,8 +71,11 @@ WS : [ \t]+ {
     if (pendingDent) { indentCount += Text.Length; }
 } ;
 
-INDENT : 'INDENT' { Channel = Hidden; };
+INDENT : 'INDENT' { Channel = Hidden; }; 
 DEDENT : 'DEDENT' { Channel = Hidden; };
+
+BlockComment : '´´´' .*? '´´´' -> channel(HIDDEN) ;
+LineComment : '#' ~[\r\n]* -> channel(HIDDEN) ;
 
 // Palabras clave
 DEF:            'def';

@@ -106,7 +106,7 @@ LBRACKET:       '[';
 RBRACKET:       ']';
 LBRACE:         '{';
 RBRACE:         '}';
-COLON:          ':';
+DOSPUNTOS:      ':';
 
 // Tipos de datos
 INTEGER:        [0-9]+;

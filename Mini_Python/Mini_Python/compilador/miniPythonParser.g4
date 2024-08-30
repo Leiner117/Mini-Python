@@ -16,10 +16,10 @@ statement: defStatement
          | assignStatement
          | functionCallStatement;
 
-defStatement: DEF IDENTIFIER LPAREN argList RPAREN COLON NEWLINE sequence;
+defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE sequence;
 argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
-ifStatement: IF expression COLON NEWLINE  sequence ELSE COLON NEWLINE sequence?;
-whileStatement: WHILE expression COLON NEWLINE sequence ;
+ifStatement: IF expression DOSPUNTOS NEWLINE  sequence ELSE DOSPUNTOS NEWLINE sequence?;
+whileStatement: WHILE expression DOSPUNTOS NEWLINE sequence ;
 returnStatement: RETURN expression NEWLINE;
 printStatement: PRINT expression NEWLINE;
 assignStatement: IDENTIFIER ASSIGN expression NEWLINE;

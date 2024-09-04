@@ -34,15 +34,11 @@
             abirToolStripMenuItem = new ToolStripMenuItem();
             nuevoToolStripMenuItem = new ToolStripMenuItem();
             guardarToolStripMenuItem = new ToolStripMenuItem();
-            tabPage1 = new TabPage();
-            richTextBox1 = new RichTextBox();
             tabControl1 = new TabControl();
             contextMenuStrip1 = new ContextMenuStrip(components);
             label1 = new Label();
-            label2 = new Label();
+            correrToolStripMenuItem = new ToolStripMenuItem();
             menuStrip1.SuspendLayout();
-            tabPage1.SuspendLayout();
-            tabControl1.SuspendLayout();
             SuspendLayout();
             // 
             // menuStrip1
@@ -56,16 +52,17 @@
             // 
             // archivoToolStripMenuItem
             // 
-            archivoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abirToolStripMenuItem, nuevoToolStripMenuItem, guardarToolStripMenuItem });
+            archivoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abirToolStripMenuItem, nuevoToolStripMenuItem, guardarToolStripMenuItem, correrToolStripMenuItem });
             archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             archivoToolStripMenuItem.Size = new Size(60, 20);
             archivoToolStripMenuItem.Text = "Archivo";
+            archivoToolStripMenuItem.Click += archivoToolStripMenuItem_Click;
             // 
             // abirToolStripMenuItem
             // 
             abirToolStripMenuItem.Name = "abirToolStripMenuItem";
             abirToolStripMenuItem.Size = new Size(180, 22);
-            abirToolStripMenuItem.Text = "Abir";
+            abirToolStripMenuItem.Text = "Abrir";
             abirToolStripMenuItem.Click += abirToolStripMenuItem_Click;
             // 
             // nuevoToolStripMenuItem
@@ -73,6 +70,7 @@
             nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
             nuevoToolStripMenuItem.Size = new Size(180, 22);
             nuevoToolStripMenuItem.Text = "Nuevo";
+            nuevoToolStripMenuItem.Click += nuevoToolStripMenuItem_Click;
             // 
             // guardarToolStripMenuItem
             // 
@@ -81,30 +79,8 @@
             guardarToolStripMenuItem.Text = "Guardar";
             guardarToolStripMenuItem.Click += guardarToolStripMenuItem_Click;
             // 
-            // tabPage1
-            // 
-            tabPage1.Controls.Add(richTextBox1);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(705, 300);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox1
-            // 
-            richTextBox1.Location = new Point(0, 0);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(705, 300);
-            richTextBox1.TabIndex = 0;
-            richTextBox1.Text = "";
-            richTextBox1.SelectionChanged += richTextBox1_SelectionChanged;
-            richTextBox1.TextChanged += richTextBox1_TextChanged;
-            // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
             tabControl1.Location = new Point(87, 97);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
@@ -119,29 +95,25 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(631, 424);
+            label1.Location = new Point(711, 428);
             label1.Name = "label1";
             label1.Size = new Size(26, 15);
             label1.TabIndex = 4;
             label1.Text = "line";
             label1.Click += label1_Click;
             // 
-            // label2
+            // correrToolStripMenuItem
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(707, 424);
-            label2.Name = "label2";
-            label2.Size = new Size(48, 15);
-            label2.TabIndex = 5;
-            label2.Text = "column";
-            label2.Click += label2_Click;
+            correrToolStripMenuItem.Name = "correrToolStripMenuItem";
+            correrToolStripMenuItem.Size = new Size(180, 22);
+            correrToolStripMenuItem.Text = "Correr";
+            correrToolStripMenuItem.Click += correrToolStripMenuItem_Click;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(tabControl1);
             Controls.Add(menuStrip1);
@@ -151,8 +123,6 @@
             Load += Form1_Load;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            tabPage1.ResumeLayout(false);
-            tabControl1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -163,12 +133,10 @@
         private ToolStripMenuItem archivoToolStripMenuItem;
         private ToolStripMenuItem abirToolStripMenuItem;
         private ToolStripMenuItem nuevoToolStripMenuItem;
-        private TabPage tabPage1;
         private TabControl tabControl1;
         private ContextMenuStrip contextMenuStrip1;
         private Label label1;
-        private Label label2;
         private ToolStripMenuItem guardarToolStripMenuItem;
-        private RichTextBox richTextBox1;
+        private ToolStripMenuItem correrToolStripMenuItem;
     }
 }

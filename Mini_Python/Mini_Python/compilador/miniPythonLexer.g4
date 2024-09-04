@@ -1,11 +1,14 @@
 lexer grammar miniPythonLexer;
-
+@lexer::header {
+using compilador;
+}
 @lexer::members {
     private bool pendingDent = true;
     private int indentCount = 0;
     private LinkedList<IToken> tokenQueue = new LinkedList<IToken>();
     private Stack<int> indentStack = new Stack<int>();
     private IToken initialIndentToken = null;
+    private const int MAX_ALLOWED_INDENT = 4; // Ajusta según sea necesario.
 
     private int getSavedIndent() {
         return indentStack.Count == 0 ? 0 : indentStack.Peek();
@@ -28,13 +31,16 @@ lexer grammar miniPythonLexer;
             tokenQueue.RemoveFirst();
             return firstToken;
         }
+
         IToken next = base.NextToken();
         if (pendingDent && initialIndentToken == null && next.Type != NEWLINE) {
             initialIndentToken = next;
         }
+
         if (next == null || next.Channel == Hidden || next.Type == NEWLINE) {
             return next;
         }
+
         if (next.Type == TokenConstants.EOF) {
             indentCount = 0;
             if (!pendingDent) {
@@ -42,6 +48,12 @@ lexer grammar miniPythonLexer;
                 tokenQueue.AddLast(createToken(NEWLINE, "NEWLINE", next));
             }
         }
+
+        // Lanzar excepción por exceso de indentación
+        if (indentCount > MAX_ALLOWED_INDENT) {
+            throw new compilador.LexerExcepcion($"Indentación excesiva detectada en la línea {next.Line}, columna {next.Column}");
+        }
+
         while (indentCount != getSavedIndent()) {
             if (indentCount > getSavedIndent()) {
                 indentStack.Push(indentCount);
@@ -51,6 +63,7 @@ lexer grammar miniPythonLexer;
                 tokenQueue.AddLast(createToken(DEDENT, "DEDENT", next));
             }
         }
+
         pendingDent = false;
         tokenQueue.AddLast(next);
         var dequeuedToken = tokenQueue.First.Value;
@@ -58,7 +71,6 @@ lexer grammar miniPythonLexer;
         return dequeuedToken;
     }
 }
-
 NEWLINE : ('\r'? '\n' | '\r') {
     if (pendingDent) { Channel = Hidden; }
     pendingDent = true;
@@ -76,6 +88,7 @@ DEDENT : 'DEDENT' { Channel = Hidden; };
 
 BlockComment : '´´´' .*? '´´´' -> channel(HIDDEN) ;
 LineComment : '#' ~[\r\n]* -> channel(HIDDEN) ;
+
 
 // Palabras clave
 DEF:            'def';

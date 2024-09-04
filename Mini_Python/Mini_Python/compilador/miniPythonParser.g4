@@ -1,5 +1,4 @@
 parser grammar miniPythonParser;
-
 options {
     tokenVocab = miniPythonLexer;
 }
@@ -16,15 +15,15 @@ statement: defStatement
          | assignStatement
          | functionCallStatement;
 
-defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE sequence;
+defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence ;
 argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
-ifStatement: IF expression DOSPUNTOS NEWLINE  sequence ELSE DOSPUNTOS NEWLINE sequence?;
-whileStatement: WHILE expression DOSPUNTOS NEWLINE sequence ;
+ifStatement: IF expression DOSPUNTOS NEWLINE   sequence  ELSE DOSPUNTOS NEWLINE  sequence ?;
+whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence ;
 returnStatement: RETURN expression NEWLINE;
 printStatement: PRINT expression NEWLINE;
 assignStatement: IDENTIFIER ASSIGN expression NEWLINE;
 functionCallStatement: IDENTIFIER LPAREN expressionList RPAREN NEWLINE?;
-sequence: INDENT statement+ DEDENT;
+sequence:  INDENT statement+ DEDENT ;
 expression: additionExpression comparison?;
 comparison: (LT | GT | LE | GE | EQ) additionExpression;
 additionExpression: multiplicationExpression ((PLUS | MINUS) multiplicationExpression)*;

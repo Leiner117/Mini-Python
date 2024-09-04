@@ -1,34 +1,63 @@
 {
   "version": 3,
   "targets": {
-    "net8.0-windows7.0": {}
+    "net8.0-windows7.0": {
+      "Antlr4.Runtime.Standard/4.13.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Antlr4.Runtime.Standard.dll": {
+            "related": ".xml"
+          }
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Antlr4.Runtime.Standard/4.13.1": {
+      "sha512": "Da5+i4kFHUseJRZGcBG5fmZGpA/Ns180ibrQMxgZzjpQOnENVvSL5gi5HZ8Ncz8/AR2WsKbOg2lMBzjz0HUQcA==",
+      "type": "package",
+      "path": "antlr4.runtime.standard/4.13.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "antlr4.runtime.standard.4.13.1.nupkg.sha512",
+        "antlr4.runtime.standard.nuspec",
+        "lib/net45/Antlr4.Runtime.Standard.dll",
+        "lib/net45/Antlr4.Runtime.Standard.xml",
+        "lib/netstandard2.0/Antlr4.Runtime.Standard.dll",
+        "lib/netstandard2.0/Antlr4.Runtime.Standard.xml"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": []
+    "net8.0-windows7.0": [
+      "Antlr4.Runtime.Standard >= 4.13.1"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\steve\\.nuget\\packages\\": {}
+    "C:\\Users\\leine\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+      "projectUniqueName": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
       "projectName": "Mini_Python",
-      "projectPath": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
-      "packagesPath": "C:\\Users\\steve\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\obj\\",
+      "projectPath": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+      "packagesPath": "C:\\Users\\leine\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\leine\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -51,6 +80,12 @@
     "frameworks": {
       "net8.0-windows7.0": {
         "targetAlias": "net8.0-windows",
+        "dependencies": {
+          "Antlr4.Runtime.Standard": {
+            "target": "Package",
+            "version": "[4.13.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -70,7 +105,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

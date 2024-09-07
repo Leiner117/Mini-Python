@@ -90,15 +90,12 @@
             // 
             // tabControl1
             // 
-            tabControl1.Location = new Point(0, 56); 
+            tabControl1.Location = new Point(0, 56);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(1636, 620);
             tabControl1.TabIndex = 2;
             tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
-
-
-
             // 
             // contextMenuStrip1
             // 

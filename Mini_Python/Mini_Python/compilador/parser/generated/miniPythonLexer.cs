@@ -108,7 +108,7 @@ public partial class miniPythonLexer : Lexer {
 	        while (indentCount != getSavedIndent()) {
 	            int difference = Math.Abs(indentCount - getSavedIndent());
 	            Console.WriteLine(getSavedIndent());
-	            if (difference == 0|| difference == 4 || difference == getSavedIndent()) {
+	            if (difference == 0|| difference == 4 || indentStack.Contains(difference) || difference == getSavedIndent()) {
 	                if (indentCount > getSavedIndent()) {
 	                    indentStack.Push(indentCount);
 	                    tokenQueue.AddLast(createToken(INDENT, "INDENT", next));
@@ -121,7 +121,7 @@ public partial class miniPythonLexer : Lexer {
 	            {
 	                throw new InvalidOperationException($"Indentation error at line {next.Line}: Indentation levels must differ by exactly 4 spaces.");
 	            }
-	        			    
+	                        
 	        }
 
 	        pendingDent = false;

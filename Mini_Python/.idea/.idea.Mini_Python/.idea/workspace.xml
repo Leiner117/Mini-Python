@@ -9,26 +9,14 @@
   <component name="ChangeListManager">
     <list default="true" id="544d44cb-54ed-4625-9947-ac5afc5b59aa" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Mini_Python/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Mini_Python/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.exe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/compilador/miniPythonLexer.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/compilador/miniPythonLexer.g4" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/compilador/miniPythonParser.g4" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/compilador/miniPythonParser.g4" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonLexer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonLexer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonLexer.interp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonParser.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonParser.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonParser.interp" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/compilador/parser/generated/miniPythonParser.interp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.AssemblyInfo.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.AssemblyInfoInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.AssemblyInfoInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.GeneratedMSBuildEditorConfig.editorconfig" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.GeneratedMSBuildEditorConfig.editorconfig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.assets.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.FileListAbsolute.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.GenerateResource.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.genruntimeconfig.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.sourcelink.json" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.sourcelink.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/apphost.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/apphost.exe" afterDir="false" />
@@ -38,7 +26,6 @@
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Mini_Python.csproj.nuget.g.props" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Mini_Python.csproj.nuget.g.props" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/project.assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/project.assets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/project.nuget.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/project.nuget.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/project.packagespec.json" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/project.packagespec.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/rider.project.model.nuget.info" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/rider.project.model.nuget.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/rider.project.restore.info" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/rider.project.restore.info" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/test.txt" afterDir="false" />

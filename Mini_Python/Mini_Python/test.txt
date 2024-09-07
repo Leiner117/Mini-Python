@@ -1,15 +1,12 @@
-def add(a,b):
+def add(a, b):
     return a + b
-def print_result():
-    print add(5, 3)
-while 5 > 3:
-    print "looping"
-if 10 == 10: # ioajdoiasdj
-    print "Equal"
-else: #asdjadskjadlkj
-    print "Not equal"
-    ´´´
-    Esto es de prueba 
-    ´´´    
-add(5, 3)
-#Hola buenas
+    def edit(a, b):
+        return a - b
+    def delete(a, b):
+        return a * b
+        for i in range(10):
+            print(i)
+def multiply(a, b):
+    return a / b
+def divide(a, b):
+    print("Hello")

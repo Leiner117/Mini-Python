@@ -8,7 +8,6 @@ using compilador;
     private LinkedList<IToken> tokenQueue = new LinkedList<IToken>();
     private Stack<int> indentStack = new Stack<int>();
     private IToken initialIndentToken = null;
-    private const int MAX_ALLOWED_INDENT = 4; // Ajusta según sea necesario.
 
     private int getSavedIndent() {
         return indentStack.Count == 0 ? 0 : indentStack.Peek();
@@ -49,19 +48,24 @@ using compilador;
             }
         }
 
-        // Lanzar excepción por exceso de indentación
-        if (indentCount > MAX_ALLOWED_INDENT) {
-            throw new compilador.LexerExcepcion($"Indentación excesiva detectada en la línea {next.Line}, columna {next.Column}");
-        }
-
+        // Ajustar las diferencias entre el conteo actual de indentaciones y el último guardado
         while (indentCount != getSavedIndent()) {
-            if (indentCount > getSavedIndent()) {
-                indentStack.Push(indentCount);
-                tokenQueue.AddLast(createToken(INDENT, "INDENT", next));
-            } else {
-                indentStack.Pop();
-                tokenQueue.AddLast(createToken(DEDENT, "DEDENT", next));
+            int difference = Math.Abs(indentCount - getSavedIndent());
+            Console.WriteLine(getSavedIndent());
+            if (difference == 0|| difference == 4 || difference == getSavedIndent()) {
+                if (indentCount > getSavedIndent()) {
+                    indentStack.Push(indentCount);
+                    tokenQueue.AddLast(createToken(INDENT, "INDENT", next));
+                } else {
+                    indentStack.Pop();
+                    tokenQueue.AddLast(createToken(DEDENT, "DEDENT", next));
+                }
             }
+            else
+            {
+                throw new InvalidOperationException($"Indentation error at line {next.Line}: Indentation levels must differ by exactly 4 spaces.");
+            }
+        			    
         }
 
         pendingDent = false;
@@ -71,6 +75,7 @@ using compilador;
         return dequeuedToken;
     }
 }
+
 NEWLINE : ('\r'? '\n' | '\r') {
     if (pendingDent) { Channel = Hidden; }
     pendingDent = true;
@@ -88,7 +93,6 @@ DEDENT : 'DEDENT' { Channel = Hidden; };
 
 BlockComment : '´´´' .*? '´´´' -> channel(HIDDEN) ;
 LineComment : '#' ~[\r\n]* -> channel(HIDDEN) ;
-
 
 // Palabras clave
 DEF:            'def';

@@ -5,7 +5,7 @@ options {
 
 program: mainStatement* EOF;
 
-mainStatement: statement;
+mainStatement: defStatement| assignStatement ;
 
 statement: defStatement
          | ifStatement
@@ -13,6 +13,7 @@ statement: defStatement
          | printStatement
          | whileStatement
          | assignStatement
+         | forStatement
          | functionCallStatement;
 
 defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence ;
@@ -20,6 +21,7 @@ argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
 ifStatement: IF expression DOSPUNTOS NEWLINE   sequence  ELSE DOSPUNTOS NEWLINE  sequence ?;
 whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence ;
 returnStatement: RETURN expression NEWLINE;
+forStatement: FOR expression IN expressionList DOSPUNTOS NEWLINE sequence; 
 printStatement: PRINT expression NEWLINE;
 assignStatement: IDENTIFIER ASSIGN expression NEWLINE;
 functionCallStatement: IDENTIFIER LPAREN expressionList RPAREN NEWLINE?;

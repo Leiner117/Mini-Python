@@ -37,3 +37,8 @@ C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\ob
 C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Pyt.869887B6.Up2Date
 C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\FontAwesome.Sharp.dll
 C:\Users\steve\OneDrive\Documentos\GitHub\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.Properties.Resources.resources
+C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\Antlr4.Runtime.Standard.dll
+C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\Mini_Python\Mini_Python\bin\Debug\net8.0-windows\FontAwesome.Sharp.dll
+C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.csproj.AssemblyReference.cache
+C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Python.Properties.Resources.resources
+C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\Mini_Python\Mini_Python\obj\Debug\net8.0-windows\Mini_Pyt.869887B6.Up2Date

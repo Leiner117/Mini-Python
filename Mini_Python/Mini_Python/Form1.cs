@@ -6,6 +6,34 @@ namespace Mini_Python
         public Form1()
         {
             InitializeComponent();
+            tabControl1.Appearance = TabAppearance.Normal;
+            tabControl1.SizeMode = TabSizeMode.Fixed;
+            tabControl1.ItemSize = new Size(100, 30);
+            tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
+            tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
+        }
+
+        private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
+        {
+            TabControl tabControl = sender as TabControl;
+            TabPage tabPage = tabControl.TabPages[e.Index];
+            Rectangle tabRect = tabControl.GetTabRect(e.Index);
+
+            // Establece los colores
+
+            Color backColor = Color.FromArgb(255, 30, 30, 30); // Color de fondo de la pestaña
+            Color foreColor = Color.WhiteSmoke;     // Color del texto de la pestaña
+
+            // Dibuja el fondo de la pestaña
+            using (SolidBrush brush = new SolidBrush(backColor))
+            {
+                e.Graphics.FillRectangle(brush, tabRect);
+            }
+
+            e.Graphics.DrawRectangle(Pens.Transparent, tabRect);
+
+            // Dibuja el texto de la pestaña
+            TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font, tabRect, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -161,7 +189,7 @@ namespace Mini_Python
             // Agregar la nueva pestaña al TabControl
             tabControl1.TabPages.Add(newTabPage);
 
-            // Opcional: Cambiar a la nueva pestaña automáticamente
+            // Cambiar a la nueva pestaña automáticamente
             tabControl1.SelectedTab = newTabPage;
         }
 
@@ -216,7 +244,9 @@ namespace Mini_Python
 
             RichTextBox richTextBox = new RichTextBox
             {
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                BackColor = Color.FromArgb(255, 30, 30, 30), // Establecer el color de fondo del RichTextBox a rgba(30,30,30,255)
+                ForeColor = Color.White // Establecer el color del texto a blanco
             };
 
             richTextBox.SelectionChanged += RichTextBox_SelectionChanged;
@@ -235,12 +265,31 @@ namespace Mini_Python
             }
         }
 
+
+
+
+
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
         }
 
         private void correrToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void iconButton1_Click(object sender, EventArgs e)
         {
 
         }

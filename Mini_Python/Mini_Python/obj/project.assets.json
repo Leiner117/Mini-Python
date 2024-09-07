@@ -14,6 +14,18 @@
             "related": ".xml"
           }
         }
+      },
+      "FontAwesome.Sharp/6.6.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.dll": {}
+        },
+        "runtime": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.WindowsDesktop.App"
+        ]
       }
     }
   },
@@ -32,11 +44,29 @@
         "lib/netstandard2.0/Antlr4.Runtime.Standard.dll",
         "lib/netstandard2.0/Antlr4.Runtime.Standard.xml"
       ]
+    },
+    "FontAwesome.Sharp/6.6.0": {
+      "sha512": "bJCb2x73UC1nD9+9iMLaUy6Ujf9Pf+buL6FHwVnaoDYT4CQNLazz59hO5gQ0+SMSW0G+ZXmjjShOYr3Jn2UZiw==",
+      "type": "package",
+      "path": "fontawesome.sharp/6.6.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fontawesome.sharp.6.6.0.nupkg.sha512",
+        "fontawesome.sharp.nuspec",
+        "lib/net472/FontAwesome.Sharp.dll",
+        "lib/net48/FontAwesome.Sharp.dll",
+        "lib/net6.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/net7.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/net8.0-windows7.0/FontAwesome.Sharp.dll",
+        "lib/netcoreapp3.1/FontAwesome.Sharp.dll"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "net8.0-windows7.0": [
-      "Antlr4.Runtime.Standard >= 4.13.1"
+      "Antlr4.Runtime.Standard >= 4.13.1",
+      "FontAwesome.Sharp >= 6.6.0"
     ]
   },
   "packageFolders": {
@@ -87,6 +117,10 @@
           "Antlr4.Runtime.Standard": {
             "target": "Package",
             "version": "[4.13.1, )"
+          },
+          "FontAwesome.Sharp": {
+            "target": "Package",
+            "version": "[6.6.0, )"
           }
         },
         "imports": [

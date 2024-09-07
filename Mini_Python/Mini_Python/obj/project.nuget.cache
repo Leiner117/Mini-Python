@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "CKu2hS614OU=",
+  "dgSpecHash": "NTcUkh6s0Ok=",
   "success": true,
   "projectFilePath": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\steve\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512"
+    "C:\\Users\\steve\\.nuget\\packages\\antlr4.runtime.standard\\4.13.1\\antlr4.runtime.standard.4.13.1.nupkg.sha512",
+    "C:\\Users\\steve\\.nuget\\packages\\fontawesome.sharp\\6.6.0\\fontawesome.sharp.6.6.0.nupkg.sha512"
   ],
   "logs": []
 }

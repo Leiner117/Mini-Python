@@ -13,6 +13,14 @@
             "fileVersion": "4.13.1.0"
           }
         }
+      },
+      "FontAwesome.Sharp/6.6.0": {
+        "runtime": {
+          "lib/net8.0-windows7.0/FontAwesome.Sharp.dll": {
+            "assemblyVersion": "6.6.0.0",
+            "fileVersion": "6.6.0.0"
+          }
+        }
       }
     }
   },
@@ -23,6 +31,13 @@
       "sha512": "sha512-Da5+i4kFHUseJRZGcBG5fmZGpA/Ns180ibrQMxgZzjpQOnENVvSL5gi5HZ8Ncz8/AR2WsKbOg2lMBzjz0HUQcA==",
       "path": "antlr4.runtime.standard/4.13.1",
       "hashPath": "antlr4.runtime.standard.4.13.1.nupkg.sha512"
+    },
+    "FontAwesome.Sharp/6.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-bJCb2x73UC1nD9+9iMLaUy6Ujf9Pf+buL6FHwVnaoDYT4CQNLazz59hO5gQ0+SMSW0G+ZXmjjShOYr3Jn2UZiw==",
+      "path": "fontawesome.sharp/6.6.0",
+      "hashPath": "fontawesome.sharp.6.6.0.nupkg.sha512"
     }
   }
 }

@@ -49,6 +49,10 @@
             "Antlr4.Runtime.Standard": {
               "target": "Package",
               "version": "[4.13.1, )"
+            },
+            "FontAwesome.Sharp": {
+              "target": "Package",
+              "version": "[6.6.0, )"
             }
           },
           "imports": [

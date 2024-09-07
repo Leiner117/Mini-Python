@@ -12,6 +12,7 @@ namespace Mini_Python
             Application.SetCompatibleTextRenderingDefault(false);
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
+
         }
     }
 }

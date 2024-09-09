@@ -13,12 +13,17 @@ namespace Mini_Python
         static void Main()
         {
             // Crea un input stream desde el archivo de prueba
-            ICharStream input = null;
-            try {
-                input = CharStreams.fromPath("C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\test.txt");
-            } catch (IOException e) {
-                throw new Exception(e.Message);
-            }
+            
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1());
+
+        }
+        public static IParseTree Parse(string text)
+        {
+            // Crea un input stream desde el archivo de prueba
+            ICharStream input = CharStreams.fromString(text);
             // Crea un lexer para el input
             var lexer = new miniPythonLexer(input);
             // Crea un buffer de tokens con el lexer
@@ -29,11 +34,8 @@ namespace Mini_Python
             IParseTree tree = parser.program();
             // Imprime el árbol de análisis (para fines de depuración)
             Console.WriteLine(tree.ToStringTree(parser));
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
-
+            return tree;
         }
     }
+    
 }

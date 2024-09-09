@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Mini_Python")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1b9684cd1df79038d906d7b29a26b884b014862c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b40d6a7eb1a1d003533b4c0979ce749b9745220c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Mini_Python")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Mini_Python")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

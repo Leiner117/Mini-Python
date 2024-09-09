@@ -136,25 +136,26 @@ namespace Mini_Python
 
         private void AddTab(object sender, EventArgs e)
         {
-            // Crear una nueva pesta�a
-            TabPage newTabPage = new TabPage("Nueva Pesta�a");
+            // Crear una nueva pestaña
+            TabPage newTabPage = new TabPage("Nueva Pestaña");
 
             // Crear un nuevo RichTextBox
             RichTextBox richTextBox = new RichTextBox
             {
-                Dock = DockStyle.Fill // Para que el RichTextBox ocupe todo el espacio de la pesta�a
+                Dock = DockStyle.Fill, // Para que el RichTextBox ocupe todo el espacio de la pestaña
+                Font = new Font("Consolas", 16, FontStyle.Bold) // Ajustar el tamaño de la fuente y hacerla negrita
             };
 
             // Asignar el evento SelectionChanged al RichTextBox
             richTextBox.SelectionChanged += RichTextBox_SelectionChanged;
 
-            // Agregar el RichTextBox a la nueva pesta�a
+            // Agregar el RichTextBox a la nueva pestaña
             newTabPage.Controls.Add(richTextBox);
 
-            // Agregar la nueva pesta�a al TabControl
+            // Agregar la nueva pestaña al TabControl
             tabControl1.TabPages.Add(newTabPage);
 
-            // Cambiar a la nueva pesta�a autom�ticamente
+            // Cambiar a la nueva pestaña automáticamente
             tabControl1.SelectedTab = newTabPage;
         }
 
@@ -211,7 +212,8 @@ namespace Mini_Python
             {
                 Dock = DockStyle.Fill,
                 BackColor = Color.FromArgb(255, 30, 30, 30), // Establecer el color de fondo del RichTextBox a rgba(30,30,30,255)
-                ForeColor = Color.White // Establecer el color del texto a blanco
+                ForeColor = Color.White, // Establecer el color del texto a blanco
+                Font = new Font("Consolas", 16, FontStyle.Bold) // Ajustar el tamaño de la fuente y hacerla negrita
             };
 
             // Suscribir los eventos PreviewKeyDown y KeyDown

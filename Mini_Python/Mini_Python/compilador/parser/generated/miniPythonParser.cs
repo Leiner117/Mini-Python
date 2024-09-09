@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from C:/Users/leine/OneDrive/Documentos/Github/Mini-Python/Mini_Python/Mini_Python/compilador/miniPythonParser.g4 by ANTLR 4.13.1
+// Generated from C:/Users/Walter/Documents/IIS2024/Compiladores/ProyectoMini-Python/ProyectoRider/Mini_Python/Mini_Python/compilador/miniPythonParser.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -1152,7 +1152,7 @@ public partial class miniPythonParser : Parser {
 			State = 174;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 533247229952L) != 0)) {
+			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & 533247262720L) != 0)) {
 				{
 				State = 166;
 				expression();
@@ -1190,10 +1190,10 @@ public partial class miniPythonParser : Parser {
 
 	public partial class PrimitiveExpressionContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LPAREN() { return GetToken(miniPythonParser.LPAREN, 0); }
-		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RPAREN() { return GetToken(miniPythonParser.RPAREN, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {
 			return GetRuleContext<ExpressionContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode RPAREN() { return GetToken(miniPythonParser.RPAREN, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode LEN() { return GetToken(miniPythonParser.LEN, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ListExpressionContext listExpression() {
 			return GetRuleContext<ListExpressionContext>(0);
@@ -1221,7 +1221,7 @@ public partial class miniPythonParser : Parser {
 		EnterRule(_localctx, 38, RULE_primitiveExpression);
 		int _la;
 		try {
-			State = 196;
+			State = 197;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case LPAREN:
@@ -1229,42 +1229,29 @@ public partial class miniPythonParser : Parser {
 				{
 				State = 176;
 				Match(LPAREN);
-				State = 180;
-				ErrorHandler.Sync(this);
-				switch (TokenStream.LA(1)) {
-				case PLUS:
-				case MINUS:
-				case LPAREN:
-				case LBRACKET:
-				case INTEGER:
-				case FLOAT:
-				case CHARCONST:
-				case STRING:
-				case IDENTIFIER:
-					{
-					State = 177;
-					expression();
-					}
-					break;
-				case LEN:
-					{
-					State = 178;
-					Match(LEN);
-					State = 179;
-					expression();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+				State = 177;
+				expression();
+				State = 178;
+				Match(RPAREN);
 				}
+				break;
+			case LEN:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 180;
+				Match(LEN);
+				State = 181;
+				Match(LPAREN);
 				State = 182;
+				expression();
+				State = 183;
 				Match(RPAREN);
 				}
 				break;
 			case LBRACKET:
-				EnterOuterAlt(_localctx, 2);
+				EnterOuterAlt(_localctx, 3);
 				{
-				State = 184;
+				State = 185;
 				listExpression();
 				}
 				break;
@@ -1274,14 +1261,14 @@ public partial class miniPythonParser : Parser {
 			case FLOAT:
 			case CHARCONST:
 			case STRING:
-				EnterOuterAlt(_localctx, 3);
+				EnterOuterAlt(_localctx, 4);
 				{
-				State = 186;
+				State = 187;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==PLUS || _la==MINUS) {
 					{
-					State = 185;
+					State = 186;
 					_la = TokenStream.LA(1);
 					if ( !(_la==PLUS || _la==MINUS) ) {
 					ErrorHandler.RecoverInline(this);
@@ -1293,7 +1280,7 @@ public partial class miniPythonParser : Parser {
 					}
 				}
 
-				State = 188;
+				State = 189;
 				_la = TokenStream.LA(1);
 				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 257698037760L) != 0)) ) {
 				ErrorHandler.RecoverInline(this);
@@ -1305,20 +1292,20 @@ public partial class miniPythonParser : Parser {
 				}
 				break;
 			case IDENTIFIER:
-				EnterOuterAlt(_localctx, 4);
+				EnterOuterAlt(_localctx, 5);
 				{
-				State = 189;
+				State = 190;
 				Match(IDENTIFIER);
-				State = 194;
+				State = 195;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 				if (_la==LPAREN) {
 					{
-					State = 190;
-					Match(LPAREN);
 					State = 191;
-					expressionList();
+					Match(LPAREN);
 					State = 192;
+					expressionList();
+					State = 193;
 					Match(RPAREN);
 					}
 				}
@@ -1360,11 +1347,11 @@ public partial class miniPythonParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 198;
-			Match(LBRACKET);
 			State = 199;
-			expressionList();
+			Match(LBRACKET);
 			State = 200;
+			expressionList();
+			State = 201;
 			Match(RBRACKET);
 			}
 		}
@@ -1380,7 +1367,7 @@ public partial class miniPythonParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,38,203,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,38,204,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,1,0,5,0,44,
 		8,0,10,0,12,0,47,9,0,1,0,1,0,1,1,1,1,3,1,53,8,1,1,2,1,2,1,2,1,2,1,2,1,
@@ -1392,15 +1379,15 @@ public partial class miniPythonParser : Parser {
 		12,1,13,1,13,3,13,139,8,13,1,14,1,14,1,14,1,15,1,15,1,15,5,15,147,8,15,
 		10,15,12,15,150,9,15,1,16,1,16,1,16,5,16,155,8,16,10,16,12,16,158,9,16,
 		1,17,1,17,1,17,1,17,1,17,3,17,165,8,17,1,18,1,18,1,18,5,18,170,8,18,10,
-		18,12,18,173,9,18,3,18,175,8,18,1,19,1,19,1,19,1,19,3,19,181,8,19,1,19,
-		1,19,1,19,1,19,3,19,187,8,19,1,19,1,19,1,19,1,19,1,19,1,19,3,19,195,8,
-		19,3,19,197,8,19,1,20,1,20,1,20,1,20,1,20,0,0,21,0,2,4,6,8,10,12,14,16,
+		18,12,18,173,9,18,3,18,175,8,18,1,19,1,19,1,19,1,19,1,19,1,19,1,19,1,19,
+		1,19,1,19,1,19,3,19,188,8,19,1,19,1,19,1,19,1,19,1,19,1,19,3,19,196,8,
+		19,3,19,198,8,19,1,20,1,20,1,20,1,20,1,20,0,0,21,0,2,4,6,8,10,12,14,16,
 		18,20,22,24,26,28,30,32,34,36,38,40,0,4,1,0,20,24,1,0,16,17,1,0,18,19,
-		1,0,34,37,207,0,45,1,0,0,0,2,52,1,0,0,0,4,62,1,0,0,0,6,64,1,0,0,0,8,81,
+		1,0,34,37,208,0,45,1,0,0,0,2,52,1,0,0,0,4,62,1,0,0,0,6,64,1,0,0,0,8,81,
 		1,0,0,0,10,83,1,0,0,0,12,94,1,0,0,0,14,100,1,0,0,0,16,104,1,0,0,0,18,112,
 		1,0,0,0,20,116,1,0,0,0,22,121,1,0,0,0,24,128,1,0,0,0,26,136,1,0,0,0,28,
 		140,1,0,0,0,30,143,1,0,0,0,32,151,1,0,0,0,34,159,1,0,0,0,36,174,1,0,0,
-		0,38,196,1,0,0,0,40,198,1,0,0,0,42,44,3,2,1,0,43,42,1,0,0,0,44,47,1,0,
+		0,38,197,1,0,0,0,40,199,1,0,0,0,42,44,3,2,1,0,43,42,1,0,0,0,44,47,1,0,
 		0,0,45,43,1,0,0,0,45,46,1,0,0,0,46,48,1,0,0,0,47,45,1,0,0,0,48,49,5,0,
 		0,1,49,1,1,0,0,0,50,53,3,6,3,0,51,53,3,20,10,0,52,50,1,0,0,0,52,51,1,0,
 		0,0,53,3,1,0,0,0,54,63,3,6,3,0,55,63,3,10,5,0,56,63,3,14,7,0,57,63,3,18,
@@ -1434,15 +1421,15 @@ public partial class miniPythonParser : Parser {
 		1,0,0,0,165,35,1,0,0,0,166,171,3,26,13,0,167,168,5,26,0,0,168,170,3,26,
 		13,0,169,167,1,0,0,0,170,173,1,0,0,0,171,169,1,0,0,0,171,172,1,0,0,0,172,
 		175,1,0,0,0,173,171,1,0,0,0,174,166,1,0,0,0,174,175,1,0,0,0,175,37,1,0,
-		0,0,176,180,5,27,0,0,177,181,3,26,13,0,178,179,5,15,0,0,179,181,3,26,13,
-		0,180,177,1,0,0,0,180,178,1,0,0,0,181,182,1,0,0,0,182,183,5,28,0,0,183,
-		197,1,0,0,0,184,197,3,40,20,0,185,187,7,1,0,0,186,185,1,0,0,0,186,187,
-		1,0,0,0,187,188,1,0,0,0,188,197,7,3,0,0,189,194,5,38,0,0,190,191,5,27,
-		0,0,191,192,3,36,18,0,192,193,5,28,0,0,193,195,1,0,0,0,194,190,1,0,0,0,
-		194,195,1,0,0,0,195,197,1,0,0,0,196,176,1,0,0,0,196,184,1,0,0,0,196,186,
-		1,0,0,0,196,189,1,0,0,0,197,39,1,0,0,0,198,199,5,29,0,0,199,200,3,36,18,
-		0,200,201,5,30,0,0,201,41,1,0,0,0,18,45,52,62,78,81,92,126,132,138,148,
-		156,164,171,174,180,186,194,196
+		0,0,176,177,5,27,0,0,177,178,3,26,13,0,178,179,5,28,0,0,179,198,1,0,0,
+		0,180,181,5,15,0,0,181,182,5,27,0,0,182,183,3,26,13,0,183,184,5,28,0,0,
+		184,198,1,0,0,0,185,198,3,40,20,0,186,188,7,1,0,0,187,186,1,0,0,0,187,
+		188,1,0,0,0,188,189,1,0,0,0,189,198,7,3,0,0,190,195,5,38,0,0,191,192,5,
+		27,0,0,192,193,3,36,18,0,193,194,5,28,0,0,194,196,1,0,0,0,195,191,1,0,
+		0,0,195,196,1,0,0,0,196,198,1,0,0,0,197,176,1,0,0,0,197,180,1,0,0,0,197,
+		185,1,0,0,0,197,187,1,0,0,0,197,190,1,0,0,0,198,39,1,0,0,0,199,200,5,29,
+		0,0,200,201,3,36,18,0,201,202,5,30,0,0,202,41,1,0,0,0,17,45,52,62,78,81,
+		92,126,132,138,148,156,164,171,174,187,195,197
 	};
 
 	public static readonly ATN _ATN =

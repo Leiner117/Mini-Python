@@ -8,11 +8,9 @@ using compilador;
     private LinkedList<IToken> tokenQueue = new LinkedList<IToken>();
     private Stack<int> indentStack = new Stack<int>();
     private IToken initialIndentToken = null;
-
     private int getSavedIndent() {
         return indentStack.Count == 0 ? 0 : indentStack.Peek();
     }
-
     private CommonToken createToken(int type, string text, IToken next) {
         CommonToken token = new CommonToken(type, text);
         if (initialIndentToken != null) {
@@ -23,23 +21,19 @@ using compilador;
         }
         return token;
     }
-
     public override IToken NextToken() {
         if (tokenQueue.Count > 0) {
             var firstToken = tokenQueue.First.Value;
             tokenQueue.RemoveFirst();
             return firstToken;
         }
-
         IToken next = base.NextToken();
         if (pendingDent && initialIndentToken == null && next.Type != NEWLINE) {
             initialIndentToken = next;
         }
-
         if (next == null || next.Channel == Hidden || next.Type == NEWLINE) {
             return next;
         }
-
         if (next.Type == TokenConstants.EOF) {
             indentCount = 0;
             if (!pendingDent) {
@@ -47,11 +41,9 @@ using compilador;
                 tokenQueue.AddLast(createToken(NEWLINE, "NEWLINE", next));
             }
         }
-
         // Ajustar las diferencias entre el conteo actual de indentaciones y el último guardado
         while (indentCount != getSavedIndent()) {
             int difference = Math.Abs(indentCount - getSavedIndent());
-            Console.WriteLine(getSavedIndent());
             if (difference == 0|| difference == 4 || indentStack.Contains(difference) || difference == getSavedIndent()) {
                 if (indentCount > getSavedIndent()) {
                     indentStack.Push(indentCount);
@@ -60,14 +52,11 @@ using compilador;
                     indentStack.Pop();
                     tokenQueue.AddLast(createToken(DEDENT, "DEDENT", next));
                 }
-            }
-            else
+            }else
             {
-                throw new InvalidOperationException($"Indentation error at line {next.Line}: Indentation levels must differ by exactly 4 spaces.");
-            }
-                        
+                return next;
+            }               
         }
-
         pendingDent = false;
         tokenQueue.AddLast(next);
         var dequeuedToken = tokenQueue.First.Value;
@@ -75,22 +64,18 @@ using compilador;
         return dequeuedToken;
     }
 }
-
 NEWLINE : ('\r'? '\n' | '\r') {
     if (pendingDent) { Channel = Hidden; }
     pendingDent = true;
     indentCount = 0;
     initialIndentToken = null;
 } ;
-
 WS : [ \t]+ {
     Channel = Hidden;
     if (pendingDent) { indentCount += Text.Length; }
 } ;
-
 INDENT : 'INDENT' { Channel = Hidden; }; 
 DEDENT : 'DEDENT' { Channel = Hidden; };
-
 BlockComment : '´´´' .*? '´´´' -> channel(HIDDEN) ;
 LineComment : '#' ~[\r\n]* -> channel(HIDDEN) ;
 

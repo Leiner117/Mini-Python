@@ -23,10 +23,10 @@ namespace Mini_Python
 
             // Establece los colores
 
-            Color backColor = Color.FromArgb(255, 30, 30, 30); // Color de fondo de la pestaña
-            Color foreColor = Color.WhiteSmoke;     // Color del texto de la pestaña
+            Color backColor = Color.FromArgb(255, 30, 30, 30); // Color de fondo de la pestaï¿½a
+            Color foreColor = Color.WhiteSmoke;     // Color del texto de la pestaï¿½a
 
-            // Dibuja el fondo de la pestaña
+            // Dibuja el fondo de la pestaï¿½a
             using (SolidBrush brush = new SolidBrush(backColor))
             {
                 e.Graphics.FillRectangle(brush, tabRect);
@@ -34,7 +34,7 @@ namespace Mini_Python
 
             e.Graphics.DrawRectangle(Pens.Transparent, tabRect);
 
-            // Dibuja el texto de la pestaña
+            // Dibuja el texto de la pestaï¿½a
             TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font, tabRect, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
         }
 
@@ -100,7 +100,7 @@ namespace Mini_Python
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Obtener la pestaña actual
+            // Obtener la pestaï¿½a actual
             TabPage selectedTab = tabControl1.SelectedTab;
 
             if (selectedTab != null)
@@ -121,8 +121,8 @@ namespace Mini_Python
                         {
                             string savePath = saveFileDialog.FileName;
                             File.WriteAllText(savePath, richTextBox.Text);
-                            selectedTab.Tag = savePath; // Ahora la pestaña está asociada a un archivo guardado
-                            selectedTab.Text = Path.GetFileName(savePath); // Actualizar el nombre de la pestaña
+                            selectedTab.Tag = savePath; // Ahora la pestaï¿½a estï¿½ asociada a un archivo guardado
+                            selectedTab.Text = Path.GetFileName(savePath); // Actualizar el nombre de la pestaï¿½a
                         }
                     }
                     else // Archivo existente
@@ -136,25 +136,25 @@ namespace Mini_Python
 
         private void AddTab(object sender, EventArgs e)
         {
-            // Crear una nueva pestaña
-            TabPage newTabPage = new TabPage("Nueva Pestaña");
+            // Crear una nueva pestaï¿½a
+            TabPage newTabPage = new TabPage("Nueva Pestaï¿½a");
 
             // Crear un nuevo RichTextBox
             RichTextBox richTextBox = new RichTextBox
             {
-                Dock = DockStyle.Fill // Para que el RichTextBox ocupe todo el espacio de la pestaña
+                Dock = DockStyle.Fill // Para que el RichTextBox ocupe todo el espacio de la pestaï¿½a
             };
 
             // Asignar el evento SelectionChanged al RichTextBox
             richTextBox.SelectionChanged += RichTextBox_SelectionChanged;
 
-            // Agregar el RichTextBox a la nueva pestaña
+            // Agregar el RichTextBox a la nueva pestaï¿½a
             newTabPage.Controls.Add(richTextBox);
 
-            // Agregar la nueva pestaña al TabControl
+            // Agregar la nueva pestaï¿½a al TabControl
             tabControl1.TabPages.Add(newTabPage);
 
-            // Cambiar a la nueva pestaña automáticamente
+            // Cambiar a la nueva pestaï¿½a automï¿½ticamente
             tabControl1.SelectedTab = newTabPage;
         }
 
@@ -170,7 +170,7 @@ namespace Mini_Python
 
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Solicitar el nombre de la nueva pestaña al usuario
+            // Solicitar el nombre de la nueva pestaï¿½a al usuario
             string tabName = PromptForTabName();
 
             if (!string.IsNullOrEmpty(tabName))
@@ -181,7 +181,7 @@ namespace Mini_Python
 
         private string PromptForTabName()
         {
-            // Crear un cuadro de diálogo simple para solicitar el nombre de la pestaña
+            // Crear un cuadro de diï¿½logo simple para solicitar el nombre de la pestaï¿½a
             using (Form prompt = new Form())
             {
                 prompt.Width = 300;
@@ -251,7 +251,7 @@ namespace Mini_Python
                 {
                     int selectionStart = richTextBox.SelectionStart;
                     richTextBox.Text = richTextBox.Text.Insert(selectionStart, "\t");
-                    richTextBox.SelectionStart = selectionStart + 1; // Mueve el cursor después del tabulador
+                    richTextBox.SelectionStart = selectionStart + 1; // Mueve el cursor despuï¿½s del tabulador
                 }
             }
         }
@@ -279,14 +279,14 @@ namespace Mini_Python
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            // Asegurarse de que hay una pestaña seleccionada
+            // Asegurarse de que hay una pestaï¿½a seleccionada
             if (tabControl1.SelectedTab != null)
             {
-                // Obtiene la pestaña seleccionada
+                // Obtiene la pestaï¿½a seleccionada
                 TabPage selectedTab = tabControl1.SelectedTab;
 
-                // Encuentra el RichTextBox dentro de la pestaña seleccionada
-                // Asumimos que el RichTextBox es el primer (y único) control en la pestaña
+                // Encuentra el RichTextBox dentro de la pestaï¿½a seleccionada
+                // Asumimos que el RichTextBox es el primer (y ï¿½nico) control en la pestaï¿½a
                 RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
 
                 if (richTextBox != null)
@@ -294,22 +294,22 @@ namespace Mini_Python
                     // Obtiene el texto del RichTextBox
                     string richText = richTextBox.Text;
 
-                    Compilador.Parse(richText);
+                    Compilador.myListenerError(richText);
                 }
                 else
                 {
-                    MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
+                    MessageBox.Show("No se encontrï¿½ un RichTextBox en la pestaï¿½a seleccionada.");
                 }
             }
             else
             {
-                MessageBox.Show("No hay ninguna pestaña seleccionada.");
+                MessageBox.Show("No hay ninguna pestaï¿½a seleccionada.");
             }
         }
 
         private void abrirArchivoLocalToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Obtener el último directorio abierto desde la configuración
+            // Obtener el ï¿½ltimo directorio abierto desde la configuraciï¿½n
             string lastOpenedDirectory = Properties.Settings.Default.LastOpenedDirectory;
 
             OpenFileDialog buscar = new OpenFileDialog
@@ -323,36 +323,36 @@ namespace Mini_Python
             {
                 string filePath = buscar.FileName;
 
-                // Actualizar el último directorio abierto en la configuración
+                // Actualizar el ï¿½ltimo directorio abierto en la configuraciï¿½n
                 Properties.Settings.Default.LastOpenedDirectory = Path.GetDirectoryName(filePath);
                 Properties.Settings.Default.Save();
 
-                // Verificar que el archivo tenga la extensión .py
+                // Verificar que el archivo tenga la extensiï¿½n .py
                 if (Path.GetExtension(filePath).ToLower() != ".py")
                 {
                     MessageBox.Show("Solo se pueden abrir archivos .py", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                // Verificar si el archivo ya está abierto en alguna pestaña
+                // Verificar si el archivo ya estï¿½ abierto en alguna pestaï¿½a
                 foreach (TabPage tab in tabControl1.TabPages)
                 {
                     if (tab.Tag != null && tab.Tag.ToString() == filePath)
                     {
-                        // El archivo ya está abierto, seleccionar la pestaña y salir
+                        // El archivo ya estï¿½ abierto, seleccionar la pestaï¿½a y salir
                         tabControl1.SelectedTab = tab;
                         return;
                     }
                 }
 
-                // Si no se encuentra el archivo abierto, crear una nueva pestaña
+                // Si no se encuentra el archivo abierto, crear una nueva pestaï¿½a
                 AddTabWithCustomName(Path.GetFileName(filePath), filePath);
             }
         }
 
         private void abrirArchivoExternoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Crear un cuadro de diálogo simple para solicitar el enlace
+            // Crear un cuadro de diï¿½logo simple para solicitar el enlace
             using (Form prompt = new Form())
             {
                 prompt.Width = 400;

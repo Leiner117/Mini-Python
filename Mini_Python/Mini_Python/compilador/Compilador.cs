@@ -11,7 +11,7 @@ public class Compilador
         MyErrorListener myListener = new MyErrorListener();
         try
         {
-            input = CharStreams.fromPath(text);
+            input = CharStreams.fromString(text);
             var lexer = new miniPythonLexer(input);
             var tokens = new CommonTokenStream(lexer);
             var parser = new miniPythonParser(tokens);
@@ -22,6 +22,7 @@ public class Compilador
             parser.AddErrorListener(myListener);
             try
             {
+                IParseTree tree = parser.program();
                 // Llama al punto de entrada principal de la gramática (en este caso, 'program')
                 //IParseTree tree = parser.program();
                 if (myListener.HasErrors())

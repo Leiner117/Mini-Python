@@ -245,14 +245,11 @@ namespace Mini_Python
         {
             if (e.KeyCode == Keys.Tab)
             {
-                e.SuppressKeyPress = true; // Evita que el Tab cambie el enfoque
                 RichTextBox richTextBox = sender as RichTextBox;
-                if (richTextBox != null)
-                {
-                    int selectionStart = richTextBox.SelectionStart;
-                    richTextBox.Text = richTextBox.Text.Insert(selectionStart, "\t");
-                    richTextBox.SelectionStart = selectionStart + 1; // Mueve el cursor despu�s del tabulador
-                }
+                int selectionStart = richTextBox.SelectionStart;
+                richTextBox.Text = richTextBox.Text.Insert(selectionStart, "    "); // Insertar 4 espacios
+                richTextBox.SelectionStart = selectionStart + 4; // Mover el cursor 4 posiciones adelante
+                e.SuppressKeyPress = true; // Evitar que el evento se propague
             }
         }
 

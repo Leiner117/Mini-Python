@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Net;
 using compilador;
 namespace Mini_Python
 {
@@ -73,47 +74,9 @@ namespace Mini_Python
         }
 
         private void abirToolStripMenuItem_Click(object sender, EventArgs e)
-{
-    // Obtener el último directorio abierto desde la configuración
-    string lastOpenedDirectory = Properties.Settings.Default.LastOpenedDirectory;
-
-    OpenFileDialog buscar = new OpenFileDialog
-    {
-        Filter = "Archivos Python (*.py)|*.py",
-        Title = "Abrir archivo Python",
-        InitialDirectory = string.IsNullOrEmpty(lastOpenedDirectory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : lastOpenedDirectory
-    };
-
-    if (buscar.ShowDialog() == DialogResult.OK)
-    {
-        string filePath = buscar.FileName;
-
-        // Actualizar el último directorio abierto en la configuración
-        Properties.Settings.Default.LastOpenedDirectory = Path.GetDirectoryName(filePath);
-        Properties.Settings.Default.Save();
-
-        // Verificar que el archivo tenga la extensión .py
-        if (Path.GetExtension(filePath).ToLower() != ".py")
         {
-            MessageBox.Show("Solo se pueden abrir archivos .py", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
 
-        // Verificar si el archivo ya está abierto en alguna pestaña
-        foreach (TabPage tab in tabControl1.TabPages)
-        {
-            if (tab.Tag != null && tab.Tag.ToString() == filePath)
-            {
-                // El archivo ya está abierto, seleccionar la pestaña y salir
-                tabControl1.SelectedTab = tab;
-                return;
-            }
         }
-
-        // Si no se encuentra el archivo abierto, crear una nueva pestaña
-        AddTabWithCustomName(Path.GetFileName(filePath), filePath);
-    }
-}
 
 
 
@@ -133,7 +96,7 @@ namespace Mini_Python
 
         }
 
-  
+
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -202,7 +165,7 @@ namespace Mini_Python
 
             int cursorPosition = rtb.SelectionStart;
             var index = rtb.GetLineFromCharIndex(cursorPosition);
-            label1.Text = ("Fila: " + index.ToString());
+            label1.Text = ("Fila: " + (index+1).ToString());
         }
 
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -343,5 +306,114 @@ namespace Mini_Python
                 MessageBox.Show("No hay ninguna pestaña seleccionada.");
             }
         }
+
+        private void abrirArchivoLocalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Obtener el último directorio abierto desde la configuración
+            string lastOpenedDirectory = Properties.Settings.Default.LastOpenedDirectory;
+
+            OpenFileDialog buscar = new OpenFileDialog
+            {
+                Filter = "Archivos Python (*.py)|*.py",
+                Title = "Abrir archivo Python",
+                InitialDirectory = string.IsNullOrEmpty(lastOpenedDirectory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : lastOpenedDirectory
+            };
+
+            if (buscar.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = buscar.FileName;
+
+                // Actualizar el último directorio abierto en la configuración
+                Properties.Settings.Default.LastOpenedDirectory = Path.GetDirectoryName(filePath);
+                Properties.Settings.Default.Save();
+
+                // Verificar que el archivo tenga la extensión .py
+                if (Path.GetExtension(filePath).ToLower() != ".py")
+                {
+                    MessageBox.Show("Solo se pueden abrir archivos .py", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                // Verificar si el archivo ya está abierto en alguna pestaña
+                foreach (TabPage tab in tabControl1.TabPages)
+                {
+                    if (tab.Tag != null && tab.Tag.ToString() == filePath)
+                    {
+                        // El archivo ya está abierto, seleccionar la pestaña y salir
+                        tabControl1.SelectedTab = tab;
+                        return;
+                    }
+                }
+
+                // Si no se encuentra el archivo abierto, crear una nueva pestaña
+                AddTabWithCustomName(Path.GetFileName(filePath), filePath);
+            }
+        }
+
+        private void abrirArchivoExternoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // Crear un cuadro de diálogo simple para solicitar el enlace
+            using (Form prompt = new Form())
+            {
+                prompt.Width = 400;
+                prompt.Height = 150;
+                prompt.Text = "Abrir archivo externo";
+
+                Label textLabel = new Label() { Left = 20, Top = 20, Text = "Pegar enlace:" };
+                TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 340 };
+                Button confirmation = new Button() { Text = "Aceptar", Left = 280, Width = 80, Top = 80, DialogResult = DialogResult.OK };
+
+                confirmation.Click += (sender, e) => { prompt.Close(); };
+
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(textBox);
+                prompt.Controls.Add(confirmation);
+                prompt.AcceptButton = confirmation;
+
+                if (prompt.ShowDialog() == DialogResult.OK)
+                {
+                    string url = textBox.Text;
+
+                    if (url.EndsWith(".py"))
+                    {
+                        try
+                        {
+                            string rawUrl = ConvertToRawGitHubUrl(url);
+                            using (WebClient client = new WebClient())
+                            {
+                                string fileContent = client.DownloadString(rawUrl);
+                                string fileName = Path.GetFileName(url);
+                                AddTabWithCustomName(fileName, isNewFile: false);
+                                RichTextBox richTextBox = tabControl1.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                                if (richTextBox != null)
+                                {
+                                    richTextBox.Text = fileContent;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Error al descargar el archivo: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("El enlace no apunta a un archivo .py", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        private string ConvertToRawGitHubUrl(string url)
+        {
+            if (url.Contains("github.com"))
+            {
+                url = url.Replace("github.com", "raw.githubusercontent.com");
+                url = url.Replace("/blob/", "/");
+            }
+            return url;
+        }
+
+
     }
 }

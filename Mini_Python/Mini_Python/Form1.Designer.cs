@@ -32,6 +32,8 @@
             menuStrip1 = new MenuStrip();
             archivoToolStripMenuItem = new ToolStripMenuItem();
             abirToolStripMenuItem = new ToolStripMenuItem();
+            abrirArchivoExternoToolStripMenuItem = new ToolStripMenuItem();
+            abrirArchivoLocalToolStripMenuItem = new ToolStripMenuItem();
             nuevoToolStripMenuItem = new ToolStripMenuItem();
             guardarToolStripMenuItem = new ToolStripMenuItem();
             tabControl1 = new TabControl();
@@ -64,18 +66,37 @@
             // abirToolStripMenuItem
             // 
             abirToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
+            abirToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abrirArchivoExternoToolStripMenuItem, abrirArchivoLocalToolStripMenuItem });
             abirToolStripMenuItem.ForeColor = Color.WhiteSmoke;
             abirToolStripMenuItem.Name = "abirToolStripMenuItem";
-            abirToolStripMenuItem.Size = new Size(116, 22);
+            abirToolStripMenuItem.Size = new Size(180, 22);
             abirToolStripMenuItem.Text = "Abrir";
             abirToolStripMenuItem.Click += abirToolStripMenuItem_Click;
+            // 
+            // abrirArchivoExternoToolStripMenuItem
+            // 
+            abrirArchivoExternoToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
+            abrirArchivoExternoToolStripMenuItem.ForeColor = Color.WhiteSmoke;
+            abrirArchivoExternoToolStripMenuItem.Name = "abrirArchivoExternoToolStripMenuItem";
+            abrirArchivoExternoToolStripMenuItem.Size = new Size(185, 22);
+            abrirArchivoExternoToolStripMenuItem.Text = "Abrir archivo externo";
+            abrirArchivoExternoToolStripMenuItem.Click += abrirArchivoExternoToolStripMenuItem_Click;
+            // 
+            // abrirArchivoLocalToolStripMenuItem
+            // 
+            abrirArchivoLocalToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
+            abrirArchivoLocalToolStripMenuItem.ForeColor = Color.WhiteSmoke;
+            abrirArchivoLocalToolStripMenuItem.Name = "abrirArchivoLocalToolStripMenuItem";
+            abrirArchivoLocalToolStripMenuItem.Size = new Size(185, 22);
+            abrirArchivoLocalToolStripMenuItem.Text = "Abrir archivo local";
+            abrirArchivoLocalToolStripMenuItem.Click += abrirArchivoLocalToolStripMenuItem_Click;
             // 
             // nuevoToolStripMenuItem
             // 
             nuevoToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
             nuevoToolStripMenuItem.ForeColor = Color.WhiteSmoke;
             nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
-            nuevoToolStripMenuItem.Size = new Size(116, 22);
+            nuevoToolStripMenuItem.Size = new Size(180, 22);
             nuevoToolStripMenuItem.Text = "Nuevo";
             nuevoToolStripMenuItem.Click += nuevoToolStripMenuItem_Click;
             // 
@@ -84,7 +105,7 @@
             guardarToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
             guardarToolStripMenuItem.ForeColor = Color.WhiteSmoke;
             guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            guardarToolStripMenuItem.Size = new Size(116, 22);
+            guardarToolStripMenuItem.Size = new Size(180, 22);
             guardarToolStripMenuItem.Text = "Guardar";
             guardarToolStripMenuItem.Click += guardarToolStripMenuItem_Click;
             // 
@@ -162,5 +183,7 @@
         private Label label1;
         private ToolStripMenuItem guardarToolStripMenuItem;
         private FontAwesome.Sharp.IconButton iconButton1;
+        private ToolStripMenuItem abrirArchivoExternoToolStripMenuItem;
+        private ToolStripMenuItem abrirArchivoLocalToolStripMenuItem;
     }
 }

@@ -195,8 +195,6 @@ namespace Mini_Python
             }
         }
 
-
-
         private void iconButton1_Click(object sender, EventArgs e)
         {
             // Asegurarse de que hay una pesta�a seleccionada
@@ -333,6 +331,27 @@ namespace Mini_Python
             }
             return url;
         }
+
+        private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void correrToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {

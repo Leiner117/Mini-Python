@@ -1,7 +1,3 @@
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using compilador;
-using parser.generated;
 
 namespace Mini_Python
 {

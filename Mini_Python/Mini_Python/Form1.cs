@@ -293,7 +293,7 @@ namespace Mini_Python
                     // Obtiene el texto del RichTextBox
                     string richText = richTextBox.Text;
 
-                    Compilador.myListenerError(richText);
+                    Compilador.compilador(richText);
                 }
                 else
                 {

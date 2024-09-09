@@ -5,7 +5,7 @@ using parser.generated;
 
 public class Compilador
 {
-    public static MyErrorListener myListenerError (string text)
+    public static MyErrorListener compilador (string text)
     {
         ICharStream input = null;
         MyErrorListener myListener = new MyErrorListener();

@@ -8,6 +8,7 @@ public class Compilador
 {
     public static IParseTree Parse(string text)
     {
+        Console.WriteLine(text);
         // Crea un input stream desde el archivo de prueba
         ICharStream input = CharStreams.fromString(text);
         // Crea un lexer para el input

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using compilador;
 namespace Mini_Python
 {
     public partial class Form1 : Form
@@ -291,7 +292,32 @@ namespace Mini_Python
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
+            // Asegurarse de que hay una pestaña seleccionada
+            if (tabControl1.SelectedTab != null)
+            {
+                // Obtiene la pestaña seleccionada
+                TabPage selectedTab = tabControl1.SelectedTab;
 
+                // Encuentra el RichTextBox dentro de la pestaña seleccionada
+                // Asumimos que el RichTextBox es el primer (y único) control en la pestaña
+                RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+
+                if (richTextBox != null)
+                {
+                    // Obtiene el texto del RichTextBox
+                    string richText = richTextBox.Text;
+
+                    Compilador.Parse(richText);
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("No hay ninguna pestaña seleccionada.");
+            }
         }
     }
 }

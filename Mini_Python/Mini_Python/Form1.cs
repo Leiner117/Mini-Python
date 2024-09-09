@@ -73,39 +73,47 @@ namespace Mini_Python
         }
 
         private void abirToolStripMenuItem_Click(object sender, EventArgs e)
+{
+    // Obtener el último directorio abierto desde la configuración
+    string lastOpenedDirectory = Properties.Settings.Default.LastOpenedDirectory;
+
+    OpenFileDialog buscar = new OpenFileDialog
+    {
+        Filter = "Archivos Python (*.py)|*.py",
+        Title = "Abrir archivo Python",
+        InitialDirectory = string.IsNullOrEmpty(lastOpenedDirectory) ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) : lastOpenedDirectory
+    };
+
+    if (buscar.ShowDialog() == DialogResult.OK)
+    {
+        string filePath = buscar.FileName;
+
+        // Actualizar el último directorio abierto en la configuración
+        Properties.Settings.Default.LastOpenedDirectory = Path.GetDirectoryName(filePath);
+        Properties.Settings.Default.Save();
+
+        // Verificar que el archivo tenga la extensión .py
+        if (Path.GetExtension(filePath).ToLower() != ".py")
         {
-            OpenFileDialog buscar = new OpenFileDialog
+            MessageBox.Show("Solo se pueden abrir archivos .py", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        // Verificar si el archivo ya está abierto en alguna pestaña
+        foreach (TabPage tab in tabControl1.TabPages)
+        {
+            if (tab.Tag != null && tab.Tag.ToString() == filePath)
             {
-                Filter = "Archivos Python (*.py)|*.py",
-                Title = "Abrir archivo Python"
-            };
-
-            if (buscar.ShowDialog() == DialogResult.OK)
-            {
-                string filePath = buscar.FileName;
-
-                // Verificar que el archivo tenga la extensión .py
-                if (Path.GetExtension(filePath).ToLower() != ".py")
-                {
-                    MessageBox.Show("Solo se pueden abrir archivos .py", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
-                // Verificar si el archivo ya está abierto en alguna pestaña
-                foreach (TabPage tab in tabControl1.TabPages)
-                {
-                    if (tab.Tag != null && tab.Tag.ToString() == filePath)
-                    {
-                        // El archivo ya está abierto, seleccionar la pestaña y salir
-                        tabControl1.SelectedTab = tab;
-                        return;
-                    }
-                }
-
-                // Si no se encuentra el archivo abierto, crear una nueva pestaña
-                AddTabWithCustomName(Path.GetFileName(filePath), filePath);
+                // El archivo ya está abierto, seleccionar la pestaña y salir
+                tabControl1.SelectedTab = tab;
+                return;
             }
         }
+
+        // Si no se encuentra el archivo abierto, crear una nueva pestaña
+        AddTabWithCustomName(Path.GetFileName(filePath), filePath);
+    }
+}
 
 
 
@@ -125,14 +133,7 @@ namespace Mini_Python
 
         }
 
-        private void richTextBox1_SelectionChanged(object sender, EventArgs e)
-        {
-            var rtb = sender as System.Windows.Forms.RichTextBox;
-
-            int cursorPosition = rtb.SelectionStart;
-            var index = rtb.GetLineFromCharIndex(cursorPosition);
-            label1.Text = ("Fila: " + index.ToString());
-        }
+  
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -250,8 +251,10 @@ namespace Mini_Python
                 ForeColor = Color.White // Establecer el color del texto a blanco
             };
 
+            // Suscribir los eventos PreviewKeyDown y KeyDown
+            richTextBox.PreviewKeyDown += RichTextBox_PreviewKeyDown;
+            richTextBox.KeyDown += RichTextBox_KeyDown;
             richTextBox.SelectionChanged += RichTextBox_SelectionChanged;
-
             newTabPage.Controls.Add(richTextBox);
 
             // Si es un archivo nuevo, Tag es null; si es un archivo existente, Tag contiene la ruta
@@ -267,7 +270,28 @@ namespace Mini_Python
         }
 
 
+        private void RichTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                e.IsInputKey = true;
+            }
+        }
 
+        private void RichTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                e.SuppressKeyPress = true; // Evita que el Tab cambie el enfoque
+                RichTextBox richTextBox = sender as RichTextBox;
+                if (richTextBox != null)
+                {
+                    int selectionStart = richTextBox.SelectionStart;
+                    richTextBox.Text = richTextBox.Text.Insert(selectionStart, "\t");
+                    richTextBox.SelectionStart = selectionStart + 1; // Mueve el cursor después del tabulador
+                }
+            }
+        }
 
 
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)

@@ -40,7 +40,7 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             label1 = new Label();
             iconButton1 = new FontAwesome.Sharp.IconButton();
-            label2 = new Label();
+            richTextBox1 = new RichTextBox();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -152,14 +152,21 @@
             iconButton1.UseVisualStyleBackColor = false;
             iconButton1.Click += iconButton1_Click;
             // 
-            // label2
+            // richTextBox1
             // 
-            label2.AutoSize = true;
-            label2.Location = new Point(151, 750);
-            label2.Name = "label2";
-            label2.Size = new Size(38, 15);
-            label2.TabIndex = 7;
-            label2.Text = "label2";
+            richTextBox1.BackColor = Color.FromArgb(30, 30, 30);
+            richTextBox1.BorderStyle = BorderStyle.None;
+            richTextBox1.DetectUrls = false;
+            richTextBox1.ForeColor = Color.WhiteSmoke;
+            richTextBox1.HideSelection = false;
+            richTextBox1.ImeMode = ImeMode.Disable;
+            richTextBox1.Location = new Point(12, 698);
+            richTextBox1.Name = "richTextBox1";
+            richTextBox1.ReadOnly = true;
+            richTextBox1.Size = new Size(508, 173);
+            richTextBox1.TabIndex = 7;
+            richTextBox1.Text = "";
+            richTextBox1.Visible = false;
             // 
             // Form1
             // 
@@ -167,8 +174,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(1636, 1061);
-            Controls.Add(label2);
+            ClientSize = new Size(1636, 883);
+            Controls.Add(richTextBox1);
             Controls.Add(iconButton1);
             Controls.Add(label1);
             Controls.Add(tabControl1);
@@ -196,6 +203,6 @@
         private FontAwesome.Sharp.IconButton iconButton1;
         private ToolStripMenuItem abrirArchivoExternoToolStripMenuItem;
         private ToolStripMenuItem abrirArchivoLocalToolStripMenuItem;
-        private Label label2;
+        private RichTextBox richTextBox1;
     }
 }

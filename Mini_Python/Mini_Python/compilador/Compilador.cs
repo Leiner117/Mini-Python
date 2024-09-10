@@ -32,7 +32,6 @@ public class Compilador
                 {
                     Console.WriteLine("Compilation failed:");
                     Console.WriteLine(myListener);
-                    form.ErrorConsole(myListener);
                 }else{
                     Console.WriteLine(myListener);
                     Console.WriteLine("Compilation succeeded");
@@ -40,12 +39,10 @@ public class Compilador
             }catch (RecognitionException e){
                 Console.WriteLine("Error!!!!");
                 Console.WriteLine(e.Message);
-                form.ErrorConsole(myListener);
             }
         }catch (IOException e) {
             Console.WriteLine("No hay un archivo.");
             Console.WriteLine(e.Message);
-            form.ErrorConsole(myListener);
         }
         return myListener;    
     }

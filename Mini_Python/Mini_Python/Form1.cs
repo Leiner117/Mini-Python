@@ -13,6 +13,9 @@ namespace Mini_Python
             tabControl1.ItemSize = new Size(100, 30);
             tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
+
+            richTextBox1.MouseClick += richTextBox1_MouseClick;
+
         }
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
@@ -189,7 +192,7 @@ namespace Mini_Python
                     // Obtiene el texto del RichTextBox
                     string richText = richTextBox.Text;
 
-                    Compilador.compilador(richText);
+                    ErrorConsole(Compilador.compilador(richText));
                 }
                 else
                 {
@@ -311,13 +314,119 @@ namespace Mini_Python
 
         public void ErrorConsole(MyErrorListener error)
         {
+            richTextBox1.Clear();
+            richTextBox1.Visible = true;
 
-            label2.Text = "Hola mundo";
-            MessageBox.Show(error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            // Suponiendo que error.ToString() devuelve una cadena con múltiples errores separados por saltos de línea
+            string[] errorLines = error.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
+            foreach (string line in errorLines)
+            {
+                // Añadir la línea al RichTextBox
+                int startIndex = richTextBox1.TextLength;
+                richTextBox1.AppendText(line + Environment.NewLine);
+                int endIndex = richTextBox1.TextLength;
 
+                // Buscar el patrón "line X:Y"
+                var match = System.Text.RegularExpressions.Regex.Match(line, @"line (\d+:\d+)");
+                if (match.Success)
+                {
+                    // Subrayar solo el número de línea y columna
+                    int numberStartIndex = startIndex + match.Groups[1].Index;
+                    int numberLength = match.Groups[1].Length;
 
+                    richTextBox1.Select(numberStartIndex, numberLength);
+                    richTextBox1.SelectionColor = Color.Blue;
+                    richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Underline);
+
+                    // Añadir un enlace al número de línea y columna
+                    richTextBox1.SelectionStart = numberStartIndex;
+                    richTextBox1.SelectionLength = numberLength;
+                    richTextBox1.SetSelectionLink(true);
+                }
+            }
+
+            // Deseleccionar el texto
+            richTextBox1.Select(0, 0);
         }
+
+
+
+        private void richTextBox1_MouseClick(object sender, MouseEventArgs e)
+        {
+            RichTextBox richTextBox = sender as RichTextBox;
+            if (richTextBox == null)
+            {
+                Debug.WriteLine("richTextBox es null");
+                return;
+            }
+
+            int index = richTextBox.GetCharIndexFromPosition(e.Location);
+            richTextBox.Select(index, 1);
+
+            Debug.WriteLine($"Índice de carácter seleccionado: {index}");
+
+            if (richTextBox.SelectionFont != null && richTextBox.SelectionFont.Underline)
+            {
+                string text = richTextBox.Text;
+                var match = System.Text.RegularExpressions.Regex.Match(text, @"(\d+:\d+)", System.Text.RegularExpressions.RegexOptions.RightToLeft);
+
+                while (match.Success)
+                {
+                    int matchStart = match.Index;
+                    int matchEnd = match.Index + match.Length;
+
+                    if (index >= matchStart && index < matchEnd)
+                    {
+                        richTextBox.Select(matchStart, match.Length);
+                        string selectedText = richTextBox.SelectedText;
+                        Debug.WriteLine($"Texto seleccionado: {selectedText}");
+
+                        var lineColumnMatch = System.Text.RegularExpressions.Regex.Match(selectedText, @"(\d+):(\d+)");
+                        if (lineColumnMatch.Success)
+                        {
+                            int lineNumber = int.Parse(lineColumnMatch.Groups[1].Value);
+                            int columnNumber = int.Parse(lineColumnMatch.Groups[2].Value);
+
+                            Debug.WriteLine($"Número de línea: {lineNumber}, Número de columna: {columnNumber}");
+
+                            // Redirigir el cursor al RichTextBox en la pestaña seleccionada
+                            TabPage selectedTab = tabControl1.SelectedTab;
+                            RichTextBox targetRichTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                            if (targetRichTextBox != null)
+                            {
+                                int lineIndex = targetRichTextBox.GetFirstCharIndexFromLine(lineNumber - 1);
+                                targetRichTextBox.Select(lineIndex + columnNumber - 1, 0);
+                                targetRichTextBox.Focus();
+
+                                Debug.WriteLine($"Cursor redirigido a la línea {lineNumber}, columna {columnNumber} en el RichTextBox de la pestaña seleccionada.");
+                            }
+                            else
+                            {
+                                Debug.WriteLine("No se encontró un RichTextBox en la pestaña seleccionada.");
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("No se encontró un patrón de línea y columna en el texto seleccionado.");
+                        }
+                        return;
+                    }
+                    match = match.NextMatch();
+                }
+            }
+            else
+            {
+                Debug.WriteLine("El texto seleccionado no está subrayado.");
+            }
+        }
+
+
+
+
+
+
+
 
 
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)

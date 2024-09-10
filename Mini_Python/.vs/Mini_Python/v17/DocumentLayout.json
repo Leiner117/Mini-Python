@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|solutionrelative:mini_python\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|c:\\users\\steve\\onedrive\\documentos\\github\\mini-python\\mini_python\\mini_python\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|solutionrelative:mini_python\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|c:\\users\\steve\\onedrive\\documentos\\github\\mini-python\\mini_python\\mini_python\\compilador\\compilador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|solutionrelative:mini_python\\compilador\\compilador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|c:\\users\\steve\\onedrive\\documentos\\github\\mini-python\\mini_python\\mini_python\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|solutionrelative:mini_python\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|c:\\users\\steve\\onedrive\\documentos\\github\\mini-python\\mini_python\\mini_python\\compilador\\compilador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|solutionrelative:mini_python\\compilador\\compilador.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|c:\\users\\steve\\onedrive\\documentos\\github\\mini-python\\mini_python\\mini_python\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E20647B-B4F6-4E7C-9D52-6EEABE8977AB}|Mini_Python\\Mini_Python.csproj|solutionrelative:mini_python\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,13 +42,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Compilador.cs",
               "DocumentMoniker": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\compilador\\Compilador.cs",
               "RelativeDocumentMoniker": "Mini_Python\\compilador\\Compilador.cs",
               "ToolTip": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\compilador\\Compilador.cs",
               "RelativeToolTip": "Mini_Python\\compilador\\Compilador.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAowCIAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCEAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-09T23:20:50.637Z",
               "EditorCaption": ""
@@ -59,16 +59,16 @@
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Form1.cs",
               "RelativeDocumentMoniker": "Mini_Python\\Form1.cs",
-              "ToolTip": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Form1.cs*",
-              "RelativeToolTip": "Mini_Python\\Form1.cs*",
-              "ViewState": "AgIAACMBAAAAAAAAAAAMwDoBAAAUAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Form1.cs",
+              "RelativeToolTip": "Mini_Python\\Form1.cs",
+              "ViewState": "AgIAAHsBAAAAAAAAAAAAAKYBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-07T03:49:03.876Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Program.cs",
               "RelativeDocumentMoniker": "Mini_Python\\Program.cs",
@@ -85,8 +85,8 @@
               "Title": "Form1.cs [Dise\u00F1o]",
               "DocumentMoniker": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Form1.cs",
               "RelativeDocumentMoniker": "Mini_Python\\Form1.cs",
-              "ToolTip": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Form1.cs [Dise\u00F1o]*",
-              "RelativeToolTip": "Mini_Python\\Form1.cs [Dise\u00F1o]*",
+              "ToolTip": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Form1.cs [Dise\u00F1o]",
+              "RelativeToolTip": "Mini_Python\\Form1.cs [Dise\u00F1o]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-28T05:09:13.782Z",
               "EditorCaption": " [Dise\u00F1o]"

@@ -15,6 +15,8 @@ namespace Mini_Python
             tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
 
             richTextBox1.MouseClick += richTextBox1_MouseClick;
+            tabControl1.SelectedIndexChanged += new EventHandler(tabControl1_SelectedIndexChanged);
+
 
         }
 
@@ -177,18 +179,20 @@ namespace Mini_Python
 
         private void iconButton1_Click(object sender, EventArgs e)
         {
-            // Asegurarse de que hay una pesta�a seleccionada
+            // Asegurarse de que hay una pestaña seleccionada
             if (tabControl1.SelectedTab != null)
             {
-                // Obtiene la pesta�a seleccionada
+                // Obtiene la pestaña seleccionada
                 TabPage selectedTab = tabControl1.SelectedTab;
 
-                // Encuentra el RichTextBox dentro de la pesta�a seleccionada
-                // Asumimos que el RichTextBox es el primer (y �nico) control en la pesta�a
+                // Encuentra el RichTextBox dentro de la pestaña seleccionada
                 RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
 
                 if (richTextBox != null)
                 {
+                    // Eliminar todos los subrayados de colores
+                    QuitarSubrayadosDeColores(richTextBox);
+
                     // Obtiene el texto del RichTextBox
                     string richText = richTextBox.Text;
 
@@ -196,18 +200,36 @@ namespace Mini_Python
                 }
                 else
                 {
-                    MessageBox.Show("No se encontr� un RichTextBox en la pesta�a seleccionada.");
+                    MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
                 }
             }
             else
             {
-                MessageBox.Show("No hay ninguna pesta�a seleccionada.");
+                MessageBox.Show("No hay ninguna pestaña seleccionada.");
             }
         }
 
+        private void QuitarSubrayadosDeColores(RichTextBox richTextBox)
+        {
+            // Guardar la posición actual del cursor
+            int originalSelectionStart = richTextBox.SelectionStart;
+            int originalSelectionLength = richTextBox.SelectionLength;
 
-                    
-      
+            // Seleccionar todo el texto
+            richTextBox.SelectAll();
+
+            // Restablecer el color de fondo y el color de texto
+            richTextBox.SelectionBackColor = richTextBox.BackColor;
+            richTextBox.SelectionColor = richTextBox.ForeColor;
+
+            // Deseleccionar el texto
+            richTextBox.Select(originalSelectionStart, originalSelectionLength);
+        }
+
+
+
+
+
 
         private void abrirArchivoLocalToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -340,7 +362,7 @@ namespace Mini_Python
                     int numberLength = match.Groups[1].Length;
 
                     richTextBox1.Select(numberStartIndex, numberLength);
-                    richTextBox1.SelectionColor = Color.Blue;
+                    richTextBox1.SelectionColor = Color.Aqua;
                     richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Underline);
 
                     // Añadir un enlace al número de línea y columna
@@ -375,6 +397,9 @@ namespace Mini_Python
 
                 if (richTextBox != null)
                 {
+                    // Desuscribir el evento TextChanged para evitar que se dispare durante el cambio de formato
+                    richTextBox.TextChanged -= RichTextBox_TextChanged;
+
                     // Obtiene el índice del primer carácter de la línea
                     int lineIndex = richTextBox.GetFirstCharIndexFromLine(lineNumber - 1);
 
@@ -383,12 +408,48 @@ namespace Mini_Python
                     richTextBox.Select(lineIndex, lineLength);
                     richTextBox.SelectionBackColor = Color.Red;
 
+                    // Restablecer el color de fondo y el color de texto para el texto posterior
+                    richTextBox.Select(lineIndex + lineLength, 0);
+                    richTextBox.SelectionBackColor = richTextBox.BackColor;
+                    richTextBox.SelectionColor = richTextBox.ForeColor;
+
                     // Deseleccionar el texto
                     richTextBox.Select(0, 0);
+
+                    // Volver a suscribir el evento TextChanged
+                    richTextBox.TextChanged += RichTextBox_TextChanged;
                 }
             }
         }
 
+        private void RichTextBox_TextChanged(object sender, EventArgs e)
+        {
+            RichTextBox richTextBox = sender as RichTextBox;
+            if (richTextBox != null)
+            {
+                // Guardar la posición actual del cursor
+                int selectionStart = richTextBox.SelectionStart;
+                int selectionLength = richTextBox.SelectionLength;
+
+                // Restablecer el color de fondo y el color de texto a los valores predeterminados
+                richTextBox.SelectAll();
+                richTextBox.SelectionBackColor = richTextBox.BackColor;
+                richTextBox.SelectionColor = richTextBox.ForeColor;
+
+                // Restaurar la posición del cursor
+                richTextBox.Select(selectionStart, selectionLength);
+            }
+        }
+
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+            RichTextBox richTextBox = e.TabPage.Controls.OfType<RichTextBox>().FirstOrDefault();
+            if (richTextBox != null)
+            {
+                richTextBox.TextChanged += RichTextBox_TextChanged;
+            }
+        }
 
 
 

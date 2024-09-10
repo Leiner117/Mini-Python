@@ -205,6 +205,10 @@ namespace Mini_Python
             }
         }
 
+
+                    
+      
+
         private void abrirArchivoLocalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // Obtener el �ltimo directorio abierto desde la configuraci�n
@@ -343,12 +347,48 @@ namespace Mini_Python
                     richTextBox1.SelectionStart = numberStartIndex;
                     richTextBox1.SelectionLength = numberLength;
                     richTextBox1.SetSelectionLink(true);
+
+                    // Subrayar la línea en rojo en el RichTextBox del TabControl
+                    var lineColumnMatch = System.Text.RegularExpressions.Regex.Match(match.Groups[1].Value, @"(\d+):(\d+)");
+                    if (lineColumnMatch.Success)
+                    {
+                        int lineNumber = int.Parse(lineColumnMatch.Groups[1].Value);
+                        SubrayarLineaEnRojo(lineNumber);
+                    }
                 }
             }
 
             // Deseleccionar el texto
             richTextBox1.Select(0, 0);
         }
+
+        private void SubrayarLineaEnRojo(int lineNumber)
+        {
+            // Asegurarse de que hay una pestaña seleccionada
+            if (tabControl1.SelectedTab != null)
+            {
+                // Obtiene la pestaña seleccionada
+                TabPage selectedTab = tabControl1.SelectedTab;
+
+                // Encuentra el RichTextBox dentro de la pestaña seleccionada
+                RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+
+                if (richTextBox != null)
+                {
+                    // Obtiene el índice del primer carácter de la línea
+                    int lineIndex = richTextBox.GetFirstCharIndexFromLine(lineNumber - 1);
+
+                    // Subrayar la línea en rojo
+                    int lineLength = richTextBox.Lines[lineNumber - 1].Length;
+                    richTextBox.Select(lineIndex, lineLength);
+                    richTextBox.SelectionBackColor = Color.Red;
+
+                    // Deseleccionar el texto
+                    richTextBox.Select(0, 0);
+                }
+            }
+        }
+
 
 
 

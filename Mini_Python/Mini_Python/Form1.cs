@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Net;
+using System.Text;
 using compilador;
 namespace Mini_Python
 {
@@ -45,12 +46,12 @@ namespace Mini_Python
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Obtener la pesta�a actual
+            // Obtener la pestaña actual
             TabPage selectedTab = tabControl1.SelectedTab;
 
             if (selectedTab != null)
             {
-                RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                RichTextBox richTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
 
                 if (richTextBox != null)
                 {
@@ -66,8 +67,8 @@ namespace Mini_Python
                         {
                             string savePath = saveFileDialog.FileName;
                             File.WriteAllText(savePath, richTextBox.Text);
-                            selectedTab.Tag = savePath; // Ahora la pesta�a est� asociada a un archivo guardado
-                            selectedTab.Text = Path.GetFileName(savePath); // Actualizar el nombre de la pesta�a
+                            selectedTab.Tag = savePath; // Ahora la pestaña está asociada a un archivo guardado
+                            selectedTab.Text = Path.GetFileName(savePath); // Actualizar el nombre de la pestaña
                         }
                     }
                     else // Archivo existente
@@ -79,7 +80,8 @@ namespace Mini_Python
             }
         }
 
-        
+
+
 
         private void RichTextBox_SelectionChanged(object sender, EventArgs e)
         {
@@ -130,21 +132,37 @@ namespace Mini_Python
         {
             TabPage newTabPage = new TabPage(tabName);
 
+            Panel panel = new Panel
+            {
+                Dock = DockStyle.Fill
+            };
+
+            Label lineNumberLabel = new Label
+            {
+                Dock = DockStyle.Left,
+                Width = 50,
+                BackColor = Color.FromArgb(255, 30, 30, 30),
+                ForeColor = Color.White,
+                Font = new Font("Consolas", 16, FontStyle.Bold),
+                TextAlign = ContentAlignment.TopRight
+            };
+
             RichTextBox richTextBox = new RichTextBox
             {
                 Dock = DockStyle.Fill,
-                BackColor = Color.FromArgb(255, 30, 30, 30), // Establecer el color de fondo del RichTextBox a rgba(30,30,30,255)
-                ForeColor = Color.White, // Establecer el color del texto a blanco
-                Font = new Font("Consolas", 16, FontStyle.Bold) // Ajustar el tamaño de la fuente y hacerla negrita
+                BackColor = Color.FromArgb(255, 30, 30, 30),
+                ForeColor = Color.White,
+                Font = new Font("Consolas", 16, FontStyle.Bold),
+                AcceptsTab = true
             };
 
-            // Suscribir los eventos PreviewKeyDown y KeyDown
-            richTextBox.PreviewKeyDown += RichTextBox_PreviewKeyDown;
-            richTextBox.KeyDown += RichTextBox_KeyDown;
-            richTextBox.SelectionChanged += RichTextBox_SelectionChanged;
-            newTabPage.Controls.Add(richTextBox);
+            richTextBox.TextChanged += (sender, e) => UpdateLineNumbers(richTextBox, lineNumberLabel);
+            richTextBox.VScroll += (sender, e) => UpdateLineNumbers(richTextBox, lineNumberLabel);
 
-            // Si es un archivo nuevo, Tag es null; si es un archivo existente, Tag contiene la ruta
+            panel.Controls.Add(richTextBox);
+            panel.Controls.Add(lineNumberLabel);
+            newTabPage.Controls.Add(panel);
+
             newTabPage.Tag = isNewFile ? null : filePath;
 
             tabControl1.TabPages.Add(newTabPage);
@@ -154,60 +172,61 @@ namespace Mini_Python
             {
                 richTextBox.Text = File.ReadAllText(filePath);
             }
+
+            UpdateLineNumbers(richTextBox, lineNumberLabel);
         }
 
-
-        private void RichTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void UpdateLineNumbers(RichTextBox richTextBox, Label lineNumberLabel)
         {
-            if (e.KeyCode == Keys.Tab)
+            int firstVisibleLine = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(0, 0)));
+            int lastVisibleLine = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(0, richTextBox.Height)));
+
+            StringBuilder lineNumbers = new StringBuilder();
+            for (int i = firstVisibleLine; i <= lastVisibleLine + 1; i++)
             {
-                e.IsInputKey = true;
+                lineNumbers.AppendLine((i + 1).ToString());
             }
+
+            lineNumberLabel.Text = lineNumbers.ToString();
         }
 
-        private void RichTextBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Tab)
-            {
-                RichTextBox richTextBox = sender as RichTextBox;
-                int selectionStart = richTextBox.SelectionStart;
-                richTextBox.Text = richTextBox.Text.Insert(selectionStart, "    "); // Insertar 4 espacios
-                richTextBox.SelectionStart = selectionStart + 4; // Mover el cursor 4 posiciones adelante
-                e.SuppressKeyPress = true; // Evitar que el evento se propague
-            }
-        }
 
         private void iconButton1_Click(object sender, EventArgs e)
+{
+    // Asegurarse de que hay una pestaña seleccionada
+    if (tabControl1.SelectedTab != null)
+    {
+        // Obtiene la pestaña seleccionada
+        TabPage selectedTab = tabControl1.SelectedTab;
+
+        // Encuentra el RichTextBox dentro de la pestaña seleccionada
+        RichTextBox richTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
+        Label lineNumberLabel = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<Label>().FirstOrDefault();
+
+        if (richTextBox != null && lineNumberLabel != null)
         {
-            // Asegurarse de que hay una pestaña seleccionada
-            if (tabControl1.SelectedTab != null)
-            {
-                // Obtiene la pestaña seleccionada
-                TabPage selectedTab = tabControl1.SelectedTab;
+            // Eliminar todos los subrayados de colores
+            QuitarSubrayadosDeColores(richTextBox);
 
-                // Encuentra el RichTextBox dentro de la pestaña seleccionada
-                RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+            // Obtiene el texto del RichTextBox
+            string richText = richTextBox.Text;
 
-                if (richTextBox != null)
-                {
-                    // Eliminar todos los subrayados de colores
-                    QuitarSubrayadosDeColores(richTextBox);
+            ErrorConsole(Compilador.compilador(richText));
 
-                    // Obtiene el texto del RichTextBox
-                    string richText = richTextBox.Text;
-
-                    ErrorConsole(Compilador.compilador(richText));
-                }
-                else
-                {
-                    MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("No hay ninguna pestaña seleccionada.");
-            }
+            // Actualizar los números de línea
+            UpdateLineNumbers(richTextBox, lineNumberLabel);
         }
+        else
+        {
+            MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
+        }
+    }
+    else
+    {
+        MessageBox.Show("No hay ninguna pestaña seleccionada.");
+    }
+}
+
 
         private void QuitarSubrayadosDeColores(RichTextBox richTextBox)
         {
@@ -225,10 +244,6 @@ namespace Mini_Python
             // Deseleccionar el texto
             richTextBox.Select(originalSelectionStart, originalSelectionLength);
         }
-
-
-
-
 
 
         private void abrirArchivoLocalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -276,7 +291,7 @@ namespace Mini_Python
 
         private void abrirArchivoExternoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // Crear un cuadro de di�logo simple para solicitar el enlace
+            // Crear un cuadro de diálogo simple para solicitar el enlace
             using (Form prompt = new Form())
             {
                 prompt.Width = 400;
@@ -308,7 +323,7 @@ namespace Mini_Python
                                 string fileContent = client.DownloadString(rawUrl);
                                 string fileName = Path.GetFileName(url);
                                 AddTabWithCustomName(fileName, isNewFile: false);
-                                RichTextBox richTextBox = tabControl1.SelectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                                RichTextBox richTextBox = tabControl1.SelectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
                                 if (richTextBox != null)
                                 {
                                     richTextBox.Text = fileContent;
@@ -328,6 +343,7 @@ namespace Mini_Python
             }
         }
 
+
         private string ConvertToRawGitHubUrl(string url)
         {
             if (url.Contains("github.com"))
@@ -340,6 +356,7 @@ namespace Mini_Python
 
         public void ErrorConsole(MyErrorListener error)
         {
+            // Limpiar y mostrar el RichTextBox de errores
             richTextBox1.Clear();
             richTextBox1.Visible = true;
 
@@ -348,7 +365,7 @@ namespace Mini_Python
 
             foreach (string line in errorLines)
             {
-                // Añadir la línea al RichTextBox
+                // Añadir la línea al RichTextBox de errores
                 int startIndex = richTextBox1.TextLength;
                 richTextBox1.AppendText(line + Environment.NewLine);
                 int endIndex = richTextBox1.TextLength;
@@ -384,6 +401,7 @@ namespace Mini_Python
             richTextBox1.Select(0, 0);
         }
 
+
         private void SubrayarLineaEnRojo(int lineNumber)
         {
             // Asegurarse de que hay una pestaña seleccionada
@@ -393,7 +411,7 @@ namespace Mini_Python
                 TabPage selectedTab = tabControl1.SelectedTab;
 
                 // Encuentra el RichTextBox dentro de la pestaña seleccionada
-                RichTextBox richTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                RichTextBox richTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
 
                 if (richTextBox != null)
                 {
@@ -421,6 +439,7 @@ namespace Mini_Python
                 }
             }
         }
+
 
         private void RichTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -493,7 +512,7 @@ namespace Mini_Python
 
                             // Redirigir el cursor al RichTextBox en la pestaña seleccionada
                             TabPage selectedTab = tabControl1.SelectedTab;
-                            RichTextBox targetRichTextBox = selectedTab.Controls.OfType<RichTextBox>().FirstOrDefault();
+                            RichTextBox targetRichTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
                             if (targetRichTextBox != null)
                             {
                                 int lineIndex = targetRichTextBox.GetFirstCharIndexFromLine(lineNumber - 1);
@@ -521,12 +540,6 @@ namespace Mini_Python
                 Debug.WriteLine("El texto seleccionado no está subrayado.");
             }
         }
-
-
-
-
-
-
 
 
 

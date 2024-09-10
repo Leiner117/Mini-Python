@@ -74,30 +74,7 @@ namespace Mini_Python
             }
         }
 
-        private void AddTab(object sender, EventArgs e)
-        {
-            // Crear una nueva pestaña
-            TabPage newTabPage = new TabPage("Nueva Pestaña");
-
-            // Crear un nuevo RichTextBox
-            RichTextBox richTextBox = new RichTextBox
-            {
-                Dock = DockStyle.Fill, // Para que el RichTextBox ocupe todo el espacio de la pestaña
-                Font = new Font("Consolas", 16, FontStyle.Bold) // Ajustar el tamaño de la fuente y hacerla negrita
-            };
-
-            // Asignar el evento SelectionChanged al RichTextBox
-            richTextBox.SelectionChanged += RichTextBox_SelectionChanged;
-
-            // Agregar el RichTextBox a la nueva pestaña
-            newTabPage.Controls.Add(richTextBox);
-
-            // Agregar la nueva pestaña al TabControl
-            tabControl1.TabPages.Add(newTabPage);
-
-            // Cambiar a la nueva pestaña automáticamente
-            tabControl1.SelectedTab = newTabPage;
-        }
+        
 
         private void RichTextBox_SelectionChanged(object sender, EventArgs e)
         {
@@ -331,6 +308,17 @@ namespace Mini_Python
             }
             return url;
         }
+
+        public void ErrorConsole(MyErrorListener error)
+        {
+
+            label2.Text = "Hola mundo";
+            MessageBox.Show(error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
+
+        }
+
 
         private void archivoToolStripMenuItem_Click(object sender, EventArgs e)
         {

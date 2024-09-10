@@ -1,12 +1,15 @@
 namespace compilador;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Mini_Python;
 using parser.generated;
+using static Mini_Python.Form1;
 
 public class Compilador
 {
     public static MyErrorListener compilador (string text)
     {
+        Form1 form = new Form1();
         ICharStream input = null;
         MyErrorListener myListener = new MyErrorListener();
         try
@@ -29,6 +32,7 @@ public class Compilador
                 {
                     Console.WriteLine("Compilation failed:");
                     Console.WriteLine(myListener);
+                    form.ErrorConsole(myListener);
                 }else{
                     Console.WriteLine(myListener);
                     Console.WriteLine("Compilation succeeded");
@@ -36,10 +40,12 @@ public class Compilador
             }catch (RecognitionException e){
                 Console.WriteLine("Error!!!!");
                 Console.WriteLine(e.Message);
+                form.ErrorConsole(myListener);
             }
         }catch (IOException e) {
             Console.WriteLine("No hay un archivo.");
             Console.WriteLine(e.Message);
+            form.ErrorConsole(myListener);
         }
         return myListener;    
     }

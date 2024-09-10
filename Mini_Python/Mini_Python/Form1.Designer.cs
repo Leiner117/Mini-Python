@@ -40,6 +40,7 @@
             contextMenuStrip1 = new ContextMenuStrip(components);
             label1 = new Label();
             iconButton1 = new FontAwesome.Sharp.IconButton();
+            label2 = new Label();
             menuStrip1.SuspendLayout();
             SuspendLayout();
             // 
@@ -69,7 +70,7 @@
             abirToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { abrirArchivoExternoToolStripMenuItem, abrirArchivoLocalToolStripMenuItem });
             abirToolStripMenuItem.ForeColor = Color.WhiteSmoke;
             abirToolStripMenuItem.Name = "abirToolStripMenuItem";
-            abirToolStripMenuItem.Size = new Size(180, 22);
+            abirToolStripMenuItem.Size = new Size(116, 22);
             abirToolStripMenuItem.Text = "Abrir";
             abirToolStripMenuItem.Click += abirToolStripMenuItem_Click;
             // 
@@ -96,7 +97,7 @@
             nuevoToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
             nuevoToolStripMenuItem.ForeColor = Color.WhiteSmoke;
             nuevoToolStripMenuItem.Name = "nuevoToolStripMenuItem";
-            nuevoToolStripMenuItem.Size = new Size(180, 22);
+            nuevoToolStripMenuItem.Size = new Size(116, 22);
             nuevoToolStripMenuItem.Text = "Nuevo";
             nuevoToolStripMenuItem.Click += nuevoToolStripMenuItem_Click;
             // 
@@ -105,7 +106,7 @@
             guardarToolStripMenuItem.BackColor = Color.FromArgb(30, 30, 30);
             guardarToolStripMenuItem.ForeColor = Color.WhiteSmoke;
             guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            guardarToolStripMenuItem.Size = new Size(180, 22);
+            guardarToolStripMenuItem.Size = new Size(116, 22);
             guardarToolStripMenuItem.Text = "Guardar";
             guardarToolStripMenuItem.Click += guardarToolStripMenuItem_Click;
             // 
@@ -151,13 +152,23 @@
             iconButton1.UseVisualStyleBackColor = false;
             iconButton1.Click += iconButton1_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(151, 750);
+            label2.Name = "label2";
+            label2.Size = new Size(38, 15);
+            label2.TabIndex = 7;
+            label2.Text = "label2";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             BackColor = Color.FromArgb(30, 30, 30);
-            ClientSize = new Size(1636, 714);
+            ClientSize = new Size(1636, 1061);
+            Controls.Add(label2);
             Controls.Add(iconButton1);
             Controls.Add(label1);
             Controls.Add(tabControl1);
@@ -185,5 +196,6 @@
         private FontAwesome.Sharp.IconButton iconButton1;
         private ToolStripMenuItem abrirArchivoExternoToolStripMenuItem;
         private ToolStripMenuItem abrirArchivoLocalToolStripMenuItem;
+        private Label label2;
     }
 }

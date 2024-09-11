@@ -20,9 +20,6 @@
 #pragma warning disable 419
 
 namespace parser.generated {
-
-using compilador;
-
 using System;
 using System.IO;
 using System.Text;

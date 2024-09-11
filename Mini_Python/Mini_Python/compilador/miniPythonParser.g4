@@ -16,12 +16,22 @@ statement: defStatement
          | forStatement
          | functionCallStatement;
 
-defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence ;
+defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence 
+            | DEF IDENTIFIER LPAREN argList RPAREN { NotifyErrorListeners("Expected ':' after function definition"); }
+            ;
 argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
-ifStatement: IF expression DOSPUNTOS NEWLINE   sequence  ELSE DOSPUNTOS NEWLINE  sequence ?;
-whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence ;
+ifStatement: IF expression DOSPUNTOS NEWLINE   sequence  ELSE DOSPUNTOS NEWLINE  sequence ?
+            |IF expression { NotifyErrorListeners("Expected ':' after 'expression' in If condition"); }
+             ELSE  DOSPUNTOS NEWLINE  sequence ?
+            | IF expression DOSPUNTOS NEWLINE sequence ELSE { NotifyErrorListeners("Expected ':' after 'else' in condition"); }     
+            ;
+whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence 
+                |WHILE expression { NotifyErrorListeners("Expected ':' after 'expression' in while condition"); }  
+                ;
 returnStatement: RETURN expression NEWLINE;
-forStatement: FOR expression IN expressionList DOSPUNTOS NEWLINE sequence; 
+forStatement: FOR expression IN expressionList DOSPUNTOS NEWLINE sequence
+            | FOR expression IN expressionList { NotifyErrorListeners("Expected ':' after 'expression' in for declaration"); }
+            ; 
 printStatement: PRINT expression NEWLINE;
 assignStatement: IDENTIFIER ASSIGN expression NEWLINE;
 functionCallStatement: IDENTIFIER LPAREN expressionList RPAREN NEWLINE?;

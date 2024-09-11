@@ -1,7 +1,4 @@
 lexer grammar miniPythonLexer;
-@lexer::header {
-using compilador;
-}
 @lexer::members {
     private bool pendingDent = true;
     private int indentCount = 0;

@@ -38,7 +38,6 @@
             guardarToolStripMenuItem = new ToolStripMenuItem();
             tabControl1 = new TabControl();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            label1 = new Label();
             iconButton1 = new FontAwesome.Sharp.IconButton();
             richTextBox1 = new RichTextBox();
             menuStrip1.SuspendLayout();
@@ -124,17 +123,6 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.ForeColor = SystemColors.ControlLight;
-            label1.Location = new Point(1561, 690);
-            label1.Name = "label1";
-            label1.Size = new Size(29, 15);
-            label1.TabIndex = 4;
-            label1.Text = "Line";
-            label1.Click += label1_Click;
-            // 
             // iconButton1
             // 
             iconButton1.BackColor = Color.FromArgb(30, 30, 30);
@@ -177,7 +165,6 @@
             ClientSize = new Size(1636, 883);
             Controls.Add(richTextBox1);
             Controls.Add(iconButton1);
-            Controls.Add(label1);
             Controls.Add(tabControl1);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
@@ -198,7 +185,6 @@
         private ToolStripMenuItem nuevoToolStripMenuItem;
         private TabControl tabControl1;
         private ContextMenuStrip contextMenuStrip1;
-        private Label label1;
         private ToolStripMenuItem guardarToolStripMenuItem;
         private FontAwesome.Sharp.IconButton iconButton1;
         private ToolStripMenuItem abrirArchivoExternoToolStripMenuItem;

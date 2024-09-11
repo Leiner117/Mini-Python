@@ -90,7 +90,6 @@ namespace Mini_Python
 
             int cursorPosition = rtb.SelectionStart;
             var index = rtb.GetLineFromCharIndex(cursorPosition);
-            label1.Text = ("Fila: " + (index+1).ToString());
         }
 
         private void nuevoToolStripMenuItem_Click(object sender, EventArgs e)
@@ -152,12 +151,13 @@ namespace Mini_Python
                 Dock = DockStyle.Fill,
                 BackColor = Color.FromArgb(255, 30, 30, 30),
                 ForeColor = Color.White,
-                Font = new Font("Consolas", 16, FontStyle.Bold),
-                AcceptsTab = true
+                Font = new Font("Consolas", 16, FontStyle.Bold)
             };
 
             richTextBox.TextChanged += (sender, e) => UpdateLineNumbers(richTextBox, lineNumberLabel);
             richTextBox.VScroll += (sender, e) => UpdateLineNumbers(richTextBox, lineNumberLabel);
+            richTextBox.PreviewKeyDown += RichTextBox_PreviewKeyDown;
+            richTextBox.KeyDown += RichTextBox_KeyDown; // Añadir el evento KeyDown
 
             panel.Controls.Add(richTextBox);
             panel.Controls.Add(lineNumberLabel);
@@ -175,6 +175,30 @@ namespace Mini_Python
 
             UpdateLineNumbers(richTextBox, lineNumberLabel);
         }
+
+
+        private void RichTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                e.IsInputKey = true;
+            }
+        }
+
+        private void RichTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                RichTextBox richTextBox = sender as RichTextBox;
+                int selectionStart = richTextBox.SelectionStart;
+                richTextBox.Text = richTextBox.Text.Insert(selectionStart, "    ");
+                richTextBox.SelectionStart = selectionStart + 4;
+                e.SuppressKeyPress = true; // Evitar que el tabulador se propague
+                
+            }
+        }
+
+
 
         private void UpdateLineNumbers(RichTextBox richTextBox, Label lineNumberLabel)
         {
@@ -210,7 +234,6 @@ namespace Mini_Python
 
             // Obtiene el texto del RichTextBox
             string richText = richTextBox.Text;
-
             ErrorConsole(Compilador.compilador(richText));
 
             // Actualizar los números de línea

@@ -6,18 +6,11 @@ namespace Mini_Python
         [STAThread]
         static void Main()
         {
-            try
-            {
-                
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
-                ApplicationConfiguration.Initialize();
-                Application.Run(new Form1());
-            }catch (IOException e)
-            {
-                Console.WriteLine("No hay un archivo.");
-                Console.WriteLine(e.Message);
-            }
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            ApplicationConfiguration.Initialize();
+            Application.Run(new Form1());
+            
         }
     }
 }

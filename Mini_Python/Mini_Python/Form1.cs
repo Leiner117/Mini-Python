@@ -80,9 +80,6 @@ namespace Mini_Python
             }
         }
 
-
-
-
         private void RichTextBox_SelectionChanged(object sender, EventArgs e)
         {
             // Ejemplo de manejo del evento SelectionChanged
@@ -136,14 +133,16 @@ namespace Mini_Python
                 Dock = DockStyle.Fill
             };
 
-            Label lineNumberLabel = new Label
+            RichTextBox lineNumberLabel = new RichTextBox
             {
                 Dock = DockStyle.Left,
                 Width = 50,
                 BackColor = Color.FromArgb(255, 30, 30, 30),
                 ForeColor = Color.White,
-                Font = new Font("Consolas", 16, FontStyle.Bold),
-                TextAlign = ContentAlignment.TopRight
+                Font = new Font("Consolas", 16, FontStyle.Regular),            
+                BorderStyle = BorderStyle.FixedSingle,
+                ReadOnly = true 
+                
             };
 
             RichTextBox richTextBox = new RichTextBox
@@ -151,7 +150,9 @@ namespace Mini_Python
                 Dock = DockStyle.Fill,
                 BackColor = Color.FromArgb(255, 30, 30, 30),
                 ForeColor = Color.White,
-                Font = new Font("Consolas", 16, FontStyle.Bold)
+                Font = new Font("Consolas", 16, FontStyle.Regular),
+                BorderStyle = BorderStyle.None,
+                Top = 20
             };
 
             richTextBox.TextChanged += (sender, e) => UpdateLineNumbers(richTextBox, lineNumberLabel);
@@ -198,10 +199,16 @@ namespace Mini_Python
             }
         }
 
-
-
-        private void UpdateLineNumbers(RichTextBox richTextBox, Label lineNumberLabel)
+        private void UpdateLineNumbers(RichTextBox richTextBox, RichTextBox lineNumberLabel)
         {
+
+
+            lineNumberLabel.ScrollBars = RichTextBoxScrollBars.None;
+            lineNumberLabel.ReadOnly = true;
+            lineNumberLabel.WordWrap = false;
+            lineNumberLabel.Multiline = true;
+
+
             int firstVisibleLine = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(0, 0)));
             int lastVisibleLine = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(0, richTextBox.Height)));
 
@@ -214,7 +221,6 @@ namespace Mini_Python
             lineNumberLabel.Text = lineNumbers.ToString();
         }
 
-
         private void iconButton1_Click(object sender, EventArgs e)
 {
     // Asegurarse de que hay una pestaña seleccionada
@@ -225,7 +231,7 @@ namespace Mini_Python
 
         // Encuentra el RichTextBox dentro de la pestaña seleccionada
         RichTextBox richTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
-        Label lineNumberLabel = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<Label>().FirstOrDefault();
+        RichTextBox lineNumberLabel = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
 
         if (richTextBox != null && lineNumberLabel != null)
         {

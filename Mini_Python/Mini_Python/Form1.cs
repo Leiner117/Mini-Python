@@ -201,17 +201,15 @@ namespace Mini_Python
 
         private void UpdateLineNumbers(RichTextBox richTextBox, RichTextBox lineNumberLabel)
         {
-
-
             lineNumberLabel.ScrollBars = RichTextBoxScrollBars.None;
-            lineNumberLabel.ReadOnly = true;
             lineNumberLabel.WordWrap = false;
             lineNumberLabel.Multiline = true;
-
 
             int firstVisibleLine = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(0, 0)));
             int lastVisibleLine = richTextBox.GetLineFromCharIndex(richTextBox.GetCharIndexFromPosition(new Point(0, richTextBox.Height)));
 
+    
+            
             StringBuilder lineNumbers = new StringBuilder();
             for (int i = firstVisibleLine; i <= lastVisibleLine + 1; i++)
             {
@@ -222,39 +220,37 @@ namespace Mini_Python
         }
 
         private void iconButton1_Click(object sender, EventArgs e)
-{
-    // Asegurarse de que hay una pestaña seleccionada
-    if (tabControl1.SelectedTab != null)
-    {
-        // Obtiene la pestaña seleccionada
-        TabPage selectedTab = tabControl1.SelectedTab;
-
-        // Encuentra el RichTextBox dentro de la pestaña seleccionada
-        RichTextBox richTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
-        RichTextBox lineNumberLabel = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
-
-        if (richTextBox != null && lineNumberLabel != null)
         {
-            // Eliminar todos los subrayados de colores
-            QuitarSubrayadosDeColores(richTextBox);
+                // Asegurarse de que hay una pestaña seleccionada
+                if (tabControl1.SelectedTab != null)
+                {
+                    // Obtiene la pestaña seleccionada
+                    TabPage selectedTab = tabControl1.SelectedTab;
 
-            // Obtiene el texto del RichTextBox
-            string richText = richTextBox.Text;
-            ErrorConsole(Compilador.compilador(richText));
+                    // Encuentra el RichTextBox dentro de la pestaña seleccionada
+                    RichTextBox richTextBox = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
+                    RichTextBox lineNumberLabel = selectedTab.Controls.OfType<Panel>().FirstOrDefault()?.Controls.OfType<RichTextBox>().FirstOrDefault();
 
-            // Actualizar los números de línea
-            UpdateLineNumbers(richTextBox, lineNumberLabel);
+                    if (richTextBox != null && lineNumberLabel != null)
+                    {
+                        // Eliminar todos los subrayados de colores
+                        QuitarSubrayadosDeColores(richTextBox);
+
+                        // Obtiene el texto del RichTextBox
+                        string richText = richTextBox.Text;
+                        ErrorConsole(Compilador.compilador(richText));
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No hay ninguna pestaña seleccionada.");
+                }
         }
-        else
-        {
-            MessageBox.Show("No se encontró un RichTextBox en la pestaña seleccionada.");
-        }
-    }
-    else
-    {
-        MessageBox.Show("No hay ninguna pestaña seleccionada.");
-    }
-}
 
 
         private void QuitarSubrayadosDeColores(RichTextBox richTextBox)

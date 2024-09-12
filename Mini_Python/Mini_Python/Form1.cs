@@ -222,15 +222,29 @@ namespace Mini_Python
 
         private void RichTextBox_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Tab)
+            RichTextBox richTextBox = sender as RichTextBox;
+
+            if (e.KeyCode == Keys.Tab && e.Shift)
             {
-                RichTextBox richTextBox = sender as RichTextBox;
+                int selectionStart = richTextBox.SelectionStart;
+
+                // Verificar si hay 4 espacios antes del cursor
+                if (selectionStart >= 4 && richTextBox.Text.Substring(selectionStart - 4, 4) == "    ")
+                {
+                    richTextBox.Text = richTextBox.Text.Remove(selectionStart - 4, 4);
+                    richTextBox.SelectionStart = selectionStart - 4;
+                }
+
+                e.SuppressKeyPress = true; // Evitar que el tabulador se propague
+            }
+            else if (e.KeyCode == Keys.Tab)
+            {
                 int selectionStart = richTextBox.SelectionStart;
                 richTextBox.Text = richTextBox.Text.Insert(selectionStart, "    ");
                 richTextBox.SelectionStart = selectionStart + 4;
                 e.SuppressKeyPress = true; // Evitar que el tabulador se propague
-                
-            }
+            
+        }
         }
 
         private void UpdateLineNumbers(RichTextBox richTextBox, RichTextBox lineNumberLabel)

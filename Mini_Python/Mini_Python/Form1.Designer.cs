@@ -111,7 +111,6 @@
             // 
             // tabControl1
             // 
-            tabControl1.Appearance = TabAppearance.FlatButtons;
             tabControl1.Location = new Point(0, 56);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;

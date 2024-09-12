@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\walte\\OneDrive\\Desktop\\IISemestre2024\\Compiladores\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\Mini_Python.csproj": {}
+    "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj": {}
   },
   "projects": {
-    "C:\\Users\\walte\\OneDrive\\Desktop\\IISemestre2024\\Compiladores\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\Mini_Python.csproj": {
+    "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\walte\\OneDrive\\Desktop\\IISemestre2024\\Compiladores\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+        "projectUniqueName": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
         "projectName": "Mini_Python",
-        "projectPath": "C:\\Users\\walte\\OneDrive\\Desktop\\IISemestre2024\\Compiladores\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
-        "packagesPath": "C:\\Users\\walte\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\walte\\OneDrive\\Desktop\\IISemestre2024\\Compiladores\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\obj\\",
+        "projectPath": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+        "packagesPath": "C:\\Users\\steve\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\steve\\OneDrive\\Documentos\\GitHub\\Mini-Python\\Mini_Python\\Mini_Python\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\walte\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\steve\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0-windows"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -71,7 +74,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\walte\\.dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

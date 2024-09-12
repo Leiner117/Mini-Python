@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Antlr4.Runtime;
 using parser.generated;
 
- public class MyErrorListener : IAntlrErrorListener<IToken>, IAntlrErrorListener<int>
+ public class MyErrorListener : BaseErrorListener,IAntlrErrorListener<IToken>, IAntlrErrorListener<int>
     {
         public List<string> ErrorMsgs { get; }
 

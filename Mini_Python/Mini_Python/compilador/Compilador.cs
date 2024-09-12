@@ -17,10 +17,13 @@ public class Compilador
             var lexer = new miniPythonLexer(input);
             var tokens = new CommonTokenStream(lexer);
             var parser = new miniPythonParser(tokens);
+            myListener.ErrorMsgs.Clear();
+            parser.RemoveErrorListeners();
             lexer.RemoveErrorListeners();
             lexer.AddErrorListener(myListener);
-            parser.RemoveErrorListeners();
             parser.AddErrorListener(myListener);
+           
+            
             IParseTree tree = parser.program();
         }catch (IOException e) {
             Console.WriteLine("No hay un archivo.");

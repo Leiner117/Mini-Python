@@ -9,6 +9,7 @@ namespace Mini_Python
         public Form1()
         {
             InitializeComponent();
+            InitializeTabControl();
             tabControl1.Appearance = TabAppearance.Normal;
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.ItemSize = new Size(100, 30);
@@ -20,6 +21,16 @@ namespace Mini_Python
 
 
         }
+
+        private void InitializeTabControl()
+        {
+            tabControl1.DrawMode = TabDrawMode.OwnerDrawFixed;
+            tabControl1.DrawItem += new DrawItemEventHandler(tabControl1_DrawItem);
+            tabControl1.MouseDown += new MouseEventHandler(tabControl1_MouseDown);
+        }
+
+
+
 
         private void tabControl1_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -42,6 +53,29 @@ namespace Mini_Python
 
             // Dibuja el texto de la pesta�a
             TextRenderer.DrawText(e.Graphics, tabPage.Text, tabPage.Font, tabRect, foreColor, TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+
+            Rectangle closeButton = new Rectangle(tabRect.Right - 15, tabRect.Top + 4, 10, 10);
+            e.Graphics.DrawLine(Pens.White, closeButton.Left, closeButton.Top, closeButton.Right, closeButton.Bottom);
+            e.Graphics.DrawLine(Pens.White, closeButton.Right, closeButton.Top, closeButton.Left, closeButton.Bottom);
+
+
+        }
+
+
+        private void tabControl1_MouseDown(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < tabControl1.TabPages.Count; i++)
+            {
+                Rectangle tabRect = tabControl1.GetTabRect(i);
+                Rectangle closeButton = new Rectangle(tabRect.Right - 15, tabRect.Top + 4, 10, 10);
+
+                if (closeButton.Contains(e.Location))
+                {
+                    tabControl1.TabPages.RemoveAt(i);
+                    break;
+                }
+            }
         }
 
         private void guardarToolStripMenuItem_Click(object sender, EventArgs e)

@@ -18,7 +18,7 @@ statement: defStatement
 
 defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence
             | DEF IDENTIFIER LPAREN argList RPAREN { NotifyErrorListeners("Expected ':' after function definition"); }
-;
+            | DEF IDENTIFIER LPAREN { NotifyErrorListeners("Expected 'arguments' after '(' in function definition"); };
 argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
 ifStatement: IF expression DOSPUNTOS NEWLINE   sequence  ELSE DOSPUNTOS NEWLINE  sequence ? 
            |IF expression { NotifyErrorListeners("Expected ':' after 'expression' in If condition"); } NEWLINE sequence

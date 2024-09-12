@@ -1,4 +1,5 @@
 lexer grammar miniPythonLexer;
+
 @lexer::members {
     private bool pendingDent = true;
     private int indentCount = 0;
@@ -61,6 +62,7 @@ lexer grammar miniPythonLexer;
         return dequeuedToken;
     }
 }
+
 NEWLINE : ('\r'? '\n' | '\r') {
     if (pendingDent) { Channel = Hidden; }
     pendingDent = true;
@@ -73,7 +75,7 @@ WS : [ \t]+ {
 } ;
 INDENT : 'INDENT' { Channel = Hidden; }; 
 DEDENT : 'DEDENT' { Channel = Hidden; };
-BlockComment : '´´´' .*? '´´´' -> channel(HIDDEN) ;
+BlockComment : '\'\'\'' .*? '\'\'\'' -> channel(HIDDEN) ;
 LineComment : '#' ~[\r\n]* -> channel(HIDDEN) ;
 
 // Palabras clave

@@ -40,7 +40,9 @@ expression: additionExpression comparison?;
 comparison: (LT | GT | LE | GE | EQ) additionExpression;
 additionExpression: multiplicationExpression ((PLUS | MINUS) multiplicationExpression)*;
 multiplicationExpression: elementExpression ((MULT | DIV) elementExpression)*;
-elementExpression: primitiveExpression (LBRACKET expression RBRACKET)?;
+elementExpression: primitiveExpression (LBRACKET expression RBRACKET)?
+                   | primitiveExpression (LBRACKET expression { NotifyErrorListeners("Expected ']' after expression in elementExpression.");})?
+                   ;
 expressionList: (expression (COMMA expression)*)?;
 primitiveExpression
     : LPAREN expression RPAREN
@@ -49,4 +51,7 @@ primitiveExpression
     | (PLUS | MINUS)? (INTEGER | FLOAT | CHARCONST | STRING)
     | IDENTIFIER (LPAREN expressionList RPAREN)?
     ;
-listExpression: LBRACKET expressionList RBRACKET;
+listExpression
+    : LBRACKET expressionList RBRACKET
+    | LBRACKET expressionList { NotifyErrorListeners("Expected ']' after list expression."); }
+    ;

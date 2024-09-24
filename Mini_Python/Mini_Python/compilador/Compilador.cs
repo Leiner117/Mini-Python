@@ -10,21 +10,36 @@ public class Compilador
     {
         Form1 form = new Form1();
         ICharStream input = null;
+        CommonTokenStream tokens = null;
+        miniPythonLexer lexer = null;
+        miniPythonParser parser = null;
         MyErrorListener myListener = new MyErrorListener();
         try
         {
             input = CharStreams.fromString(text);
-            var lexer = new miniPythonLexer(input);
-            var tokens = new CommonTokenStream(lexer);
-            var parser = new miniPythonParser(tokens);
+            lexer = new miniPythonLexer(input);
+            tokens = new CommonTokenStream(lexer);
+            parser = new miniPythonParser(tokens);
             myListener.ErrorMsgs.Clear();
             parser.RemoveErrorListeners();
-            lexer.RemoveErrorListeners();
+            lexer.RemoveErrorListeners(); 
+            parser.ErrorHandler = new CustomErrorStrategy();
             lexer.AddErrorListener(myListener);
             parser.AddErrorListener(myListener);
-           
-            
-            IParseTree tree = parser.program();
+            try
+            {
+                IParseTree tree = parser.program(); // Intenta analizar
+                if (myListener.HasErrors())
+                {
+                    Console.WriteLine("Compilation failed");
+                }
+            }catch (RecognitionException e)
+            {
+                myListener.ErrorMsgs.Add($"Unhandled error: {e.Message}");
+            }catch (Exception ex) // Captura excepciones generales
+            {
+               myListener.ErrorMsgs.Add($"General exception: {ex.Message}");
+            }
         }catch (IOException e) {
             Console.WriteLine("No hay un archivo.");
             Console.WriteLine(e.Message);

@@ -75,7 +75,8 @@ WS : [ \t]+ {
 } ;
 INDENT : 'INDENT' { Channel = Hidden; }; 
 DEDENT : 'DEDENT' { Channel = Hidden; };
-BlockComment : '\'\'\'' .*? '\'\'\'' -> channel(HIDDEN) ;
+BlockComment : '\'\'\'' ( . | NEWLINE )*? '\'\'\'' -> channel(HIDDEN) ;
+ComillasDoblesComment: '"""' ( . | NEWLINE )*? '"""' -> channel(HIDDEN) ;
 LineComment : '#' ~[\r\n]* -> channel(HIDDEN) ;
 
 // Palabras clave
@@ -112,6 +113,6 @@ DOSPUNTOS:      ':';
 // Tipos de datos
 INTEGER:        [0-9]+;
 FLOAT:          [0-9]+ '.' [0-9]+;
-CHARCONST:      '\'' . '\'';
+CHARCONST:      '\'' .*? '\'';
 STRING:         '"' .*? '"';
 IDENTIFIER:     [a-zA-Z_][a-zA-Z_0-9]*;

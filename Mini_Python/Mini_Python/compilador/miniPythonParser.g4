@@ -16,15 +16,9 @@ statement: defStatement
          | forStatement
          | functionCallStatement;
 
-defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence
-            | DEF IDENTIFIER LPAREN argList RPAREN { NotifyErrorListeners("Expected ':' after function definition"); }
-            | DEF IDENTIFIER LPAREN { NotifyErrorListeners("Expected 'arguments' after '(' in function definition"); };
+defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence;
 argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
-ifStatement: IF expression DOSPUNTOS NEWLINE   sequence  ELSE DOSPUNTOS NEWLINE  sequence ? 
-           |IF expression { NotifyErrorListeners("Expected ':' after 'expression' in If condition"); } NEWLINE sequence
-            ELSE DOSPUNTOS NEWLINE  sequence ?
-           | IF expression DOSPUNTOS NEWLINE sequence ELSE { NotifyErrorListeners("Expected ':' after 'else' in condition"); }     
-           ;
+ifStatement: IF expression DOSPUNTOS NEWLINE sequence  ELSE DOSPUNTOS NEWLINE  sequence;
 whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence;
 returnStatement: RETURN expression NEWLINE;
 forStatement: FOR expression IN expressionList DOSPUNTOS NEWLINE sequence; 
@@ -46,7 +40,5 @@ primitiveExpression
     | (PLUS | MINUS)? (INTEGER | FLOAT | CHARCONST | STRING)
     | IDENTIFIER (LPAREN expressionList RPAREN)?
     ;
-listExpression : LBRACKET expressionList RBRACKET
-     | LBRACKET expressionList { NotifyErrorListeners("Expected ']' after list expression."); }
-     ;
+listExpression : LBRACKET expressionList RBRACKET;
    

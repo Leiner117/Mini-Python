@@ -1,18 +1,17 @@
 namespace compilador
 {
-using System.Collections.Generic;
-using Antlr4.Runtime;
-using parser.generated;
+    using System.Collections.Generic;
+    using Antlr4.Runtime;
+    using parser.generated;
 
- public class MyErrorListener : BaseErrorListener,IAntlrErrorListener<IToken>, IAntlrErrorListener<int>
+    public class MyErrorListener:BaseErrorListener , IAntlrErrorListener<int>, IAntlrErrorListener<IToken>
     {
-        public List<string> ErrorMsgs { get; }
+        public List<string> ErrorMsgs;
 
         public MyErrorListener()
         {
             ErrorMsgs = new List<string>();
         }
-        // Syntax error handling for token-level errors
         public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
             if (recognizer is miniPythonParser)

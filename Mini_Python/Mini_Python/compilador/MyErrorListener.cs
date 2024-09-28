@@ -3,16 +3,17 @@ namespace compilador
     using System.Collections.Generic;
     using Antlr4.Runtime;
     using parser.generated;
+    using System.IO;
 
-    public class MyErrorListener:BaseErrorListener , IAntlrErrorListener<int>, IAntlrErrorListener<IToken>
+    public class MyErrorListener: BaseErrorListener,  IAntlrErrorListener<int>
     {
-        public List<string> ErrorMsgs;
+        public List<string> ErrorMsgs{ get; }
 
         public MyErrorListener()
         {
             ErrorMsgs = new List<string>();
         }
-        public void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public override  void SyntaxError(TextWriter output ,IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
         {
             if (recognizer is miniPythonParser)
             {
@@ -20,6 +21,7 @@ namespace compilador
             }
             else if (recognizer is miniPythonLexer)
             {
+                
                 ErrorMsgs.Add($"SCANNER ERROR - line {line}:{charPositionInLine+1} {msg}");
             }
             else
@@ -27,15 +29,15 @@ namespace compilador
                 ErrorMsgs.Add("Other Error");
             }
         }
-        // Syntax error handling for character-level errors (lexer)
-        public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
-        {
-            ErrorMsgs.Add($"LEXER ERROR - line {line}:{charPositionInLine+1} {msg}");
-        }
-
+        
         public bool HasErrors()
         {
             return ErrorMsgs.Count > 0;
+        }
+
+        public void SyntaxError(TextWriter output, IRecognizer recognizer, int offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e) 
+        {
+            ErrorMsgs.Add($"LEXER ERROR - line {line}:{charPositionInLine+1} {msg}");
         }
 
         public override string ToString()

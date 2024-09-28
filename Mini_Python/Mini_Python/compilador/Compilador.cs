@@ -14,36 +14,28 @@ public class Compilador
         miniPythonLexer lexer = null;
         miniPythonParser parser = null;
         MyErrorListener myListener = new MyErrorListener();
+        
+        myListener.ErrorMsgs.Clear();
+        input = CharStreams.fromString(text);
+        lexer = new miniPythonLexer(input);
+        lexer.RemoveErrorListeners(); 
+        lexer.AddErrorListener(myListener);
+        tokens = new CommonTokenStream(lexer);
+        parser = new miniPythonParser(tokens);
+        parser.RemoveErrorListeners();
+        parser.AddErrorListener(myListener);
         try
         {
-            input = CharStreams.fromString(text);
-            lexer = new miniPythonLexer(input);
-            tokens = new CommonTokenStream(lexer);
-            parser = new miniPythonParser(tokens);
-            myListener.ErrorMsgs.Clear();
-            parser.RemoveErrorListeners();
-            lexer.RemoveErrorListeners(); 
-            parser.ErrorHandler = new CustomErrorStrategy();
-            lexer.AddErrorListener(myListener);
-            parser.AddErrorListener(myListener);
-            try
+            IParseTree tree = parser.program(); 
+            if (myListener.HasErrors())
             {
-                IParseTree tree = parser.program(); // Intenta analizar
-                if (myListener.HasErrors())
-                {
-                    Console.WriteLine("Compilation failed");
-                }
-            }catch (RecognitionException e)
-            {
-                myListener.ErrorMsgs.Add($"Unhandled error: {e.Message}");
-            }catch (Exception ex) // Captura excepciones generales
-            {
-               myListener.ErrorMsgs.Add($"General exception: {ex.Message}");
+                Console.WriteLine("Compilation failed");
             }
-        }catch (IOException e) {
-            Console.WriteLine("No hay un archivo.");
-            Console.WriteLine(e.Message);
-        }
+            else
+            {
+                Console.WriteLine("Compilation successful");
+            }
+        }catch (NullReferenceException  ex){ }
         return myListener;    
     }
     

@@ -117,6 +117,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_program; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitProgram(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -168,6 +174,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_mainStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMainStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -237,6 +249,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_statement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -334,6 +352,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_defStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDefStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -386,6 +410,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_argList; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitArgList(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -460,6 +490,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_ifStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIfStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -515,6 +551,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_whileStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitWhileStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -558,6 +600,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_returnStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitReturnStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -605,6 +653,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_forStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitForStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -652,6 +706,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_printStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPrintStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -692,6 +752,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_assignStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssignStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -735,6 +801,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_functionCallStatement; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunctionCallStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -790,6 +862,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_sequence; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSequence(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -843,6 +921,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_expression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -892,6 +976,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_comparison; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitComparison(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -946,6 +1036,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_additionExpression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAdditionExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1014,6 +1110,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_multiplicationExpression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMultiplicationExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1076,6 +1178,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_elementExpression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitElementExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1131,6 +1239,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_expressionList; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpressionList(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1205,6 +1319,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_primitiveExpression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPrimitiveExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1330,6 +1450,12 @@ public partial class miniPythonParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_listExpression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			IminiPythonParserVisitor<TResult> typedVisitor = visitor as IminiPythonParserVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitListExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]

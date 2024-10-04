@@ -29,11 +29,11 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         Visit(context.IDENTIFIER());
         Visit(context.LPAREN());
         Visit(context.RPAREN()); 
-        TablaSimbolosProyecto.OpenScope();
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreFuncion) != null) {
             errorList.Add($"Error: La funcion '{nombreFuncion}' ya esta definida en este scope.");
         } else
         { 
+            TablaSimbolosProyecto.OpenScope();
            // Extraemos la lista de parámetros de la función
            List<string> parametros = new List<string>();
            Visit(context.argList());

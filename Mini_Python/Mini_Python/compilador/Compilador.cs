@@ -40,11 +40,12 @@ public class Compilador
                 caVisitor.Visit(tree);
                 if (caVisitor.hasErrors()){
                     Console.WriteLine("ContextAnalizer failed");
+                    Console.WriteLine(caVisitor.toString());
                     Console.WriteLine(caVisitor);
                 }
-                else {
+                else
+                {
                     Console.WriteLine(myListener);
-                    Console.WriteLine(caVisitor.toString());
                     Console.WriteLine("ContextAnalizer passed");
                 }
                 

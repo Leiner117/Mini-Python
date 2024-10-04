@@ -26,52 +26,44 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
     public override object VisitDefStatement(miniPythonParser.DefStatementContext context) {
         string nombreFuncion = context.IDENTIFIER().GetText();
-        
+        Visit(context.IDENTIFIER());
+        Visit(context.LPAREN());
+        Visit(context.RPAREN()); 
+        TablaSimbolosProyecto.OpenScope();
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreFuncion) != null) {
             errorList.Add($"Error: La funcion '{nombreFuncion}' ya esta definida en este scope.");
         } else
-        {
-           TablaSimbolosProyecto.OpenScope();
-            Visit(context.IDENTIFIER());
-           Visit(context.LPAREN());
-           Visit(context.argList());
-           Visit(context.RPAREN());
-            Visit(context.DOSPUNTOS());
-           Visit(context.NEWLINE());
-           Visit(context.sequence());
+        { 
            // Extraemos la lista de parámetros de la función
            List<string> parametros = new List<string>();
-           if (context.argList() != null)
-           {
+           Visit(context.argList());
+           if (context.argList() != null) {
                // Asumimos que los identificadores de los parámetros están en el argList
-               foreach (var param in context.argList().IDENTIFIER())
-               {
-                   string paramName = param.GetText();
-
-                   // Verificar si el parámetro ya está definido en este scope
-                   if (TablaSimbolosProyecto.BuscarEnNivelActual(paramName) != null)
-                   {
-                       errorList.Add($"Error: El parametro '{paramName}' ya esta definido en este scope.");
-                   }
-                   else
-                   {
+               foreach (var param in context.argList().IDENTIFIER()){
                        // Insertamos cada parámetro en la tabla de símbolos
-                       TablaSimbolosProyecto.InsertarVariable(param.Symbol, SymbolType.Parameter);
-                       parametros.Add(paramName); // Guardamos el parámetro
-                   }
+                       parametros.Add(param.GetText()); // Guardamos el parámetro
+                       
                }
            }
-
            // Insertamos la función en la tabla de símbolos con su lista de parámetros
            TablaSimbolosProyecto.InsertarFuncion(context.IDENTIFIER().Symbol, SymbolType.Function, parametros);
+           // Insert parameters into the new scope
+           if (context.argList() != null) {
+               foreach (var param in context.argList().IDENTIFIER()) {
+                   TablaSimbolosProyecto.InsertarVariable(param.Symbol, SymbolType.Parameter);
+               }
+           }
+           Visit(context.DOSPUNTOS());
+           Visit(context.NEWLINE());
+           Visit(context.sequence());
            // Imprimimos la tabla de símbolos para depuración
            TablaSimbolosProyecto.Imprimir();
            // Cerramos el scope después de procesar la función
-           TablaSimbolosProyecto.OpenScope();
+           TablaSimbolosProyecto.CloseScope();
         }
 
-        //return null;
-        return base.VisitDefStatement(context);
+        return null;
+        //return base.VisitDefStatement(context);
     }
 
     public override object VisitArgList(miniPythonParser.ArgListContext context)
@@ -107,23 +99,18 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
     public override object VisitAssignStatement(miniPythonParser.AssignStatementContext context) {
         string nombreVariable = context.IDENTIFIER().GetText();
-        
+        Visit(context.IDENTIFIER());
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreVariable) != null) {
             errorList.Add($"Error: La variable '{nombreVariable}' ya esta definida en este scope.");
         } else {
             TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);
-            Visit(context.IDENTIFIER());
             Visit(context.ASSIGN());
             Visit(context.expression());
             Visit(context.NEWLINE());
-            
-            
-            TablaSimbolosProyecto.Imprimir();
-          
         }
 
-        //return null;
-         return base.VisitAssignStatement(context);
+        return null;
+         //return base.VisitAssignStatement(context);
     }
 
     public override object VisitFunctionCallStatement(miniPythonParser.FunctionCallStatementContext context)
@@ -190,6 +177,5 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         }
         return builder.ToString();
     }
-    
     
 }

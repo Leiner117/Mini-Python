@@ -33,12 +33,12 @@ multiplicationExpression: elementExpression ((MULT | DIV) elementExpression)*;
 elementExpression: primitiveExpression (LBRACKET expression RBRACKET)?;
                   
 expressionList: (expression (COMMA expression)*)?;
-primitiveExpression
-    : LPAREN expression RPAREN
-    | LEN LPAREN expression RPAREN
-    | listExpression
-    | (PLUS | MINUS)? (INTEGER | FLOAT | CHARCONST | STRING)
-    | IDENTIFIER (LPAREN expressionList RPAREN)?
+primitiveExpression                                                 
+    : LPAREN expression RPAREN                                        #primitiveExpressionparenthesisExprAST                               
+    | LEN LPAREN expression RPAREN                                    #primitiveExpressionlenAST
+    | listExpression                                                  #primitiveExpressionlistAST                      
+    | (PLUS | MINUS)? (INTEGER | FLOAT | CHARCONST | STRING)          #primitiveExpressionliteralAST
+    | IDENTIFIER (LPAREN expressionList RPAREN)?                      #primitiveExpressionidentifierListAST
     ;
 listExpression : LBRACKET expressionList RBRACKET;
    

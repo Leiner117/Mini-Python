@@ -24,11 +24,9 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     public override object VisitProgram(miniPythonParser.ProgramContext context)
     {
         TablaSimbolosProyecto.OpenScope();
-        
         //return null; 
         return base.VisitProgram(context);
     }
-
     public override object VisitMainStatement(miniPythonParser.MainStatementContext context)
     {
         return base.VisitMainStatement(context);
@@ -69,17 +67,14 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                    TablaSimbolosProyecto.InsertarVariable(param.Symbol, SymbolType.Parameter);
                }
            }
-           //Visit(context.DOSPUNTOS());
-          // Visit(context.NEWLINE());
-           //Visit(context.sequence());
-           // Imprimimos la tabla de símbolos para depuración
-          // TablaSimbolosProyecto.Imprimir();
-           // Cerramos el scope después de procesar la función
-           //TablaSimbolosProyecto.CloseScope();
+           Visit(context.DOSPUNTOS());
+           Visit(context.NEWLINE());
+           Visit(context.sequence());
+           TablaSimbolosProyecto.Imprimir();
+           TablaSimbolosProyecto.CloseScope();
         }
-        TablaSimbolosProyecto.Imprimir();
-        //return null;
-        return base.VisitDefStatement(context);
+       return null;
+        //return base.VisitDefStatement(context);
     }
     public override object VisitArgList(miniPythonParser.ArgListContext context)
     {
@@ -191,12 +186,13 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             //errorList.Add($"Error: La variable '{nombreVariable}' ya esta definida en este scope.");
         } else {
             Visit(context.expression());
-            TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);
             Visit(context.ASSIGN());
-          // 
+            if (hasErrors()){
+                return null;
+            }
+            TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);
             Visit(context.NEWLINE());
         }
-        TablaSimbolosProyecto.Imprimir();
         //return null;
          return base.VisitAssignStatement(context);
     }
@@ -232,12 +228,27 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         //return base.VisitFunctionCallStatement(context);
     }
     public override object VisitSequence(miniPythonParser.SequenceContext context) {
+        
         return base.VisitSequence(context) ;
     }
-    public override object VisitExpression(miniPythonParser.ExpressionContext context)
-    {
-        
-        return base.VisitExpression(context);
+    public override object VisitExpression(miniPythonParser.ExpressionContext context) {
+        // Visit the addition expression
+        var ex1 = Visit(context.additionExpression());
+        // Check if the addition expression contains a primitive expression and validate its existence
+        var additionExpr = context.additionExpression();
+        foreach (var multExpr in additionExpr.multiplicationExpression()) {
+            foreach (var elemExpr in multExpr.elementExpression()) {
+                if (elemExpr.primitiveExpression() is miniPythonParser.PrimitiveExpressionidentifierListASTContext identifierContext) {
+                    string identifier = identifierContext.IDENTIFIER().GetText();
+                    var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
+                    if (symbol == null) {
+                        reportError($"Error: La variable '{identifier}' no está definida.", identifierContext.IDENTIFIER().Symbol);
+                    }
+                }
+            }
+        }
+        return ex1;
+       // return base.VisitExpression(context);
     }
     public override object VisitComparison(miniPythonParser.ComparisonContext context)
     {
@@ -249,10 +260,12 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitMultiplicationExpression(miniPythonParser.MultiplicationExpressionContext context)
     {
-        return base.VisitMultiplicationExpression(context);
+        
+       return base.VisitMultiplicationExpression(context);
     }
     public override object VisitElementExpression(miniPythonParser.ElementExpressionContext context)
     {
+       
         return base.VisitElementExpression(context);
     }
     public override object VisitExpressionList(miniPythonParser.ExpressionListContext context)
@@ -262,27 +275,33 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
     public override object VisitPrimitiveExpressionparenthesisExprAST(miniPythonParser.PrimitiveExpressionparenthesisExprASTContext context)
     {
-        return base.VisitPrimitiveExpressionparenthesisExprAST(context);
+      return base.VisitPrimitiveExpressionparenthesisExprAST(context);
     }
 
     public override object VisitPrimitiveExpressionlenAST(miniPythonParser.PrimitiveExpressionlenASTContext context)
     {
+       
         return base.VisitPrimitiveExpressionlenAST(context);
     }
 
     public override object VisitPrimitiveExpressionlistAST(miniPythonParser.PrimitiveExpressionlistASTContext context)
     {
+       
         return base.VisitPrimitiveExpressionlistAST(context);
     }
 
     public override object VisitPrimitiveExpressionliteralAST(miniPythonParser.PrimitiveExpressionliteralASTContext context)
     {
+      
         return base.VisitPrimitiveExpressionliteralAST(context);
     }
 
     public override object VisitPrimitiveExpressionidentifierListAST(miniPythonParser.PrimitiveExpressionidentifierListASTContext context)
     {
-        return base.VisitPrimitiveExpressionidentifierListAST(context);
+        string identifier = context.IDENTIFIER().GetText();
+        var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
+        return symbol;
+        //return base.VisitPrimitiveExpressionidentifierListAST(context);
     }
 
     public override object VisitListExpression(miniPythonParser.ListExpressionContext context)

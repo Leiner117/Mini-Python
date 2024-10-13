@@ -72,7 +72,7 @@ public class TablaSimbolos {
 
     public void CloseScope() {
         if (nivelActual >= 0) {
-            tabla.RemoveAt(nivelActual);
+            tabla[nivelActual].Clear();
             nivelActual--;
         }
     }

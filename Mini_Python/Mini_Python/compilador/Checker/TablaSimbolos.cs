@@ -119,6 +119,17 @@ public class TablaSimbolos {
         }
         return null;
     }
+    public Ident BuscarEnNivelAnterior(int nivel,string nombre)
+    {
+        if (nivel >= 0 && nivel < tabla.Count && tabla[nivel].ContainsKey(nombre))
+        {
+            return tabla[nivel][nombre];
+        }
+        return null;
+    }
+    public int getNivelActual(){
+        return nivelActual;
+    }
 
     // Imprimir la tabla de símbolos
     public void Imprimir()

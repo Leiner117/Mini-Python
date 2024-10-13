@@ -8,14 +8,14 @@ using Mini_Python.compilador.Checker;
 using static Mini_Python.Form1;
 public class Compilador
 {
-    public static MyErrorListener compilador (string text)
+    public static object compilador (string text)
     {
-        Form1 form = new Form1();
         ICharStream input = null;
         CommonTokenStream tokens = null;
         miniPythonLexer lexer = null;
         miniPythonParser parser = null;
         MyErrorListener myListener = new MyErrorListener();
+        ContextAnalizer caVisitor = new ContextAnalizer();
         
         myListener.ErrorMsgs.Clear();
         input = CharStreams.fromString(text);
@@ -36,12 +36,11 @@ public class Compilador
             else
             {
                 Console.WriteLine("Compilation successful - Pasando al ContextAnalizer");
-                ContextAnalizer caVisitor = new ContextAnalizer();
                 caVisitor.Visit(tree);
                 if (caVisitor.hasErrors()){
                     Console.WriteLine("ContextAnalizer failed");
-                    Console.WriteLine(caVisitor.toString());
-                    Console.WriteLine(caVisitor);
+                    Console.WriteLine(caVisitor.ToString());
+                    return caVisitor;
                 }
                 else
                 {
@@ -51,7 +50,7 @@ public class Compilador
                 
             }
         }catch (NullReferenceException  ex){ }
-        return myListener;    
+        return myListener; 
     }
     
 }

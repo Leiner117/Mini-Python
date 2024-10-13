@@ -4,7 +4,7 @@ using Antlr4.Runtime;
 public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
     private TablaSimbolos TablaSimbolosProyecto;
-    private List<string> errorList ;
+    public List<string> errorList ;
     public ContextAnalizer() {
         TablaSimbolosProyecto = new TablaSimbolos();
         errorList =  new List<string>();
@@ -14,11 +14,12 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         //StringBuffer err = new System.Text.StringBuffer();
         err.Append(error).
             Append(" ").
-            Append("(").
+            Append("line").
+            Append(" ").
             Append(offendingToken.Line).
             Append(":").
-            Append(offendingToken.Column ).
-            Append(")");
+            Append(offendingToken.Column+1 ).
+            Append("");
         errorList.Add(err.ToString());
     }
     public override object VisitProgram(miniPythonParser.ProgramContext context)
@@ -43,13 +44,34 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
        // Visit(context.LPAREN());
       //  Visit(context.RPAREN()); 
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreFuncion) != null) {
-            reportError($"Error: La funcion '{nombreFuncion}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
+            reportError($"CONTEXT ERROR  La funcion '{nombreFuncion}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
             //errorList.Add($"Error: La funcion '{nombreFuncion}' ya esta definida en este scope.");
         } else
         {
+            var nivel = TablaSimbolosProyecto.getNivelActual();
+            if (nivel!= 0 && TablaSimbolosProyecto.BuscarEnNivelAnterior(nivel-1, nombreFuncion) != null) {
+                var symbol = TablaSimbolosProyecto.BuscarEnNivelAnterior(nivel-1, nombreFuncion);
+                if (symbol.Type == SymbolType.Function) {
+                    var methodIdent = symbol as TablaSimbolos.MethodIdent;
+                    if (methodIdent != null) {
+                        int cantidadParametros = methodIdent.Params.Count;
+                        int cantidadParametrosNueva = 0;
+                        foreach (var param in context.argList().IDENTIFIER())
+                        {
+                            cantidadParametrosNueva++;
+                        }
+                        if (cantidadParametros == cantidadParametrosNueva) {
+                            reportError($"CONTEXT ERROR  La funcion '{nombreFuncion}' esta siendo redefinida con los mismos {cantidadParametros} parametros.", context.IDENTIFIER().Symbol);
+                        }
+                    }
+                }
+            }
+            if (hasErrors()){
+                return null;
+            }
            // Extraemos la lista de parámetros de la función
            List<string> parametros = new List<string>();
-         //  Visit(context.argList());
+           //Visit(context.argList());
            if (context.argList() != null) {
                // Asumimos que los identificadores de los parámetros están en el argList
                foreach (var param in context.argList().IDENTIFIER()){
@@ -129,7 +151,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
            
             if (expressionSymbol == null)
             {
-                reportError($"Error: La variable '{expressionText}' no está definida.", context.expression().Start);
+                reportError($"CONTEXT ERROR  La variable '{expressionText}' no esta definida.", context.expression().Start);
                // errorList.Add($"Error: La variable '{expressionText}' no está definida.");
             }
         }
@@ -167,7 +189,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
            
             if (expressionSymbol == null)
             {
-                reportError($"Error: La variable '{expressionText}' no está definida.",context.expression().Start);
+                reportError($"CONTEXT ERROR  La variable '{expressionText}' no esta definida.",context.expression().Start);
               //  errorList.Add($"Error: La variable '{expressionText}' no está definida.");
             }
         }
@@ -182,7 +204,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         string nombreVariable = context.IDENTIFIER().GetText();
         Visit(context.IDENTIFIER());
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreVariable) != null) {
-            reportError($"Error: La variable '{nombreVariable}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
+            reportError($"CONTEXT ERROR  La variable '{nombreVariable}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
             //errorList.Add($"Error: La variable '{nombreVariable}' ya esta definida en este scope.");
         } else {
             Visit(context.expression());
@@ -207,7 +229,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         var functionSymbol = TablaSimbolosProyecto.BuscarEnNivelActual(functionName);
         if (functionSymbol == null || functionSymbol.Type != SymbolType.Function)
         {
-            reportError($"Error: La función '{functionName}' no está definida.", context.IDENTIFIER().Symbol);
+            reportError($"CONTEXT ERROR  La funcion '{functionName}' no esta definida.", context.IDENTIFIER().Symbol);
           //  errorList.Add($"Error: La función '{functionName}' no está definida.");
         }
         else
@@ -219,7 +241,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
             if (numArguments != numParameters)
             {
-                reportError($"Error: La función '{functionName}' espera {numParameters} argumentos, pero se pasaron {numArguments}.", context.IDENTIFIER().Symbol);
+                reportError($"CONTEXT ERROR  La funcion '{functionName}' espera {numParameters} argumentos, pero se pasaron {numArguments}.", context.IDENTIFIER().Symbol);
                 //errorList.Add($"Error: La función '{functionName}' espera {numParameters} argumentos, pero se pasaron {numArguments}.");
             }
         } 
@@ -242,7 +264,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                     string identifier = identifierContext.IDENTIFIER().GetText();
                     var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
                     if (symbol == null) {
-                        reportError($"Error: La variable '{identifier}' no está definida.", identifierContext.IDENTIFIER().Symbol);
+                        reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
                     }
                 }
             }
@@ -311,7 +333,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     public bool hasErrors(){
         return errorList.Count > 0;
     }
-    public String toString ( )
+    public override string ToString ( )
     {
         if ( !hasErrors() ) return "0 type/scope errors";
         var builder = new System.Text.StringBuilder();

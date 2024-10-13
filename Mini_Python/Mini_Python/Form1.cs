@@ -427,7 +427,7 @@ namespace Mini_Python
             return url;
         }
 
-        public void ErrorConsole(MyErrorListener error)
+        public void ErrorConsole(Object error)
         {
             // Limpiar y mostrar el RichTextBox de errores
             richTextBox1.Clear();
@@ -435,7 +435,6 @@ namespace Mini_Python
 
             // Suponiendo que error.ToString() devuelve una cadena con múltiples errores separados por saltos de línea
             string[] errorLines = error.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-
             foreach (string line in errorLines)
             {
                 // Añadir la línea al RichTextBox de errores

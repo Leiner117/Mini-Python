@@ -11,7 +11,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     }    
     private void reportError(String error, IToken offendingToken){
         var err = new System.Text.StringBuilder();
-        //StringBuffer err = new System.Text.StringBuffer();
         err.Append(error).
             Append(" ").
             Append("line").
@@ -33,19 +32,12 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         return base.VisitMainStatement(context);
     }
  public override object VisitStatement(miniPythonParser.StatementContext context) {
-     //TablaSimbolosProyecto.CloseScope();
-     //TablaSimbolosProyecto.Imprimir();
-     
      return base.VisitStatement(context);;
  }
     public override object VisitDefStatement(miniPythonParser.DefStatementContext context) {
         string nombreFuncion = context.IDENTIFIER().GetText();
-        //Visit(context.IDENTIFIER());
-       // Visit(context.LPAREN());
-      //  Visit(context.RPAREN()); 
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreFuncion) != null) {
             reportError($"CONTEXT ERROR  La funcion '{nombreFuncion}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
-            //errorList.Add($"Error: La funcion '{nombreFuncion}' ya esta definida en este scope.");
         } else
         {
             var nivel = TablaSimbolosProyecto.getNivelActual();
@@ -71,13 +63,10 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             }
            // Extraemos la lista de parámetros de la función
            List<string> parametros = new List<string>();
-           //Visit(context.argList());
            if (context.argList() != null) {
                // Asumimos que los identificadores de los parámetros están en el argList
                foreach (var param in context.argList().IDENTIFIER()){
-                       // Insertamos cada parámetro en la tabla de símbolos
                        parametros.Add(param.GetText()); // Guardamos el parámetro
-                       
                }
            }
            // Insertamos la función en la tabla de símbolos con su lista de parámetros
@@ -102,42 +91,45 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     {
         return base.VisitArgList(context);
     }
-
     public override object VisitIfStatement(miniPythonParser.IfStatementContext context)
     {
         // Visit the expression inside the if statement
         Visit(context.expression());
+        Visit(context.DOSPUNTOS(0));
+        Visit(context.NEWLINE(0));
         // Open a new scope for the if block
         TablaSimbolosProyecto.OpenScope();
         Visit(context.sequence(0)); // Visit the sequence of statements inside the if block
+        TablaSimbolosProyecto.Imprimir();
         TablaSimbolosProyecto.CloseScope();
-
         // Check if there is an else block
-        if (context.ELSE() != null)
-        {
-            // Open a new scope for the else block
-            TablaSimbolosProyecto.OpenScope();
-            Visit(context.sequence(1)); // Visit the sequence of statements inside the else block
-            TablaSimbolosProyecto.CloseScope();
-        }
-      //  return null;
-        return base.VisitIfStatement(context);
+        Visit(context.ELSE());
+        // Open a new scope for the else block
+        Visit(context.DOSPUNTOS(1));
+        Visit(context.NEWLINE(1));
+        TablaSimbolosProyecto.OpenScope();
+        Visit(context.sequence(1)); // Visit the sequence of statements inside the else block
+        TablaSimbolosProyecto.Imprimir();
+        TablaSimbolosProyecto.CloseScope();
+    
+        return null;
+       // return base.VisitIfStatement(context);
     }
-
     public override object VisitWhileStatement(miniPythonParser.WhileStatementContext context)
     {
         // Visit the expression inside the while statement
- //       Visit(context.expression());
-
+        Visit(context.expression());
+        Visit(context.DOSPUNTOS());
+        Visit(context.NEWLINE());
         // Open a new scope for the while block
         TablaSimbolosProyecto.OpenScope();
-       // Visit(context.sequence()); // Visit the sequence of statements inside the while block
+        Visit(context.sequence()); // Visit the sequence of statements inside the while block
+        TablaSimbolosProyecto.Imprimir();
         TablaSimbolosProyecto.CloseScope();
 
         return null;
        // return base.VisitWhileStatement(context);
     }
-
     public override object VisitReturnStatement(miniPythonParser.ReturnStatementContext context)
     {
         // Visit the expression inside the print statement
@@ -155,8 +147,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                // errorList.Add($"Error: La variable '{expressionText}' no está definida.");
             }
         }
-        // For complex expressions, you can add additional validation if needed
-
         return null;
         //return base.VisitReturnStatement(context);
     }
@@ -164,12 +154,14 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     public override object VisitForStatement(miniPythonParser.ForStatementContext context)
     {
             // Visit the expressions inside the for statement
-         //   Visit(context.expression()); // Visit the variable in the for loop
-          //  Visit(context.expressionList()); // Visit the list or range in the for loop
-
+            Visit(context.expression()); // Visit the variable in the for loop
+            Visit(context.expressionList()); // Visit the list or range in the for loop
+            Visit(context.DOSPUNTOS());
+            Visit(context.NEWLINE());
             // Open a new scope for the for block
             TablaSimbolosProyecto.OpenScope();
             Visit(context.sequence()); // Visit the sequence of statements inside the for block
+            TablaSimbolosProyecto.Imprimir();
             TablaSimbolosProyecto.CloseScope();
 
             return null;
@@ -190,13 +182,9 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             if (expressionSymbol == null)
             {
                 reportError($"CONTEXT ERROR  La variable '{expressionText}' no esta definida.",context.expression().Start);
-              //  errorList.Add($"Error: La variable '{expressionText}' no está definida.");
             }
         }
-        // For complex expressions, you can add additional validation if needed
-
         return null;
-    
     //    return base.VisitPrintStatement(context);
     }
     public override object VisitAssignStatement(miniPythonParser.AssignStatementContext context)
@@ -205,32 +193,26 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         Visit(context.IDENTIFIER());
         if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreVariable) != null) {
             reportError($"CONTEXT ERROR  La variable '{nombreVariable}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
-            //errorList.Add($"Error: La variable '{nombreVariable}' ya esta definida en este scope.");
         } else {
-            Visit(context.expression());
             Visit(context.ASSIGN());
+            Visit(context.expression());
             if (hasErrors()){
                 return null;
             }
             TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);
             Visit(context.NEWLINE());
         }
-        //return null;
-         return base.VisitAssignStatement(context);
+        return null;
+         //return base.VisitAssignStatement(context);
     }
     public override object VisitFunctionCallStatement(miniPythonParser.FunctionCallStatementContext context)
     {
-        // Visit the function identifier
-    //    Visit(context.IDENTIFIER());
-        // Visit the list of expressions (arguments) passed to the function
-      //  Visit(context.expressionList());
         // Check if the function is defined in the symbol table
         var functionName = context.IDENTIFIER().GetText();
-        var functionSymbol = TablaSimbolosProyecto.BuscarEnNivelActual(functionName);
+        var functionSymbol = TablaSimbolosProyecto.Buscar(functionName);
         if (functionSymbol == null || functionSymbol.Type != SymbolType.Function)
         {
             reportError($"CONTEXT ERROR  La funcion '{functionName}' no esta definida.", context.IDENTIFIER().Symbol);
-          //  errorList.Add($"Error: La función '{functionName}' no está definida.");
         }
         else
         {
@@ -242,7 +224,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             if (numArguments != numParameters)
             {
                 reportError($"CONTEXT ERROR  La funcion '{functionName}' espera {numParameters} argumentos, pero se pasaron {numArguments}.", context.IDENTIFIER().Symbol);
-                //errorList.Add($"Error: La función '{functionName}' espera {numParameters} argumentos, pero se pasaron {numArguments}.");
             }
         } 
         
@@ -262,13 +243,31 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             foreach (var elemExpr in multExpr.elementExpression()) {
                 if (elemExpr.primitiveExpression() is miniPythonParser.PrimitiveExpressionidentifierListASTContext identifierContext) {
                     string identifier = identifierContext.IDENTIFIER().GetText();
-                    var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
-                    if (symbol == null) {
-                        reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
+                    if (identifierContext.LPAREN() != null) {
+                        // Function call case
+                        var functionSymbol = TablaSimbolosProyecto.Buscar(identifier);
+                        if (functionSymbol == null || functionSymbol.Type != SymbolType.Function) {
+                            reportError($"CONTEXT ERROR La funcion '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
+                        } else {
+                            // Check if the number of arguments matches the number of parameters
+                            var methodSymbol = functionSymbol as TablaSimbolos.MethodIdent;
+                            int numArguments = identifierContext.expressionList()?.expression().Length ?? 0;
+                            int numParameters = methodSymbol.Params.Count;
+
+                            if (numArguments != numParameters) {
+                                reportError($"CONTEXT ERROR La funcion '{identifier}' espera {numParameters} argumentos, pero se pasaron {numArguments}.", identifierContext.IDENTIFIER().Symbol);
+                            }
+                        }
+                    } else {
+                        // Variable case
+                        var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
+                        if (symbol == null) {
+                            reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
+                        }
                     }
                 }
             }
-        }
+        }    
         return ex1;
        // return base.VisitExpression(context);
     }

@@ -139,13 +139,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         var expressionText = context.expression().GetText();
         if (!string.IsNullOrEmpty(expressionText) && !expressionText.Contains("("))
         {
-            var expressionSymbol = TablaSimbolosProyecto.BuscarEnNivelActual(expressionText);
-           
-            if (expressionSymbol == null)
-            {
-                reportError($"CONTEXT ERROR  La variable '{expressionText}' no esta definida.", context.expression().Start);
-               // errorList.Add($"Error: La variable '{expressionText}' no está definida.");
-            }
+           Visit(context.expression());
         }
         return null;
         //return base.VisitReturnStatement(context);
@@ -177,12 +171,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         var expressionText = context.expression().GetText();
         if (!string.IsNullOrEmpty(expressionText) && !expressionText.Contains("("))
         {
-            var expressionSymbol = TablaSimbolosProyecto.BuscarEnNivelActual(expressionText);
-           
-            if (expressionSymbol == null)
-            {
-                reportError($"CONTEXT ERROR  La variable '{expressionText}' no esta definida.",context.expression().Start);
-            }
+            Visit(context.expression());
         }
         return null;
     //    return base.VisitPrintStatement(context);
@@ -262,7 +251,10 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                         // Variable case
                         var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
                         if (symbol == null) {
-                            reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
+                            symbol= TablaSimbolosProyecto.Buscar(identifier);
+                            if (symbol == null) {
+                                reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
+                            }
                         }
                     }
                 }

@@ -54,13 +54,12 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                         }
                         if (cantidadParametros == cantidadParametrosNueva) {
                             reportError($"CONTEXT ERROR  La funcion '{nombreFuncion}' esta siendo redefinida con los mismos {cantidadParametros} parametros.", context.IDENTIFIER().Symbol);
+                            return null;
                         }
                     }
                 }
             }
-            if (hasErrors()){
-                return null;
-            }
+            
            // Extraemos la lista de parámetros de la función
            List<string> parametros = new List<string>();
            if (context.argList() != null) {
@@ -184,8 +183,12 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             reportError($"CONTEXT ERROR  La variable '{nombreVariable}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
         } else {
             Visit(context.ASSIGN());
+            // Store the current error count
+            int initialErrorCount = errorList.Count;
             Visit(context.expression());
-            if (hasErrors()){
+
+            // Check if new errors were added
+            if (errorList.Count > initialErrorCount){
                 return null;
             }
             TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);

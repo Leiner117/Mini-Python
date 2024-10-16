@@ -263,8 +263,32 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitElementExpression(miniPythonParser.ElementExpressionContext context)
     {
-       
-        return base.VisitElementExpression(context);
+        var primitiveExpr = context.primitiveExpression();
+        if (primitiveExpr != null)
+        {
+            var result = Visit(primitiveExpr);
+            if (context.LBRACKET() != null && context.expression() != null)
+            {
+                string primitiveText = primitiveExpr.GetText();
+                // Check if the primitive expression is a numeric literal
+                if (primitiveText.All(char.IsDigit))
+                {
+                    reportError($"CONTEXT ERROR La expresión '{primitiveText}' no es indexable.", context.primitiveExpression().Start);
+                    return null;
+                }
+                // Check if the primitive expression is a string literal
+                if (primitiveText.StartsWith("\"") && primitiveText.EndsWith("\""))
+                {
+                    reportError($"CONTEXT ERROR La expresión '{primitiveText}' no es indexable.", context.primitiveExpression().Start);
+                    return null;
+                }
+                // Add more checks for other invalid cases as needed
+                Visit(context.expression());
+            }
+            return result;
+        }
+        return null;
+       // return base.VisitElementExpression(context);
     }
     public override object VisitExpressionList(miniPythonParser.ExpressionListContext context)
     {

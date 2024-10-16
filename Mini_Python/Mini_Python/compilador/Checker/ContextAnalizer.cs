@@ -59,18 +59,13 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                     }
                 }
             }
-            
-           // Extraemos la lista de parámetros de la función
            List<string> parametros = new List<string>();
            if (context.argList() != null) {
-               // Asumimos que los identificadores de los parámetros están en el argList
                foreach (var param in context.argList().IDENTIFIER()){
                        parametros.Add(param.GetText()); // Guardamos el parámetro
                }
            }
-           // Insertamos la función en la tabla de símbolos con su lista de parámetros
            TablaSimbolosProyecto.InsertarFuncion(context.IDENTIFIER().Symbol, SymbolType.Function, parametros);
-           // Insert parameters into the new scope
            TablaSimbolosProyecto.OpenScope();
            if (context.argList() != null) {
                foreach (var param in context.argList().IDENTIFIER()) {
@@ -92,25 +87,20 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitIfStatement(miniPythonParser.IfStatementContext context)
     {
-        // Visit the expression inside the if statement
         Visit(context.expression());
         Visit(context.DOSPUNTOS(0));
         Visit(context.NEWLINE(0));
-        // Open a new scope for the if block
         TablaSimbolosProyecto.OpenScope();
-        Visit(context.sequence(0)); // Visit the sequence of statements inside the if block
+        Visit(context.sequence(0)); 
         TablaSimbolosProyecto.Imprimir();
         TablaSimbolosProyecto.CloseScope();
-        // Check if there is an else block
         Visit(context.ELSE());
-        // Open a new scope for the else block
         Visit(context.DOSPUNTOS(1));
         Visit(context.NEWLINE(1));
         TablaSimbolosProyecto.OpenScope();
-        Visit(context.sequence(1)); // Visit the sequence of statements inside the else block
+        Visit(context.sequence(1)); 
         TablaSimbolosProyecto.Imprimir();
         TablaSimbolosProyecto.CloseScope();
-    
         return null;
        // return base.VisitIfStatement(context);
     }
@@ -131,9 +121,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitReturnStatement(miniPythonParser.ReturnStatementContext context)
     {
-        // Visit the expression inside the print statement
-     //   Visit(context.expression());
-
         // Check if the expression is a simple identifier (variable)
         var expressionText = context.expression().GetText();
         if (!string.IsNullOrEmpty(expressionText) && !expressionText.Contains("("))
@@ -147,13 +134,13 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     public override object VisitForStatement(miniPythonParser.ForStatementContext context)
     {
             // Visit the expressions inside the for statement
-            Visit(context.expression()); // Visit the variable in the for loop
-            Visit(context.expressionList()); // Visit the list or range in the for loop
+            Visit(context.expression());
+            Visit(context.expressionList()); 
             Visit(context.DOSPUNTOS());
             Visit(context.NEWLINE());
             // Open a new scope for the for block
             TablaSimbolosProyecto.OpenScope();
-            Visit(context.sequence()); // Visit the sequence of statements inside the for block
+            Visit(context.sequence()); 
             TablaSimbolosProyecto.Imprimir();
             TablaSimbolosProyecto.CloseScope();
 
@@ -163,12 +150,9 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
     public override object VisitPrintStatement(miniPythonParser.PrintStatementContext context)
     {
-        // Visit the expression inside the print statement
-       // Visit(context.expression());
-
         // Check if the expression is a simple identifier (variable)
         var expressionText = context.expression().GetText();
-        if (!string.IsNullOrEmpty(expressionText) && !expressionText.Contains("("))
+        if (!string.IsNullOrEmpty(expressionText)) 
         {
             Visit(context.expression());
         }
@@ -183,11 +167,11 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             reportError($"CONTEXT ERROR  La variable '{nombreVariable}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
         } else {
             Visit(context.ASSIGN());
-            // Store the current error count
+            // Guardar el numero de errores actuales
             int initialErrorCount = errorList.Count;
             Visit(context.expression());
 
-            // Check if new errors were added
+            // Verificar si se generaron errores al visitar la expresion
             if (errorList.Count > initialErrorCount){
                 return null;
             }
@@ -208,7 +192,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         }
         else
         {
-            // Check if the number of arguments matches the number of parameters
             var methodSymbol = functionSymbol as TablaSimbolos.MethodIdent;
             int numArguments = context.expressionList()?.expression().Length ?? 0;
             int numParameters = methodSymbol.Params.Count;
@@ -229,7 +212,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     public override object VisitExpression(miniPythonParser.ExpressionContext context) {
         // Visit the addition expression
         var ex1 = Visit(context.additionExpression());
-        // Check if the addition expression contains a primitive expression and validate its existence
         var additionExpr = context.additionExpression();
         foreach (var multExpr in additionExpr.multiplicationExpression()) {
             foreach (var elemExpr in multExpr.elementExpression()) {
@@ -241,7 +223,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                         if (functionSymbol == null || functionSymbol.Type != SymbolType.Function) {
                             reportError($"CONTEXT ERROR La funcion '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
                         } else {
-                            // Check if the number of arguments matches the number of parameters
+                            // Verificar si coinciden la cantidad de argumentos con la cantidad de parametros
                             var methodSymbol = functionSymbol as TablaSimbolos.MethodIdent;
                             int numArguments = identifierContext.expressionList()?.expression().Length ?? 0;
                             int numParameters = methodSymbol.Params.Count;

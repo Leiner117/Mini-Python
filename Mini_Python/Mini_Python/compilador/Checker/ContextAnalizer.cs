@@ -213,7 +213,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         var additionExpr = context.additionExpression();
         foreach (var multExpr in additionExpr.multiplicationExpression()) {
             foreach (var elemExpr in multExpr.elementExpression()) {
-                if (elemExpr.primitiveExpression() is miniPythonParser.PrimitiveExpressionidentifierListASTContext identifierContext) {
+                 if (elemExpr.primitiveExpression() is miniPythonParser.PrimitiveExpressionidentifierListASTContext identifierContext) {
                     string identifier = identifierContext.IDENTIFIER().GetText();
                     if (identifierContext.LPAREN() != null) {
                         // Function call case
@@ -235,7 +235,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                         var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
                         if (symbol == null) {
                             symbol= TablaSimbolosProyecto.Buscar(identifier);
-                            if (symbol == null) {
+                            if (symbol == null || symbol.Type != SymbolType.Variable) {
                                 reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
                             }
                         }

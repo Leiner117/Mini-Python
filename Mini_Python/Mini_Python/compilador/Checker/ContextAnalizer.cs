@@ -2,7 +2,6 @@
 using parser.generated;    
 using Antlr4.Runtime;
 public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
-
     private TablaSimbolos TablaSimbolosProyecto;
     public List<string> errorList ;
     public ContextAnalizer() {
@@ -130,7 +129,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         return null;
         //return base.VisitReturnStatement(context);
     }
-
     public override object VisitForStatement(miniPythonParser.ForStatementContext context)
     {
             // Visit the expressions inside the for statement
@@ -273,16 +271,15 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                 // Check if the primitive expression is a numeric literal
                 if (primitiveText.All(char.IsDigit))
                 {
-                    reportError($"CONTEXT ERROR La expresión '{primitiveText}' no es indexable.", context.primitiveExpression().Start);
+                    reportError($"CONTEXT ERROR La expresion '{primitiveText}' no es indexable.", context.primitiveExpression().Start);
                     return null;
                 }
                 // Check if the primitive expression is a string literal
                 if (primitiveText.StartsWith("\"") && primitiveText.EndsWith("\""))
                 {
-                    reportError($"CONTEXT ERROR La expresión '{primitiveText}' no es indexable.", context.primitiveExpression().Start);
+                    reportError($"CONTEXT ERROR La expresion '{primitiveText}' no es indexable.", context.primitiveExpression().Start);
                     return null;
                 }
-                // Add more checks for other invalid cases as needed
                 Visit(context.expression());
             }
             return result;
@@ -303,7 +300,19 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     public override object VisitPrimitiveExpressionlenAST(miniPythonParser.PrimitiveExpressionlenASTContext context)
     {
        
-        return base.VisitPrimitiveExpressionlenAST(context);
+        var expr = context.expression();
+        var exprText = expr.GetText();
+        if (exprText.All(char.IsDigit))
+        {
+            reportError($"CONTEXT ERROR La expresion '{exprText}' no es valida como argumento para 'len'.", context.Start);
+            return null;
+        }
+        // Visit the expression to ensure it is processed
+        Visit(expr);
+        return null;
+        
+        
+        //return base.VisitPrimitiveExpressionlenAST(context);
     }
 
     public override object VisitPrimitiveExpressionlistAST(miniPythonParser.PrimitiveExpressionlistASTContext context)
@@ -343,5 +352,4 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         }
         return builder.ToString();
     }
-    
 }

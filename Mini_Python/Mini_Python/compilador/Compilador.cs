@@ -4,7 +4,9 @@ using Antlr4.Runtime.Tree;
 using Mini_Python;
 using parser.generated;
 using Mini_Python.compilador.Checker;
-
+using Mini_Python.compilador.CodeGen;
+using System.IO;
+using System;
 using static Mini_Python.Form1;
 public class Compilador
 {
@@ -32,9 +34,7 @@ public class Compilador
             if (myListener.HasErrors())
             {
                 Console.WriteLine("Compilation failed");
-            }
-            else
-            {
+            }else{
                 Console.WriteLine("Compilation successful - Pasando al ContextAnalizer");
                 caVisitor.Visit(tree);
                 if (caVisitor.hasErrors()){
@@ -42,12 +42,33 @@ public class Compilador
                     Console.WriteLine(caVisitor.ToString());
                     return caVisitor;
                 }
-                else
-                {
-                    Console.WriteLine(myListener);
-                    Console.WriteLine("ContextAnalizer passed");
-                }
+                Console.WriteLine("ContextAnalizer successful - Pasando al CodeGeneration");
+                CodeGeneration cgVisitor = new CodeGeneration();
+                cgVisitor.Visit(tree);
+                string byteCode = cgVisitor.ToString();
+                Console.WriteLine(byteCode);
+                Console.WriteLine("Compilation successful");
                 
+                try
+                { 
+                   string binDirectory = AppDomain.CurrentDomain.BaseDirectory;
+                   // Subir varios niveles hasta el directorio del proyecto
+                   string projectDirectory = Directory.GetParent(binDirectory).Parent.Parent.Parent.FullName;
+                    // Crear la ruta completa para el archivo dentro del directorio del proyecto
+                    string filePath = Path.Combine(projectDirectory, "byteCodeProyecto.txt");
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        writer.Write(byteCode);
+                    }
+                    Console.WriteLine("bytecode generado.");
+                    Console.WriteLine("Directorio del proyecto: " + projectDirectory);
+                }
+                catch (IOException e)
+                {
+                    Console.WriteLine("Error al escribir el archivo bytecode.txt");
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
         }catch (NullReferenceException  ex){ }
         return myListener; 

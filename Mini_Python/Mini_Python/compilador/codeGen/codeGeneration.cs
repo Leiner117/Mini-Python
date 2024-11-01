@@ -229,12 +229,11 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     {
         return base.VisitListExpression(context);
     }
- 
     public override string ToString() {
         var sb = new StringBuilder();
         int cont = 0;
         foreach (Instruction i in bytecode) {
-            sb.Append((cont++) + " " + i + "\n");
+            sb.AppendLine($"{cont++} {i}");
         }
         return sb.ToString();
     }

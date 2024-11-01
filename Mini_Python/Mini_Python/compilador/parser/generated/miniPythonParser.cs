@@ -741,6 +741,7 @@ public partial class miniPythonParser : Parser {
 	}
 
 	public partial class AssignStatementContext : ParserRuleContext {
+		public bool firstDefinition = false;
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode IDENTIFIER() { return GetToken(miniPythonParser.IDENTIFIER, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode ASSIGN() { return GetToken(miniPythonParser.ASSIGN, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ExpressionContext expression() {

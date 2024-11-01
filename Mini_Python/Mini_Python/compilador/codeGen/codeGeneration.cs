@@ -124,7 +124,8 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
 
     public override object VisitAssignStatement(miniPythonParser.AssignStatementContext context)
     {
-        
+        if (context.firstDefinition)
+            bytecode.Add(new Instruction("PUSH_LOCAL", context.IDENTIFIER().GetText()));
         Visit(context.expression());
         bytecode.Add(new Instruction("STORE_FAST", context.IDENTIFIER().GetText()));
         return null;

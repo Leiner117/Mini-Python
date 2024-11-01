@@ -23,7 +23,7 @@ whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence;
 returnStatement: RETURN expression NEWLINE;
 forStatement: FOR expression IN expressionList DOSPUNTOS NEWLINE sequence; 
 printStatement: PRINT expression NEWLINE;
-assignStatement: IDENTIFIER ASSIGN expression NEWLINE;
+assignStatement locals [bool firstDefinition= false]   : IDENTIFIER ASSIGN expression NEWLINE;
 functionCallStatement: IDENTIFIER LPAREN expressionList RPAREN NEWLINE?;
 sequence:  INDENT statement+ DEDENT ;
 expression: additionExpression comparison?;
@@ -31,7 +31,7 @@ comparison: (LT | GT | LE | GE | EQ) additionExpression;
 additionExpression: multiplicationExpression ((PLUS | MINUS) multiplicationExpression)*;
 multiplicationExpression: elementExpression ((MULT | DIV) elementExpression)*;
 elementExpression: primitiveExpression (LBRACKET expression RBRACKET)?;
-                  
+
 expressionList: (expression (COMMA expression)*)?;
 primitiveExpression                                                 
     : LPAREN expression RPAREN                                        #primitiveExpressionparenthesisExprAST                               

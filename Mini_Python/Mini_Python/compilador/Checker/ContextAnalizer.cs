@@ -173,6 +173,8 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             if (errorList.Count > initialErrorCount){
                 return null;
             }
+
+            context.firstDefinition = true;
             TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);
             Visit(context.NEWLINE());
         }
@@ -213,7 +215,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         var additionExpr = context.additionExpression();
         foreach (var multExpr in additionExpr.multiplicationExpression()) {
             foreach (var elemExpr in multExpr.elementExpression()) {
-                 if (elemExpr.primitiveExpression() is miniPythonParser.PrimitiveExpressionidentifierListASTContext identifierContext) {
+                if (elemExpr.primitiveExpression() is miniPythonParser.PrimitiveExpressionidentifierListASTContext identifierContext) {
                     string identifier = identifierContext.IDENTIFIER().GetText();
                     if (identifierContext.LPAREN() != null) {
                         // Function call case
@@ -235,7 +237,7 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
                         var symbol = TablaSimbolosProyecto.BuscarEnNivelActual(identifier);
                         if (symbol == null) {
                             symbol= TablaSimbolosProyecto.Buscar(identifier);
-                            if (symbol == null || symbol.Type != SymbolType.Variable) {
+                            if (symbol == null || symbol.Type == SymbolType.Function) {
                                 reportError($"CONTEXT ERROR La variable '{identifier}' no esta definida.", identifierContext.IDENTIFIER().Symbol);
                             }
                         }
@@ -299,7 +301,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
 
     public override object VisitPrimitiveExpressionlenAST(miniPythonParser.PrimitiveExpressionlenASTContext context)
     {
-       
         var expr = context.expression();
         var exprText = expr.GetText();
         if (exprText.All(char.IsDigit))
@@ -307,8 +308,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             reportError($"CONTEXT ERROR La expresion '{exprText}' no es valida como argumento para 'len'.", context.Start);
             return null;
         }
-        // Visit the expression to ensure it is processed
-        Visit(expr);
         return null;
         
         

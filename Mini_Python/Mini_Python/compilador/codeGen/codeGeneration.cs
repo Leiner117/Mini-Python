@@ -58,7 +58,15 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
 
     public override object VisitArgList(miniPythonParser.ArgListContext context)
     {
-        return base.VisitArgList(context);
+        if (context.IDENTIFIER() != null)
+        {
+            foreach (var identifier in context.IDENTIFIER())
+            {
+                bytecode.Add(new Instruction("STORE_FAST", identifier.GetText()));
+            }
+        }
+        return null;
+       // return base.VisitArgList(context);
     }
 
     public override object VisitIfStatement(miniPythonParser.IfStatementContext context)
@@ -161,10 +169,14 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
 
     public override object VisitAdditionExpression(miniPythonParser.AdditionExpressionContext context)
     {
-        for (int i = 0; i < context.multiplicationExpression().Length; i++) {
+        Visit(context.multiplicationExpression(0));
+        for (int i = 1; i < context.multiplicationExpression().Length; i++) {
             Visit(context.multiplicationExpression(i));
-            if (i > 0) {
+            var operatorToken = context.GetChild((i * 2) - 1).GetText();
+            if (operatorToken == "+") {
                 bytecode.Add(new Instruction("BINARY_ADD"));
+            } else if (operatorToken == "-") {
+                bytecode.Add(new Instruction("BINARY_SUBTRACT"));
             }
         }
         return null;
@@ -173,10 +185,14 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
 
     public override object VisitMultiplicationExpression(miniPythonParser.MultiplicationExpressionContext context)
     {
-        for (int i = 0; i < context.elementExpression().Length; i++) {
+        Visit(context.elementExpression(0));
+        for (int i = 1; i < context.elementExpression().Length; i++) {
             Visit(context.elementExpression(i));
-            if (i > 0) {
+            var operatorToken = context.GetChild((i * 2) - 1).GetText();
+            if (operatorToken == "*") {
                 bytecode.Add(new Instruction("BINARY_MULTIPLY"));
+            } else if (operatorToken == "/") {
+                bytecode.Add(new Instruction("BINARY_DIVIDE"));
             }
         }
         return null;
@@ -207,7 +223,9 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
 
     public override object VisitPrimitiveExpressionlenAST(miniPythonParser.PrimitiveExpressionlenASTContext context)
     {
-        return base.VisitPrimitiveExpressionlenAST(context);
+        Visit(context.expression());
+        bytecode.Add(new Instruction("CALL_FUNCTION", "len"));
+        return null;
     }
 
     public override object VisitPrimitiveExpressionlistAST(miniPythonParser.PrimitiveExpressionlistASTContext context)
@@ -217,17 +235,32 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
 
     public override object VisitPrimitiveExpressionliteralAST(miniPythonParser.PrimitiveExpressionliteralASTContext context)
     {
-        return base.VisitPrimitiveExpressionliteralAST(context);
+        string literal = context.GetText();
+        bytecode.Add(new Instruction("LOAD_CONST", literal));
+        return null;
     }
 
     public override object VisitPrimitiveExpressionidentifierListAST(miniPythonParser.PrimitiveExpressionidentifierListASTContext context)
     {
-        return base.VisitPrimitiveExpressionidentifierListAST(context);
+        string identifier = context.IDENTIFIER().GetText();
+        if (context.expressionList() != null)
+        {
+            Visit(context.expressionList());
+            bytecode.Add(new Instruction("CALL_FUNCTION", identifier));
+        }
+        else
+        {
+            bytecode.Add(new Instruction("LOAD_FAST", identifier));
+        }
+        return null;
     }
 
     public override object VisitListExpression(miniPythonParser.ListExpressionContext context)
     {
-        return base.VisitListExpression(context);
+        Visit(context.expressionList());
+        bytecode.Add(new Instruction("BUILD_LIST", context.expressionList().expression().Length.ToString()));
+        return null;
+        //return base.VisitListExpression(context);
     }
     public override string ToString() {
         var sb = new StringBuilder();

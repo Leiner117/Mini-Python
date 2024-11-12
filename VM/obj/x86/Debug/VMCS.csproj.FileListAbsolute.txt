@@ -50,3 +50,16 @@ C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\VMs\obj\x86\Debug\VMCS.csp
 C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\VMs\obj\x86\Debug\VMCS.csproj.CoreCompileInputs.cache
 C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\VMs\obj\x86\Debug\MiniPY.exe
 C:\Users\leine\OneDrive\Documentos\Github\Mini-Python\VMs\obj\x86\Debug\MiniPY.pdb
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\obj\x86\Debug\MiniPY.exe
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\obj\x86\Debug\MiniPY.pdb
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\desensamblador_codigo\a.txt
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\desensamblador_codigo\b.txt
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\desensamblador_codigo\fact_iter.txt
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\desensamblador_codigo\pruebas.txt
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\desensamblador_codigo\test2.txt
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\desensamblador_codigo\text.txt
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\MiniPY.exe.config
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\MiniPY.exe
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\bin\Debug\MiniPY.pdb
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\obj\x86\Debug\VMCS.csproj.AssemblyReference.cache
+C:\Users\Walter\Documents\IIS2024\Compiladores\ProyectoMini-Python\RepositorioMiniPython\VM\obj\x86\Debug\VMCS.csproj.CoreCompileInputs.cache

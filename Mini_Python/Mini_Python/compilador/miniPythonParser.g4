@@ -28,7 +28,7 @@ functionCallStatement: IDENTIFIER LPAREN expressionList RPAREN NEWLINE?;
 sequence:  INDENT statement+ DEDENT ;
 expression: additionExpression comparison?;
 comparison: (LT | GT | LE | GE | EQ) additionExpression;
-additionExpression: multiplicationExpression ((PLUS | MINUS) multiplicationExpression)*;
+additionExpression: multiplicationExpression ((PLUS | MINUS| OR | AND|MODULAR) multiplicationExpression)*;
 multiplicationExpression: elementExpression ((MULT | DIV) elementExpression)*;
 elementExpression: primitiveExpression (LBRACKET expression RBRACKET)?;
 

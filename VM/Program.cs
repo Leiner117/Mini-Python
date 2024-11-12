@@ -15,7 +15,7 @@ namespace Minics.exe
             
             InstructionSet instructionSet = new InstructionSet();
             Desensamblador desensamblador = new Desensamblador(ref instructionSet);
-            desensamblador.desensamblar("C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\VM\\bin\\Debug\\desensamblador_codigo\\byteCodeProyecto.txt");
+            desensamblador.desensamblar(args[0]);
             List<string> list = instructionSet.run();
             Console.WriteLine("Instructions:");
             foreach (string s in list)

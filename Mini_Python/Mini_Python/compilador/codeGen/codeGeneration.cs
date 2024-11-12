@@ -175,6 +175,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitComparison(miniPythonParser.ComparisonContext context)
     {
+        
         Visit(context.additionExpression());
 
         bytecode.Add(new Instruction("COMPARE_OP", context.GetChild(0).GetText()));
@@ -191,6 +192,15 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
                 bytecode.Add(new Instruction("BINARY_ADD"));
             } else if (operatorToken == "-") {
                 bytecode.Add(new Instruction("BINARY_SUBTRACT"));
+            }
+            else if (operatorToken == "or") {
+                bytecode.Add(new Instruction("BINARY_OR"));
+            }
+            else if (operatorToken == "and") {
+                bytecode.Add(new Instruction("BINARY_AND"));
+            }
+            else if (operatorToken == "%") {
+                bytecode.Add(new Instruction("BINARY_MODULO"));
             }
         }
         return null;

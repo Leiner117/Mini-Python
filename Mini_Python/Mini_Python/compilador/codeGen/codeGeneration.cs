@@ -154,8 +154,14 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitFunctionCallStatement(miniPythonParser.FunctionCallStatementContext context)
     {
-        Visit(context.expressionList());
-        bytecode.Add(new Instruction("CALL_FUNCTION", context.IDENTIFIER().GetText()));
+        var numArgs = 0;
+        foreach (var expr in context.expressionList().expression())
+        {
+            Visit(expr);
+            numArgs++;
+        }
+        bytecode.Add(new Instruction("LOAD_GLOBAL", context.IDENTIFIER().GetText()));
+        bytecode.Add(new Instruction("CALL_FUNCTION", numArgs.ToString()));
         return null;
      //   return base.VisitFunctionCallStatement(context);
     }
@@ -227,7 +233,8 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     public override object VisitPrimitiveExpressionlenAST(miniPythonParser.PrimitiveExpressionlenASTContext context)
     {
         Visit(context.expression());
-        bytecode.Add(new Instruction("CALL_FUNCTION", "len"));
+        bytecode.Add(new Instruction("LOAD_GLOBAL", "len"));
+        bytecode.Add(new Instruction("CALL_FUNCTION", "1"));
         return null;
     }
     public override object VisitPrimitiveExpressionlistAST(miniPythonParser.PrimitiveExpressionlistASTContext context)
@@ -245,8 +252,14 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
         string identifier = context.IDENTIFIER().GetText();
         if (context.expressionList() != null)
         {
-            Visit(context.expressionList());
-            bytecode.Add(new Instruction("CALL_FUNCTION", identifier));
+            var numArgs = 0;
+            foreach (var expr in context.expressionList().expression())
+            {
+                Visit(expr);
+                numArgs++;
+            }
+            bytecode.Add(new Instruction("LOAD_GLOBAL", identifier));
+            bytecode.Add(new Instruction("CALL_FUNCTION", numArgs.ToString()));
         }
         else
         {
@@ -257,7 +270,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     public override object VisitListExpression(miniPythonParser.ListExpressionContext context)
     {
         Visit(context.expressionList());
-        bytecode.Add(new Instruction("BUILD_LIST", context.expressionList().GetText()));
+        bytecode.Add(new Instruction("BUILD_LIST", context.expressionList() != null ? context.expressionList().GetText() : "0"));
         return null;
         //return base.VisitListExpression(context);
     }

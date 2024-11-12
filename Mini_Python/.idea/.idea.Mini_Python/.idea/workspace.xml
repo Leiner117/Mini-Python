@@ -8,6 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="544d44cb-54ed-4625-9947-ac5afc5b59aa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Mini_Python/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Mini_Python/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Mini_Python/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Mini_Python/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.exe" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/bin/Debug/net8.0-windows/Mini_Python.exe" afterDir="false" />
@@ -18,7 +19,6 @@
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.assets.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.assets.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.AssemblyReference.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.FileListAbsolute.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.FileListAbsolute.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.GenerateResource.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.csproj.GenerateResource.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.dll" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.genruntimeconfig.cache" beforeDir="false" afterPath="$PROJECT_DIR$/Mini_Python/obj/Debug/net8.0-windows/Mini_Python.genruntimeconfig.cache" afterDir="false" />
@@ -67,6 +67,13 @@
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\leine\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\leine\\AppData\\Roaming\\JetBrains\\Rider2023.3\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\leine\\AppData\\Local\\Symbols\\src&quot;
+    ]
   }
 }</component>
   <component name="RunManager">
@@ -104,6 +111,10 @@
       <workItem from="1725920185279" duration="165000" />
       <workItem from="1726024470547" duration="501000" />
       <workItem from="1727141910633" duration="67000" />
+      <workItem from="1728965155350" duration="1212000" />
+      <workItem from="1729132588825" duration="3233000" />
+      <workItem from="1729302862906" duration="3000" />
+      <workItem from="1731369133180" duration="924000" />
     </task>
     <servers />
   </component>
@@ -112,7 +123,6 @@
   </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
-    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
   </component>
 </project>

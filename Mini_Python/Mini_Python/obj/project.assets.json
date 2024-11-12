@@ -70,19 +70,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Walter\\.nuget\\packages\\": {}
+    "C:\\Users\\leine\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Walter\\Documents\\IIS2024\\Compiladores\\ProyectoMini-Python\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+      "projectUniqueName": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
       "projectName": "Mini_Python",
-      "projectPath": "C:\\Users\\Walter\\Documents\\IIS2024\\Compiladores\\ProyectoMini-Python\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
-      "packagesPath": "C:\\Users\\Walter\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Walter\\Documents\\IIS2024\\Compiladores\\ProyectoMini-Python\\RepositorioMiniPython\\Mini_Python\\Mini_Python\\obj\\",
+      "projectPath": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\Mini_Python.csproj",
+      "packagesPath": "C:\\Users\\leine\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\leine\\OneDrive\\Documentos\\Github\\Mini-Python\\Mini_Python\\Mini_Python\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Walter\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\leine\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0-windows"
@@ -100,11 +100,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -139,7 +134,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Users\\Walter\\.dotnet\\sdk\\8.0.303/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

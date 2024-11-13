@@ -3,8 +3,6 @@ using System.Collections.Generic;
 namespace AlmacenNameSpace
 {
     public class Almacen{
-
-
         // PRELIMINARY DATA STRUCTURE:
         Dictionary<string, dynamic> data;
 

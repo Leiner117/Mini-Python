@@ -19,7 +19,7 @@ whileStatement: WHILE expression DOSPUNTOS NEWLINE  sequence;
 returnStatement: RETURN expression NEWLINE;
 forStatement: FOR expression IN expressionList DOSPUNTOS NEWLINE sequence; 
 printStatement: PRINT expression NEWLINE;
-assignStatement locals [bool firstDefinition= false]   : IDENTIFIER ASSIGN expression NEWLINE;
+assignStatement locals [bool firstDefinition= false] : IDENTIFIER ASSIGN expression NEWLINE;
 functionCallStatement: IDENTIFIER LPAREN expressionList RPAREN NEWLINE?;
 sequence:  INDENT statement+ DEDENT ;
 expression: additionExpression comparison?;

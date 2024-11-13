@@ -5,7 +5,11 @@ using System.Text;
 using Antlr4.Runtime;
 using parser.generated;  
 
-public class CodeGeneration : miniPythonParserBaseVisitor<object> {
+public class CodeGeneration : miniPythonParserBaseVisitor<object>
+{
+    private int nivelActual = 0;
+    private List<Dictionary<string, string>> scopeStack = new List<Dictionary<string, string>>();
+
     private class Instruction{
         private string instr;
         private string value;
@@ -31,6 +35,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
  
     public CodeGeneration() {
         bytecode =new List<Instruction>();
+        scopeStack.Add(new Dictionary<string, string>());
         
     }
     public override object VisitProgram(miniPythonParser.ProgramContext context)
@@ -58,7 +63,11 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     public override object VisitDefStatement(miniPythonParser.DefStatementContext context)
     {
         bytecode.Add(new Instruction("DEF", context.IDENTIFIER().GetText()));
+        nivelActual++;
+        scopeStack.Add(new Dictionary<string, string>());
         Visit(context.sequence());
+        nivelActual--;
+        scopeStack.RemoveAt(scopeStack.Count - 1);
         return null;
         //return base.VisitDefStatement(context);
     }
@@ -82,14 +91,22 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
         bytecode.Add(new Instruction("JUMP_IF_FALSE", ""));
         int jumpIfFalsePos = bytecode.Count - 1;
         // Visitar el bloque de código del if
+        nivelActual++;
+        scopeStack.Add(new Dictionary<string, string>());
         Visit(context.sequence(0));
+        nivelActual--;
+        scopeStack.RemoveAt(scopeStack.Count - 1);
         // Agregar la instrucción JUMP_ABSOLUTE con un valor temporal
         bytecode.Add(new Instruction("JUMP_ABSOLUTE", ""));
         int jumpAbsolutePos = bytecode.Count - 1;
         // Backpatching: actualizar JUMP_IF_FALSE para saltar al bloque else
         bytecode[jumpIfFalsePos].Value = bytecode.Count.ToString();
         // Viitar el bloque de código del else
+        nivelActual++;
+        scopeStack.Add(new Dictionary<string, string>());
         Visit(context.sequence(1));
+        nivelActual--;
+        scopeStack.RemoveAt(scopeStack.Count - 1);
         // Backpatching: actualizar JUMP_ABSOLUTE para saltar al final del else
         bytecode[jumpAbsolutePos].Value = bytecode.Count.ToString();
        
@@ -102,7 +119,11 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
         Visit(context.expression());
         bytecode.Add(new Instruction("JUMP_IF_FALSE", ""));
         int jumpIfFalsePos = bytecode.Count - 1;
+        nivelActual++;
+        scopeStack.Add(new Dictionary<string, string>());
         Visit(context.sequence());
+        nivelActual--;
+        scopeStack.RemoveAt(scopeStack.Count - 1);
         bytecode.Add(new Instruction("JUMP_ABSOLUTE", startPos.ToString()));
         bytecode[jumpIfFalsePos].Value = bytecode.Count.ToString();
         return null;
@@ -121,7 +142,11 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
         Visit(context.expressionList()); // Iteración sobre la lista de expresiones
         string varName = context.expression().GetText();
         bytecode.Add(new Instruction("STORE_FAST", varName));
+        nivelActual++;
+        scopeStack.Add(new Dictionary<string, string>());
         Visit(context.sequence());
+        nivelActual--;
+        scopeStack.RemoveAt(scopeStack.Count - 1);
         return null;
     }
     public override object VisitPrintStatement(miniPythonParser.PrintStatementContext context)
@@ -143,12 +168,14 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitAssignStatement(miniPythonParser.AssignStatementContext context)
     {
+        var variableName = context.IDENTIFIER().GetText()+"_"+nivelActual;
         if (context.firstDefinition)
-        {
-           bytecode.Add(new Instruction("PUSH_LOCAL", context.IDENTIFIER().GetText()));
+        { 
+            scopeStack[nivelActual].Add(context.IDENTIFIER().GetText(), variableName);
+           bytecode.Add(new Instruction("PUSH_LOCAL", variableName));
         }
         Visit(context.expression());
-        bytecode.Add(new Instruction("STORE_FAST", context.IDENTIFIER().GetText()));
+        bytecode.Add(new Instruction("STORE_FAST", variableName));
         return null;
         //return base.VisitAssignStatement(context);
     }
@@ -259,7 +286,18 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitPrimitiveExpressionidentifierListAST(miniPythonParser.PrimitiveExpressionidentifierListASTContext context)
     {
-        string identifier = context.IDENTIFIER().GetText();
+        var identifier = context.IDENTIFIER().GetText();
+        string variableName = null;
+
+        // Buscar la variable en los scopes, desde el nivel actual hacia atrás
+        for (int i = nivelActual; i >= 0; i--)
+        {
+            if (scopeStack[i].ContainsKey(identifier))
+            {
+                variableName = scopeStack[i][identifier];
+                break;
+            }
+        } 
         if (context.expressionList() != null)
         {
             var numArgs = 0;
@@ -273,7 +311,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
         }
         else
         {
-            bytecode.Add(new Instruction("LOAD_FAST", identifier));
+            bytecode.Add(new Instruction("LOAD_FAST", variableName));
         }
         return null;
     }

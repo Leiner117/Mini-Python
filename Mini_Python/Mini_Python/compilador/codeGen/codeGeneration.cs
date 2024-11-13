@@ -47,9 +47,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
         }
         // Agregar la instrucción END al final del programa
         bytecode.Add(new Instruction("END"));
-    
         return null;
-        
         //return base.VisitProgram(context);
     }
     public override object VisitMainStatement(miniPythonParser.MainStatementContext context)
@@ -65,6 +63,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
         bytecode.Add(new Instruction("DEF", context.IDENTIFIER().GetText()));
         nivelActual++;
         scopeStack.Add(new Dictionary<string, string>());
+        Visit(context.argList());
         Visit(context.sequence());
         nivelActual--;
         scopeStack.RemoveAt(scopeStack.Count - 1);
@@ -78,7 +77,8 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
             foreach (var identifier in context.IDENTIFIER())
             {
                 var name = identifier.GetText()+"_"+nivelActual;
-                bytecode.Add(new Instruction("STORE_FAST", name));
+                bytecode.Add(new Instruction("PUSH_LOCAL", name));
+                scopeStack[nivelActual].Add(identifier.GetText(), name);
             }
         }
         return null;

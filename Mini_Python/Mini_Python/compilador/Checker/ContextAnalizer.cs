@@ -114,7 +114,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
         Visit(context.sequence()); // Visit the sequence of statements inside the while block
         TablaSimbolosProyecto.Imprimir();
         TablaSimbolosProyecto.CloseScope();
-
         return null;
        // return base.VisitWhileStatement(context);
     }
@@ -141,7 +140,6 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
             Visit(context.sequence()); 
             TablaSimbolosProyecto.Imprimir();
             TablaSimbolosProyecto.CloseScope();
-
             return null;
        // return base.VisitForStatement(context);
     }
@@ -159,25 +157,22 @@ public class ContextAnalizer : miniPythonParserBaseVisitor<object> {
     }
     public override object VisitAssignStatement(miniPythonParser.AssignStatementContext context)
     {
-        string nombreVariable = context.IDENTIFIER().GetText();
-        Visit(context.IDENTIFIER());
-        if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreVariable) != null) {
-            reportError($"CONTEXT ERROR  La variable '{nombreVariable}' ya esta definida en este scope.", context.IDENTIFIER().Symbol);
-        } else {
+            string nombreVariable = context.IDENTIFIER().GetText();
+            Visit(context.IDENTIFIER());
             Visit(context.ASSIGN());
             // Guardar el numero de errores actuales
             int initialErrorCount = errorList.Count;
             Visit(context.expression());
-
             // Verificar si se generaron errores al visitar la expresion
             if (errorList.Count > initialErrorCount){
                 return null;
             }
-
-            context.firstDefinition = true;
+            if (TablaSimbolosProyecto.BuscarEnNivelActual(nombreVariable) == null){
+                context.firstDefinition = true;
+            }
             TablaSimbolosProyecto.InsertarVariable(context.IDENTIFIER().Symbol, SymbolType.Variable);
             Visit(context.NEWLINE());
-        }
+        
         return null;
          //return base.VisitAssignStatement(context);
     }

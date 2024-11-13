@@ -145,7 +145,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object> {
     {
         if (context.firstDefinition)
         {
-            bytecode.Add(new Instruction("PUSH_LOCAL", context.IDENTIFIER().GetText()));
+           bytecode.Add(new Instruction("PUSH_LOCAL", context.IDENTIFIER().GetText()));
         }
         Visit(context.expression());
         bytecode.Add(new Instruction("STORE_FAST", context.IDENTIFIER().GetText()));

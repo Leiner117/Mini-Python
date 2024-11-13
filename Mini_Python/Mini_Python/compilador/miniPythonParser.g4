@@ -2,11 +2,8 @@ parser grammar miniPythonParser;
 options {
     tokenVocab = miniPythonLexer;
 }
-
 program: mainStatement* EOF;
-
 mainStatement: defStatement| assignStatement ;
-
 statement: defStatement
          | ifStatement
          | returnStatement
@@ -15,7 +12,6 @@ statement: defStatement
          | assignStatement
          | forStatement
          | functionCallStatement;
-
 defStatement: DEF IDENTIFIER LPAREN argList RPAREN DOSPUNTOS NEWLINE  sequence;
 argList: (IDENTIFIER (COMMA IDENTIFIER)*)?;
 ifStatement: IF expression DOSPUNTOS NEWLINE sequence  ELSE DOSPUNTOS NEWLINE  sequence;

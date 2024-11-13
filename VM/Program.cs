@@ -17,7 +17,6 @@ namespace Minics.exe
             Desensamblador desensamblador = new Desensamblador(ref instructionSet);
             desensamblador.desensamblar(args[0]);
             List<string> list = instructionSet.run();
-            Console.WriteLine("Instructions:");
             foreach (string s in list)
             {
                 Console.WriteLine(s);

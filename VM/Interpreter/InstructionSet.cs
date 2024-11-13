@@ -196,7 +196,7 @@ namespace InstructionsNameSpace
             if (opn1.GetType() != opn2.GetType())
             {
                 //devolver error
-                reportError(" Error: No se pueden comparar tipos de datos diferentes");
+                reportError("Error: No se pueden comparar tipos de datos diferentes");
                 return;
             }
 

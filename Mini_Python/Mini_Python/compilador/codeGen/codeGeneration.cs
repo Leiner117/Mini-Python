@@ -77,7 +77,8 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
         {
             foreach (var identifier in context.IDENTIFIER())
             {
-                bytecode.Add(new Instruction("STORE_FAST", identifier.GetText()));
+                var name = identifier.GetText()+"_"+nivelActual;
+                bytecode.Add(new Instruction("STORE_FAST", name));
             }
         }
         return null;
@@ -140,7 +141,7 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
     public override object VisitForStatement(miniPythonParser.ForStatementContext context)
     {
         Visit(context.expressionList()); // Iteración sobre la lista de expresiones
-        string varName = context.expression().GetText();
+        string varName = context.expression().GetText()+"_"+nivelActual;
         bytecode.Add(new Instruction("STORE_FAST", varName));
         nivelActual++;
         scopeStack.Add(new Dictionary<string, string>());

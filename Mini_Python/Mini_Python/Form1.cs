@@ -2,6 +2,8 @@ using System.Diagnostics;
 using System.Net;
 using System.Text;
 using compilador;
+using Mini_Python.compilador.CodeGen;
+
 namespace Mini_Python
 {
     public partial class Form1 : Form
@@ -432,48 +434,83 @@ namespace Mini_Python
             // Limpiar y mostrar el RichTextBox de errores
             richTextBox1.Clear();
             richTextBox1.Visible = true;
-
-            // Suponiendo que error.ToString() devuelve una cadena con múltiples errores separados por saltos de línea
-            string[] errorLines = error.ToString().Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string line in errorLines)
+            
+            if (error is ProcessResult processResult)
             {
-                // Añadir la línea al RichTextBox de errores
-                int startIndex = richTextBox1.TextLength;
-                richTextBox1.AppendText(line + Environment.NewLine);
-                int endIndex = richTextBox1.TextLength;
-
-                // Buscar el patrón "line X:Y"
-                var match = System.Text.RegularExpressions.Regex.Match(line, @"line (\d+:\d+)");
-                if (match.Success)
+                // Si es un resultado de proceso (output o error)
+                if (processResult.IsSuccess)
                 {
-                    // Subrayar solo el número de línea y columna
-                    int numberStartIndex = startIndex + match.Groups[1].Index;
-                    int numberLength = match.Groups[1].Length;
-
-                    richTextBox1.Select(numberStartIndex, numberLength);
-                    richTextBox1.SelectionColor = Color.Aqua;
-                    richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Underline);
-
-                    // Añadir un enlace al número de línea y columna
-                    richTextBox1.SelectionStart = numberStartIndex;
-                    richTextBox1.SelectionLength = numberLength;
-                    richTextBox1.SetSelectionLink(true);
-
-                    // Subrayar la línea en rojo en el RichTextBox del TabControl
-                    var lineColumnMatch = System.Text.RegularExpressions.Regex.Match(match.Groups[1].Value, @"(\d+):(\d+)");
-                    if (lineColumnMatch.Success)
-                    {
-                        int lineNumber = int.Parse(lineColumnMatch.Groups[1].Value);
-                        SubrayarLineaEnRojo(lineNumber);
-                    }
+                    // Mostrar salida del proceso (output)
+                    string outputMessage = "Ejecución Finalizada: " + processResult.Output;
+                    richTextBox1.AppendText(outputMessage + Environment.NewLine);
+                }else{
+                    // Mostrar error
+                    string errorMessage = processResult.Error;
+                    richTextBox1.AppendText(errorMessage + Environment.NewLine);
+                    HighlightErrorKeywords(errorMessage);
                 }
-            }
+            }else{
+                string errorMessage = error.ToString();
+                // Suponiendo que error.ToString() devuelve una cadena con múltiples errores separados por saltos de línea
+                string[] errorLines =errorMessage.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                foreach (string line in errorLines){
+                        // Añadir la línea al RichTextBox de errores
+                        int startIndex = richTextBox1.TextLength;
+                        richTextBox1.AppendText(line + Environment.NewLine);
+                        int endIndex = richTextBox1.TextLength;
 
+                        // Buscar el patrón "line X:Y"
+                        var match = System.Text.RegularExpressions.Regex.Match(line, @"line (\d+:\d+)");
+                        if (match.Success)
+                        {
+                            // Subrayar solo el número de línea y columna
+                            int numberStartIndex = startIndex + match.Groups[1].Index;
+                            int numberLength = match.Groups[1].Length;
+
+                            richTextBox1.Select(numberStartIndex, numberLength);
+                            richTextBox1.SelectionColor = Color.Aqua;
+                            richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Underline);
+
+                            // Añadir un enlace al número de línea y columna
+                            richTextBox1.SelectionStart = numberStartIndex;
+                            richTextBox1.SelectionLength = numberLength;
+                            richTextBox1.SetSelectionLink(true);
+
+                            // Subrayar la línea en rojo en el RichTextBox del TabControl
+                            var lineColumnMatch = System.Text.RegularExpressions.Regex.Match(match.Groups[1].Value, @"(\d+):(\d+)");
+                            if (lineColumnMatch.Success)
+                            {
+                                int lineNumber = int.Parse(lineColumnMatch.Groups[1].Value);
+                                SubrayarLineaEnRojo(lineNumber);
+                            }
+                        }
+                    }
+            }
             // Deseleccionar el texto
             richTextBox1.Select(0, 0);
         }
 
+        private void HighlightErrorKeywords(string errorMessage)
+        {
+            // Lista de palabras clave que quieres resaltar
+            string[] keywords = { "Error", "Exception", "Warning" };
 
+            foreach (string keyword in keywords)
+            {
+                int startIndex = 0;
+
+                // Buscar cada palabra clave en el mensaje de error
+                while ((startIndex = errorMessage.IndexOf(keyword, startIndex, StringComparison.OrdinalIgnoreCase)) != -1)
+                {
+                    // Seleccionar la palabra clave en el RichTextBox
+                    richTextBox1.Select(startIndex, keyword.Length);
+                    richTextBox1.SelectionColor = Color.Red;  // Color personalizado para la palabra clave
+                    richTextBox1.SelectionFont = new Font(richTextBox1.Font, FontStyle.Bold);
+
+                    startIndex += keyword.Length;  // Avanzar el índice para evitar encontrar la misma palabra clave múltiples veces
+                }
+            }
+        }
         private void SubrayarLineaEnRojo(int lineNumber)
         {
             // Asegurarse de que hay una pestaña seleccionada

@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace compilador;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -18,8 +20,9 @@ public class Compilador
         miniPythonParser parser = null;
         MyErrorListener myListener = new MyErrorListener();
         ContextAnalizer caVisitor = new ContextAnalizer();
-        
+        CodeGeneration cgVisitor = new CodeGeneration();
         myListener.ErrorMsgs.Clear();
+        caVisitor.errorList.Clear();
         input = CharStreams.fromString(text);
         lexer = new miniPythonLexer(input);
         lexer.RemoveErrorListeners(); 
@@ -43,7 +46,6 @@ public class Compilador
                     return caVisitor;
                 }
                 Console.WriteLine("ContextAnalizer successful - Pasando al CodeGeneration");
-                CodeGeneration cgVisitor = new CodeGeneration();
                 cgVisitor.Visit(tree);
                 string byteCode = cgVisitor.ToString();
                 Console.WriteLine(byteCode);
@@ -61,7 +63,27 @@ public class Compilador
                         writer.Write(byteCode);
                     }
                     Console.WriteLine("bytecode generado.");
-                    Console.WriteLine("Directorio del proyecto: " + projectDirectory);
+                    string exePath = Path.Combine(projectDirectory,"MiniPY.exe");
+                    ProcessStartInfo startInfo = new ProcessStartInfo
+                    {
+                        FileName = exePath,
+                        Arguments = filePath,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        UseShellExecute = false,
+                        CreateNoWindow = true
+                    };
+                    Console.WriteLine("Ejecutando el archivo bytecode generado");
+                    using (Process exeProcess = Process.Start(startInfo))
+                    {
+                        string output = exeProcess.StandardOutput.ReadToEnd();
+                        string error = exeProcess.StandardError.ReadToEnd();
+                        exeProcess.WaitForExit();
+                        string combinedOutput = output + Environment.NewLine + error;
+                        if (!string.IsNullOrEmpty(error)|| output.Contains("Error:")) 
+                            return new ProcessResult(false,"Error de Ejecucion:","",combinedOutput); 
+                        return new ProcessResult(true,"Ejecucion Finalizada con exito:",output,"");
+                    } 
                 }
                 catch (IOException e)
                 {

@@ -33,12 +33,12 @@ lexer grammar miniPythonLexer;
             return next;
         }
         if (next.Type == TokenConstants.EOF) {
-            indentCount = 0;
-            if (!pendingDent) {
-                initialIndentToken = next;
-                tokenQueue.AddLast(createToken(NEWLINE, "NEWLINE", next));
-            }
-        }
+                            indentCount = 0;
+                            if (!pendingDent) {
+                                initialIndentToken = next;
+                                tokenQueue.AddLast(createToken(NEWLINE, "NEWLINE", next));
+                            }
+                        }
         // Ajustar las diferencias entre el conteo actual de indentaciones y el último guardado
         while (indentCount != getSavedIndent()) {
             int difference = Math.Abs(indentCount - getSavedIndent());
@@ -64,7 +64,7 @@ lexer grammar miniPythonLexer;
 }
 
 NEWLINE : ('\r'? '\n' | '\r') {
-    if (pendingDent) { Channel = Hidden; }
+    if (pendingDent){  Channel = Hidden;} 
     pendingDent = true;
     indentCount = 0;
     initialIndentToken = null;
@@ -100,6 +100,9 @@ GT:             '>';
 LE:             '<=';
 GE:             '>=';
 EQ:             '==';
+OR:             'or';
+AND:            'and';
+MODULAR:        '%';
 ASSIGN:         '=';
 COMMA:          ',';
 LPAREN:         '(';

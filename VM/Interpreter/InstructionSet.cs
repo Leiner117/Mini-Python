@@ -227,41 +227,44 @@ namespace InstructionsNameSpace
             //se asume que los valores de los operandos son del mismo tipo, si no, se cae feo pero así debe ser... no hay mensajes de error
             dynamic opn2 = pilaExprs.pop();
             dynamic opn1 = pilaExprs.pop();
-            if (opn1.GetType() != opn2.GetType())
-            {
-                //devolver error
-                reportError("Error: No se pueden comparar tipos de datos diferentes");
-                return;
-            }
+            if ((opn1 is int || opn1 is double || opn1 is float ) &&
+                (opn2 is int || opn2 is double || opn2 is float )){
+            double val1 = Convert.ToDouble(opn1);
+            double val2 = Convert.ToDouble(opn2);
 
             if (op.Equals("=="))
-                pilaExprs.push(opn1 == opn2);
+                pilaExprs.push(val1 == val2);
             else if (op.Equals("!="))
-                pilaExprs.push(opn1 != opn2);
+                pilaExprs.push(val1 != val2);
             else if (op.Equals("<"))
-                pilaExprs.push(opn1 < opn2);
+                pilaExprs.push(val1 < val2);
             else if (op.Equals("<="))
-                pilaExprs.push(opn1 <= opn2);
+                pilaExprs.push(val1 <= val2);
             else if (op.Equals(">"))
-                pilaExprs.push(opn1 > opn2);
+                pilaExprs.push(val1 > val2);
             else if (op.Equals(">="))
-                pilaExprs.push(opn1 >= opn2);
+                pilaExprs.push(val1 >= val2);
+             }
+            else
+            {
+                reportError("Error: No se pueden comparar tipos de datos incompatibles");
+            }
+                
         }
-
         private void runBINARY_SUBTRACT()
         {
             //obtiene dos operandos de la pila, opera según el operador y finalmente inserta el resultados de la operación en la pila
             //se asume que los valores son enteros, si no, se cae feo pero así debe ser... no hay mensajes de error
             dynamic opn2 = pilaExprs.pop();
             dynamic opn1 = pilaExprs.pop();
-            if (opn1.GetType() != opn2.GetType())
+            if ((opn1 is int || opn1 is double || opn1 is float) && (opn2 is int || opn2 is double || opn2 is float))
             {
-                //devolver error
-                reportError("Error: No se pueden restar tipos de datos diferentes");
-                return;
+                pilaExprs.push((double)opn1 - (double)opn2);
             }
-
-            pilaExprs.push(opn1 - opn2);
+            else
+            {
+                reportError("Error: No se pueden restar tipos de datos incompatibles");
+            }
         }
 
         private void runBINARY_ADD()
@@ -286,14 +289,15 @@ namespace InstructionsNameSpace
             //se asume que los valores son enteros, si no, se cae feo pero así debe ser... no hay mensajes de error
             dynamic opn2 = pilaExprs.pop();
             dynamic opn1 = pilaExprs.pop();
-            if (opn1.GetType() != opn2.GetType())
+          
+            if ((opn1 is int || opn1 is double || opn1 is float) && (opn2 is int || opn2 is double || opn2 is float))
             {
-                //devolver error
-                reportError("Error: No se pueden multiplicar tipos de datos diferentes");
-                return;
+                pilaExprs.push((double)opn1 * (double)opn2);
             }
-
-            pilaExprs.push(opn1 * opn2);
+            else
+            {
+                reportError("Error: No se pueden multiplicar tipos de datos incompatibles");
+            }
         }
 
         private void runBINARY_DIVIDE()
@@ -302,14 +306,14 @@ namespace InstructionsNameSpace
             //se asume que los valores son enteros, si no, se cae feo pero así debe ser... no hay mensajes de error
             dynamic opn2 = pilaExprs.pop();
             dynamic opn1 = pilaExprs.pop();
-            if (opn1.GetType() != opn2.GetType())
+            if ((opn1 is int || opn1 is double || opn1 is float) && (opn2 is int || opn2 is double || opn2 is float))
             {
-                //devolver error
-                reportError("Error: No se pueden dividir tipos de datos diferentes");
-                return;
+                pilaExprs.push((double)opn1 / (double)opn2);
             }
-
-            pilaExprs.push(opn1 / opn2);
+            else
+            {
+                reportError("Error: No se pueden dividir tipos de datos incompatibles");
+            }
         }
 
         private void runBINARY_AND()
@@ -350,14 +354,14 @@ namespace InstructionsNameSpace
             //se asume que los valores son enteros, si no, se cae feo pero así debe ser... no hay mensajes de error
             dynamic opn2 = pilaExprs.pop();
             dynamic opn1 = pilaExprs.pop();
-            if (opn1.GetType() != opn2.GetType())
+            if ((opn1 is int || opn1 is double || opn1 is float) && (opn2 is int || opn2 is double || opn2 is float))
             {
-                //devolver error
-                reportError("Error: No se puede operar tipos de datos diferentes");
-                return;
+                pilaExprs.push((double)opn1 % (double)opn2);
             }
-
-            pilaExprs.push(opn1 % opn2);
+            else
+            {
+                reportError("Error: No se pueden operar tipos de datos incompatibles");
+            }
         }
 
         private void runJUMP_ABSOLUTE(int target)

@@ -171,12 +171,25 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
     {
         var variableName = context.IDENTIFIER().GetText()+"_"+nivelActual;
         if (context.firstDefinition)
-        { 
+        {
+            if (nivelActual == 0) {
+                scopeStack[nivelActual].Add(context.IDENTIFIER().GetText(), variableName);
+                bytecode.Add(new Instruction("PUSH_GLOBAL", variableName));    
+                
+            }else{
             scopeStack[nivelActual].Add(context.IDENTIFIER().GetText(), variableName);
-           bytecode.Add(new Instruction("PUSH_LOCAL", variableName));
-        }
+            bytecode.Add(new Instruction("PUSH_LOCAL", variableName));
+            }
+        }    
         Visit(context.expression());
-        bytecode.Add(new Instruction("STORE_FAST", variableName));
+        if (nivelActual == 0)
+        {
+            bytecode.Add(new Instruction("STORE_GLOBAL", variableName));
+        }else
+        {
+            bytecode.Add(new Instruction("STORE_FAST", variableName));    
+        }
+        
         return null;
         //return base.VisitAssignStatement(context);
     }
@@ -289,13 +302,14 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
     {
         var identifier = context.IDENTIFIER().GetText();
         string variableName = null;
-
+        var contadorNivel = -1;
         // Buscar la variable en los scopes, desde el nivel actual hacia atrás
         for (int i = nivelActual; i >= 0; i--)
         {
             if (scopeStack[i].ContainsKey(identifier))
             {
                 variableName = scopeStack[i][identifier];
+                contadorNivel = i;       
                 break;
             }
         } 
@@ -312,7 +326,13 @@ public class CodeGeneration : miniPythonParserBaseVisitor<object>
         }
         else
         {
+            if (contadorNivel == 0) {
+                bytecode.Add(new Instruction("LOAD_GLOBAL", variableName));
+            }
+            else
+            {
             bytecode.Add(new Instruction("LOAD_FAST", variableName));
+            }
         }
         return null;
     }

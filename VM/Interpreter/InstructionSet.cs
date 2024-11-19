@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 using AlmacenNameSpace;
 using moduloPila;
 //using static System.Linq.Enumerable;
@@ -85,7 +86,7 @@ namespace InstructionsNameSpace
         private void runPUSH_GLOBAL(string name)
         {
             //declara el elemento "name" en el almacen GLOBAL con valor por defecto 0
-            almacenGlobal.setValue(name, 0);
+            almacenGlobal.setValue(name, 0); //el valor por defecto es el parámetro actual de turno
         }
 
         private void runDEF(string name)
@@ -121,17 +122,26 @@ namespace InstructionsNameSpace
 
         private void runSTORE_GLOBAL(string varname)
         {
-            //almacena el contenido del tope de la pila en el almacén GLOBAL para la variable "varname"
-            dynamic tope = 0;
-            tope = pilaExprs.pop(); //debe sacar el elemento de la pila y devolver su valor
-            almacenGlobal.updateValue(varname, tope);
+            dynamic tope = pilaExprs.pop(); // debe sacar el elemento de la pila y devolver su valor
+            if (almacenGlobal.searchValue(varname))
+            {
+                almacenGlobal.updateValue(varname, tope);
+            }
+            else
+            {
+                almacenGlobal.setValue(varname, tope);
+            }
         }
 
         private void runLOAD_GLOBAL(string varname)
         {
+            if (!almacenGlobal.searchValue(varname))
+            {
+                reportError($"Error: Variable global '{varname}' no encontrada");
+                return;
+            }
             //busca en el almacén GLOBAL el valor asociado a "varname" y lo inserta en la pila
-            dynamic val;
-            val = almacenGlobal.getValue(varname); //EL GET VALUE DEBE DEVOLVER UN VALOR PARA PODERLO CARGAR A LA PILA
+            dynamic val = almacenGlobal.getValue(varname); //EL GET VALUE DEBE DEVOLVER UN VALOR PARA PODERLO CARGAR A LA PILA
             pilaExprs.push(val);
         }
 
@@ -142,7 +152,32 @@ namespace InstructionsNameSpace
             if (actualRef == -1)
             {
                 // es porque es el método print
-                Console.WriteLine(pilaExprs.pop());
+                var value = pilaExprs.pop();
+                if (value is string)
+                {
+                    Console.WriteLine((string)value);
+                }
+                else if (value is char[])
+                {
+                    Console.WriteLine((char[])value);
+                }
+                else if (value is int)
+                {
+                    Console.WriteLine((int)value);
+                }
+                else if (value is double)
+                {
+                    Console.WriteLine((double)value);
+                }
+                else if (value is IEnumerable)
+                {
+                    var list = value as IEnumerable;
+                    Console.WriteLine("[" + string.Join(", ", list.Cast<object>()) + "]");
+                }
+                else
+                {
+                    Console.WriteLine(value);
+                }
             }
             else
             {
@@ -161,7 +196,6 @@ namespace InstructionsNameSpace
                 //en buena teoría con solo cambiar el índice de la instrucción actual y respaldar el anterior en la pila, ya el ciclo de afuera llama emulando un salto
             }
         }
-
         private void runRETURN_VALUE()
         {
             dynamic returnValue;
@@ -401,13 +435,20 @@ namespace InstructionsNameSpace
                 while (actualInstrIndex <= instSet.Count - 1)
                 {
 
-                    if (instSet[actualInstrIndex].Key.Equals("PUSH_GLOBAL") ||
-                        instSet[actualInstrIndex].Key.Equals("DEF"))
+                    if (instSet[actualInstrIndex].Key.Equals("PUSH_GLOBAL") || instSet[actualInstrIndex].Key.Equals("DEF")||
+                        instSet[actualInstrIndex].Key.Equals("LOAD_CONST")|| instSet[actualInstrIndex].Key.Equals("STORE_GLOBAL") )
                     {
                         switch (instSet[actualInstrIndex].Key)
                         {
                             case "PUSH_GLOBAL":
-                                almacenGlobal.setValue(instSet[actualInstrIndex].Value, 0);
+                                //almacenGlobal.setValue(instSet[actualInstrIndex].Value,0);
+                                runPUSH_GLOBAL(instSet[actualInstrIndex].Value);
+                                break;
+                            case "LOAD_CONST":
+                                runLOAD_CONST(instSet[actualInstrIndex].Value);
+                                break;
+                            case "STORE_GLOBAL":
+                                runSTORE_GLOBAL(instSet[actualInstrIndex].Value);
                                 break;
                             case "DEF":
                                 if (instSet[actualInstrIndex].Value.Equals("Main"))

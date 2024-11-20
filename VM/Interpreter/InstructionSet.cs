@@ -48,6 +48,7 @@ namespace InstructionsNameSpace
             instSet = new List<KeyValuePair<string, dynamic>>();
             almacenGlobal = new Almacen("Global");
             almacenGlobal.setValue("print", -1); //por defecto se agrega el método write al almacen global
+            almacenGlobal.setValue("len", -2); //por defecto se agrega el método len al almacen global
             almacenLocal = new List<Almacen>();
             pilaExprs = new Pila();
             actualInstrIndex = 0;
@@ -178,23 +179,46 @@ namespace InstructionsNameSpace
                 {
                     Console.WriteLine(value);
                 }
-            }
-            else
-            {
-                int latestInstr = actualInstrIndex;
-                actualInstrIndex = actualRef;
-                for (var i = 1; i <= numparams; i++)
-                {
-                    //carga en una lista, todos los elementos de la pila referentes a parámetros
-                    actualParamList.Add(pilaExprs.pop());
-                }
 
-                actualParamList.Reverse(); //queda al revés toda la lista, se le da Vuelta!!!
-                almacenLocal.Add(new Almacen("Local")); // se crea el almacen local para el método a llamar
-                pilaExprs.push(
-                    latestInstr); //se carga en la pila la dirección de la referencia a la dirección por la que iba antes de cambiarla por la del método a llamar
-                //en buena teoría con solo cambiar el índice de la instrucción actual y respaldar el anterior en la pila, ya el ciclo de afuera llama emulando un salto
+                return;
             }
+            if (actualRef == -2)
+            {
+                // es porque es el método len
+                var value = pilaExprs.pop();
+                if (value is string)
+                {
+                    pilaExprs.push(((string)value).Length);
+                }
+                else if (value is char[])
+                {
+                    pilaExprs.push(((char[])value).Length);
+                }
+                else if (value is IEnumerable)
+                {
+                    var list = value as IEnumerable;
+                    pilaExprs.push(list.Cast<object>().Count());
+                }
+                else
+                {
+                    reportError("Error: No se puede obtener la longitud de un tipo de dato no iterable");
+                }
+                return; 
+            }
+        int latestInstr = actualInstrIndex;
+        actualInstrIndex = actualRef;
+        for (var i = 1; i <= numparams; i++)
+        {
+            //carga en una lista, todos los elementos de la pila referentes a parámetros
+            actualParamList.Add(pilaExprs.pop());
+        }
+
+        actualParamList.Reverse(); //queda al revés toda la lista, se le da Vuelta!!!
+        almacenLocal.Add(new Almacen("Local")); // se crea el almacen local para el método a llamar
+        pilaExprs.push(
+            latestInstr); //se carga en la pila la dirección de la referencia a la dirección por la que iba antes de cambiarla por la del método a llamar
+        //en buena teoría con solo cambiar el índice de la instrucción actual y respaldar el anterior en la pila, ya el ciclo de afuera llama emulando un salto
+    
         }
         private void runRETURN_VALUE()
         {
@@ -417,10 +441,11 @@ namespace InstructionsNameSpace
         // metodo BUILD_LIST
         private void build_list(int n)
         {
-            List<dynamic> list = new List<dynamic>();
-            for (int i = 0; i < n; i++)
+            dynamic list = new List<dynamic>();
+            for (var i = 0; i < n; i++)
             {
-                list.Add(pilaExprs.pop());
+                var value = pilaExprs.pop();
+                list.Add(value);
             }
 
             list.Reverse();
@@ -440,12 +465,12 @@ namespace InstructionsNameSpace
                 {
 
                     if (instSet[actualInstrIndex].Key.Equals("PUSH_GLOBAL") || instSet[actualInstrIndex].Key.Equals("DEF")||
-                        instSet[actualInstrIndex].Key.Equals("LOAD_CONST")|| instSet[actualInstrIndex].Key.Equals("STORE_GLOBAL") )
+                        instSet[actualInstrIndex].Key.Equals("LOAD_CONST")|| instSet[actualInstrIndex].Key.Equals("STORE_GLOBAL")
+                        || instSet[actualInstrIndex].Key.Equals("BUILD_LIST"))
                     {
                         switch (instSet[actualInstrIndex].Key)
                         {
                             case "PUSH_GLOBAL":
-                                //almacenGlobal.setValue(instSet[actualInstrIndex].Value,0);
                                 runPUSH_GLOBAL(instSet[actualInstrIndex].Value);
                                 break;
                             case "LOAD_CONST":
@@ -454,8 +479,11 @@ namespace InstructionsNameSpace
                             case "STORE_GLOBAL":
                                 runSTORE_GLOBAL(instSet[actualInstrIndex].Value);
                                 break;
+                            case "BUILD_LIST":
+                                build_list(instSet[actualInstrIndex].Value);
+                                break;
                             case "DEF":
-                                if (instSet[actualInstrIndex].Value.Equals("Main"))
+                                if (instSet[actualInstrIndex].Value.Equals("Main") )
                                 {
                                     actualInstrIndex
                                         ++; //se incrementa para que contenga la primera línea de código del Main
